@@ -1,0 +1,104 @@
+/* Import một font chữ tương tự từ Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Stick+No+Bills:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap');
+
+.site-header {
+    font-family: "Smooch Sans", sans-serif;
+    position: fixed;
+    top: 0;
+    left:0;
+    right:0;
+    display: flex;
+    align-items: center; /* Căn giữa các mục theo chiều dọc */
+    justify-content: space-between; /* Phân bổ không gian giữa các mục */
+    background-color: #f5f2ed;
+    color: #333; /* Màu chữ mặc định */
+    height: 60px;
+}
+
+/* --- Logo --- */
+.logo {
+    font-family: 'Stick No Bills', sans-serif;
+    margin-left: 20px;
+    font-size: 2.5rem; /* Kích thước chữ lớn */
+    font-weight: 300; /* Rất đậm */
+    text-decoration: none;
+    color: #1a1a1a;
+    letter-spacing: -2px; /* Giảm khoảng cách giữa các chữ */
+}
+
+.logo span{
+    font-weight: 700; 
+}
+
+/* --- Thanh tìm kiếm --- */
+.search-container {
+    position: relative;
+    display:flex;
+    align-items: center;
+    margin: 0 90px 0 40px;
+    flex: 1;
+    max-width: 600px; /* Giới hạn độ rộng tối đa */
+}
+
+.search-input {
+    flex:1;
+    font-family: "Smooch Sans", sans-serif;
+    font-size: 100%;
+    font-weight: 500;
+    width: 0;
+    padding: 10px 20px 8px 45px; /* Thêm padding bên trái cho icon */
+    border-radius: 30px; /* Bo tròn các góc */
+    border: 2px solid #888;
+    background-color: transparent; /* Nền trong suốt */
+    font-size: 1rem;
+    outline: none; /* Bỏ viền khi click vào */
+}
+
+.search-input::placeholder{
+    font-family: "Smooch Sans", sans-serif;
+    font-size: 20px;
+    padding: 10px 0 0px -10px;
+    font-weight: 500;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Căn icon vào giữa theo chiều dọc */
+    color: #555;
+    font-size: 1.1rem;
+}
+
+/* --- Menu điều hướng --- */
+.navigation {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+    margin-right:20px;
+}
+
+.navigation a{
+    color: #1a1a1a;
+    font-weight: 500;
+    font-size: 26px;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+
+.navigation a:hover {
+    color: #888; /* Đổi màu khi di chuột qua */
+}
+
+/* --- Icon người dùng --- */
+.profile-icon {
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Tạo hình tròn */
+    color: #333;
+    font-size: 1.2rem;
+    margin: 0px 0px 0 0px;
+}
