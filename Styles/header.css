@@ -14,6 +14,7 @@
     background-color: #f5f2ed;
     color: #333; /* Màu chữ mặc định */
     height: 60px;
+    z-index: 999;
 }
 
 /* --- Logo --- */
