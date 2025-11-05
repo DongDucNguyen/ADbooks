@@ -69,3 +69,7 @@
 .book-card img{
     width: 200px;
 }
+.title{
+    font-weight: 600;
+    font-size: 20px;
+}

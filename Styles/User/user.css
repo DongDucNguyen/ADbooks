@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Prata&display=swap');
+.user-page-grid{
+    justify-self: center;
+    min-width: 1200px;
+    min-width: 1400px;
+    font-family: "Smooch Sans", sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    justify-items: center;
+    margin-bottom: 100px;
+}
+
+.setting-container{
+    justify-self: center;
+    background-color: #F6F3ED;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    color: #948E8E;
+    width: 600px;
+    height:150px;
+    margin-bottom: 50px;
+}
+
+.user-setting-title{
+    position: absolute;
+    font-size: 45px;
+    font-weight: 700;
+    align-self: center;
+    justify-self: center;
+    top: 70px;
+}
+
+.user-seting-selection{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items:left;
+    padding-top:20px;
+}
+
+.setting-command{
+    margin: 10px 0 0 40px;
+    font-size: 24px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.setting-command:hover {
+    transform: scale(1.05);
+    font-weight: 600;
+}
+.bookmark-container{
+    background-color: #D9D4C9;
+    color: #79776F;
+    justify-items: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.bookmark-title{
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.bookmark-card{
+    width: 80%;
+}
+
+.bookmark-card-grid{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+}
+
+.bookmark-card-grid img{
+    width: 120px;
+}
+
+.bookmark-card-title{
+    font-size: 30px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+.bookmark-card-author, 
+.bookmark-card-last-view{
+    font-size: 20px;
+    font-weight: 400;
+    margin: 10px 0;
+}
+.bookmark-time{
+    width:150px;
+    height: 40px;
+    background-color: #9D9784;
+    color: white;
+    text-align:center;
+    align-content: center;
+    font-weight: 500;
+    font-size: 20px;
+    position: relative;
+    bottom:60px;
+    left: 300px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.bookmark-time:hover {
+    transform: scale(1.05);
+    background-color: #767160;
+}
+.all-ratings,
+.all-authors,
+.all-bookmark{
+    padding: 0 0 20px 0;
+    text-align: center;
+    color:#302d25;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 700;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.all-ratings:hover,
+.all-authors:hover,
+.all-bookmark:hover {
+    transform: scale(1.1);
+}
+.your-authors-container{
+    justify-self: center;
+    background-color: #F6F1E3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    color: #79776F;
+    width: 600px;
+    height: 60%;
+    margin-bottom: 10px;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+.your-author-card{
+    height: 70px;
+    margin-bottom:90px;
+}
+.your-authors-title{
+    font-size: 50px;
+    font-weight: 700;
+    margin:0 0 20px 0;
+}
+.your-author-infor{
+    background-color:white;
+    width: 400px;
+    height: 130px;
+    position: relative;
+    bottom: 120px;
+    left: 20px;
+    z-index:1;
+}
+.your-author-image {
+  width: 100px;
+  height:100px;
+  overflow: hidden;
+  border: 5px solid #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  position: relative;
+  left: -30px;
+  bottom: -20px;
+    z-index:2;
+transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.your-author-image:hover {
+    transform: scale(1.1);
+}
+.your-author-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.your-author-name{
+    padding-top:20px;
+    font-size: 28px;
+    font-weight: 700;
+}
+.your-author-books{
+    width: 70px;
+    font-size: 22px;
+    margin: 20px 0px 0px 100px;
+    font-weight: 500;
+    justify-self: left;
+}
+
+.rating-title{
+    color: #7F7B6B;
+    background-color:white;
+    font-size: 50px;
+    font-weight: 700;
+    margin:0 0;
+    position: relative;
+    width: 300px;
+    bottom: -35px;
+    justify-self: center;
+    text-align: center;
+}
+
+.your-rating{
+    border: solid;
+    border-width: 8px;
+    border-color: #7F7B6B;
+    padding-top: 30px;
+}
+.your-rating-card{
+    justify-self: center;
+    height: 90px;
+    width: 550px;
+    display: grid;
+    grid-template-columns:120px 1fr;
+    background-color: #EDEADF;
+    margin-bottom: 10px;
+transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.your-rating-card:hover {
+    transform: scale(1.05);
+    background-color: #dfdbcf;
+}
+.main-inf{
+    border-right: 5px solid #ffffff;
+    align-items: center;
+    padding-top: 10px;
+}
+.date,
+.star{
+    justify-self: center;
+    font-size: 23px;
+    font-weight: 500;
+}
+.comment{
+    padding: 10px 0px 0px 10px;
+    width:90%;
+    font-size:18px;
+}
+.comment-title{
+    font-weight: 600;
+}
+.favorite-container{
+    background: linear-gradient(0deg, #ffffff, #edcfa839);
+}
+.favorite-title{
+    font-family: "Smooch Sans", sans-serif;
+    color:#573703;
+    text-align: center;
+    font-size: 70px;
+    font-weight: 500;
+    margin:0 0 0 0;
+}
+.favorite-grid{
+    justify-self:center;
+    width:1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+}
+.favorite-card{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    justify-items: center;
+    padding-bottom: 15px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.favorite-card:hover {
+    transform: scale(1.05);
+}
+.favorite-card img{
+    width: 175px;
+}
+.favorite-card div{
+    color:#574103;
+    font-size:24px;
+    font-family: "Smooch Sans", sans-serif;
+}
+.line{
+    margin: 30px 0;
+    justify-self: center;
+    height: 2px; /* Độ dày của đường thẳng */
+    background-color: rgba(88, 60, 15, 0.365); /* Màu của đường thẳng */
+    width: 60%;
+}
+.all-favorites{
+    margin-right: 40px;
+    justify-self: end;
+    color:#574103;
+    font-size:28px;
+    font-family: "Smooch Sans", sans-serif;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.all-favorites:hover {
+    transform: scale(1.05);
+    font-weight:600;
+}
