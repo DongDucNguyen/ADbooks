@@ -1,0 +1,71 @@
+.section-title{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+}
+.line{
+    height: 1.5px; /* Độ dày của đường thẳng */
+    background-color: rgba(121, 113, 90, 0.616); /* Màu của đường thẳng */
+    width: 100%;
+}
+.sub-text{
+    justify-self: center;
+    color: #7A7A7A;
+    font-size: 20px;
+    font-weight: 400;
+}
+.main-text{
+    justify-self: center;
+    color: #4c493e;
+    font-size: 40px;
+    font-weight: 700;
+}
+.selections{
+    margin-top: 50px;
+    justify-self: center;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    width: 800px;
+    justify-content: space-between;
+    justify-items:center;
+}
+.selections div{
+    color: #7A7A7A;
+    font-weight:500;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.selected{
+    text-decoration-line: underline;
+}
+
+.selections div:hover {
+    transform: scale(1.1);
+}
+
+.books-container{
+    margin-top: 50px;
+    justify-self: center;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 1000px;
+    justify-items:center;
+    gap:20px;
+}
+
+.book-card{
+    justify-items:center;
+    border-radius: 5px;
+    margin-bottom: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+}
+.book-card img{
+    width: 200px;
+}

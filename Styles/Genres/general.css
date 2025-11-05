@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap');
+
+body{
+    font-family: "Afacad", sans-serif;
+    padding-top: 80px;
+    margin: 0 0;
+}
+
+.genres-navigation{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    
+}
+
+.genres-navigation a{
+    align-self: center;
+    justify-self: center;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+.genres-navigation a:hover{
+    font-weight:700;
+}
+
+.sponsor-banner{
+    height: 100px;
+    background-color: #EFEEE8;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 30px;
+}
+
+.sponsor-banner p{
+    font-size: 28px;
+    padding-top: 10px;
+    justify-self: center;
+    width: 700px;
+}
+.sponsor-banner div{
+    position: absolute;
+    right: 30px;
+    top: 185px;
+    font-weight: 600;
+    font-size: 24px;
+    
+}
