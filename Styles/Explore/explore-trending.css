@@ -74,3 +74,22 @@
     color: #777;
     margin-bottom: 12px;
 }
+
+.read-more-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    border: 1px solid #aaa;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
