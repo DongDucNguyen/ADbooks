@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Prata&display=swap');
+.listing-title{
+    display: grid;
+    grid-template-columns: 1fr 500px 1fr;
+    height: 100px;
+    margin-bottom: 50px;
+}
+.rec-decoration{
+    width: 100%;
+    background-color: #EFEEE8;
+}
+.listing-title-content{
+    color: #8F8781;
+    justify-self: center;
+    align-self: center;
+    font-family: "Afacad", sans-serif;
+    font-size: 70px;
+    font-weight: 900;
+}
+.listed-element-card{
+    justify-self: center;
+    font-family: "Smooch Sans", sans-serif;
+    width: 70%;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.listed-element-card:hover {
+    transform: scale(1.05);
+}
+.listed-element-card:active{
+    filter: brightness(0.9);
+}
+.listing-grid{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    height: 180px;
+}
+.listed-element-image{
+    justify-self: center;
+    align-self: center;
+    background-color: rgba(255, 255, 255, 0.973);
+    height: 160px;
+}
+.listed-element-image img{
+    align-self: center;
+    width: 120px;
+}
+.listing-card-info{
+    background-color: white;
+    width: 90%;
+    height: 80%;
+    align-self: center;
+    align-items: center;
+    padding-left: 40px;;
+}
+.listing-card-info p{
+    margin: 0 0;
+}
+.listing-element-title{
+    font-size: 40px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+.listing-element-author, 
+.listing-element-des{
+    font-size: 24px;
+    font-weight: 400;
+    margin: 10px 0;
+}
+.listed-element-card.element-card-1{
+    background-color: #cdc7ae;
+}
+.listed-element-card.element-card-2{
+    background-color: #EAE7DA;
+}
+.listed-element-card.element-card-3{
+    background-color: #fdf8e9;
+}
+.line{
+    margin: 30px 0;
+    justify-self: center;
+    height: 2px; /* Độ dày của đường thẳng */
+    background-color: rgba(0, 0, 0, 0.354); /* Màu của đường thẳng */
+    width: 60%;
+}

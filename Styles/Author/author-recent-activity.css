@@ -5,6 +5,7 @@
   padding: 10px 20px;
 }
 .recent-activities-title{
+  text-decoration: none;
     position: relative;
     top: 100px;
     z-index: 3;
