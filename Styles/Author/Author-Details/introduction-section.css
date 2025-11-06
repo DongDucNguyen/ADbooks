@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Prata&display=swap');
+
+/* Container chính cho banner 
+Chúng ta sẽ dùng position: relative để làm gốc cho ảnh nền 
+*/
+.introduction-grid {
+    font-family: "Smooch Sans", sans-serif;
+    position: relative; /* Quan trọng: để chứa ảnh nền */
+    height: 370px;      /* Chiều cao của banner */
+    max-width: 100%;   /* Giới hạn chiều rộng (tùy chọn) */
+    overflow: hidden;   /* Ẩn các phần thừa của ảnh mờ */
+    /* Sử dụng Flexbox để căn chỉnh nội dung phía TRƯỚC */
+    display: flex;
+    align-items: center;  /* Căn giữa theo chiều dọc */
+    padding: 0 80px;      /* Khoảng đệm 2 bên */
+    box-sizing: border-box;
+}
+
+/* Ảnh nền (Background Image) 
+Class .introduction-grid-img
+*/
+.introduction-grid-img {
+    position: absolute; /* Tách khỏi luồng, làm nền */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    object-fit: cover;  /* Đảm bảo ảnh lấp đầy, kéo giãn */
+    
+    /* Đây là hiệu ứng mờ và tối đi */
+    filter: blur(10px) brightness(0.4);
+    
+    /* Phóng to nhẹ để loại bỏ viền mờ 
+    (khi làm mờ, các cạnh có thể bị trong suốt)
+    */
+    transform: scale(1.1); 
+    
+    z-index: 1; /* Nằm ở lớp dưới cùng */
+}
+
+/* Ảnh đại diện (Foreground Image)
+Class .author-image
+*/
+.author-image {
+    position: relative; /* Đảm bảo nó nổi lên trên */
+    z-index: 2;         /* Nằm ở lớp trên (trên z-index: 1) */
+    transition: transform 0.3s ease;
+}
+.author-image:hover{
+    transform: scale(1.1); 
+}
+.author-image img {
+    border-radius: 10px;
+    width: 300px;       /* Kích thước ảnh tròn */
+    height: 300px;
+    object-fit: cover;  /* Đảm bảo ảnh vừa vặn trong hình tròn */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.751);
+}
+
+/* Thông tin văn bản
+Class .introduction-infor
+*/
+.introduction-infor {
+    position: relative; /* Đảm bảo nó nổi lên trên */
+    z-index: 2;         /* Nằm ở lớp trên */
+    color: #ffffff;
+    margin-left: 70px;  /* Khoảng cách với ảnh đại diện */
+}
+
+.introduction-name {
+    font-size: 60px;  /* 40px */
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.introduction-DoB {
+    font-size: 30px; /* 20px */
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+}
+.introduction-des{
+    font-family: "Prata", serif;
+    width: 80%;
+    line-height: 28px;
+    transition: transform 0.3s ease;
+}
+
+.introduction-name:hover,
+.introduction-DoB:hover,
+.introduction-des:hover{
+    transform: scale(1.05); 
+}
+.top-books{
+    height: 400px;
+}
+.top-books-section{
+    font-family: "Prata", serif;
+    background-color:#edebe4ab;
+    height: 250px;
+    justify-items:center;
+
+}
+.top-books-author-name{
+    padding: 30px 0px 0px 0px;
+    font-weight: 300;
+}
+.top-books-title{
+    padding: 0px 0px 20px 0;
+    font-size: 35px;
+    font-weight: 500;
+}
+.top-books-grid{
+    justify-self: center;
+    display: grid;
+    width: 1150px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    text-align: center;
+}
+.top-book-card{
+    width: 160px;
+    height: 230px;
+    background-color: #EAE8DF;
+    justify-items: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.top-book-card:hover{
+    transform: scale(1.15); 
+}
+.top-book-card img{
+    padding-top: 16px;
+    width: 150px;
+}
+.top-book-card div{
+    font-family: "Prata", serif;
+    position: relative;
+    bottom: -10%;
+}
+.line{
+    margin: 30px 0;
+    justify-self: center;
+    height: 2px; /* Độ dày của đường thẳng */
+    background-color: rgba(89, 85, 71, 0.354); /* Màu của đường thẳng */
+    width: 60%;
+}
+.related-infor,
+.about-the-author{
+    font-family: "Prata", serif;
+}
+.related-infor-title,
+.about-the-author-title{
+    padding: 50px 50px;
+    font-size: 25px;
+}
+.related-infor-content,
+.about-the-author-content{
+    height:500px;
+}
+.all-ratings{
+    font-family: "Prata", serif;
+    width:fit-content;
+    justify-self:center;
+    color:#302d25;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.all-ratings:hover{
+    transform: scale(1.1);
+}
+
+.rating-title{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color: #7F7B6B;
+    background-color:white;
+    font-size: 45px;
+    font-weight: 700;
+    margin:0 0;
+    position: relative;
+}
+
+.rating-card{
+    font-family: "Prata", serif;
+    justify-self: center;
+    width: 80%;
+    display: grid;
+    grid-template-columns:200px 1fr;
+    background-color: #EDEADF;
+    margin-bottom: 10px;
+transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.rating-card:hover {
+    transform: scale(1.05);
+    background-color: #dfdbcf;
+}
+.main-inf{
+    border-right: 5px solid #ffffff;
+    align-items: center;
+    padding-top: 10px;
+}
+.name,
+.date,
+.star{
+    justify-self: left;
+    font-size: 23px;
+    font-weight: 500;
+    padding-left:20px;;
+}
+.comment{
+    padding: 10px 0px 0px 10px;
+    width:90%;
+    font-size:18px;
+}
+.comment-title{
+    font-weight: 600;
+}
