@@ -79,6 +79,7 @@ transition: transform 0.3s ease;
 }
 .function-buttons{
     position: relative;
+    width:fit-content;
     left: 50%;
     top: 50px;
 }
