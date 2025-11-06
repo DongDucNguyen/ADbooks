@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Prata&display=swap');
+.introduction-banner{
+    background: linear-gradient(180deg, #FFFBE9, #edcfa800);
+}
+.book-cover{
+    position: absolute;
+    background-color: #EFEEE8;
+    width:350px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left:13%;
+    top: 130px;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    }
+.book-cover:hover {
+        transform: scale(1.05);
+    }
+.book-cover img{
+    width: 300px;
+}
+
+.book-card{
+    position: relative;
+    background-color: #D8D5CB;
+    width: 900px;
+    height: 400px;
+    left: 25%;
+    top: 30px;
+    border: solid;
+    border-color: white;
+    border-width: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+transition: transform 0.3s ease;
+    }
+.book-card:hover {
+        transform: scale(1.05);
+    }
+.book-title{
+    justify-self: center;
+    text-align: center;
+    font-family: "Prata", serif;
+    color:#464333;
+    font-size: 45px;
+    font-weight: 700;
+    padding: 0 0;
+    margin: 0 0;
+}
+.author-name{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color:#6A6756;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 0;
+    margin: 0 0;
+}
+.publish-date{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color:#6A6756;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 0;
+    margin: 10px 0;
+}
+.book-infor{
+    padding-left: 20%;
+    font-family: "Prata", serif;
+}
+.book-infor-title{
+    font-size: 18px;
+}
+.book-infor-content{
+    width: 80%;
+}
+.function-buttons{
+    position: relative;
+    left: 50%;
+    top: 50px;
+}
+.function-buttons button{
+    width: 200px;
+    height: 50px;
+    margin: 0px 20px;
+    background-color: #A4A09A;
+    border: none;
+    color: white;
+    font-family: "Prata", serif;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    }
+
+.function-buttons button:hover{
+    background-color: #726f6a;
+}
+.function-buttons button:active {
+        transform: scale(1.2);
+}
+.line{
+    margin: 30px 0;
+    justify-self: center;
+    height: 2px; /* Độ dày của đường thẳng */
+    background-color: rgba(89, 85, 71, 0.354); /* Màu của đường thẳng */
+    width: 60%;
+}
+.related-infor,
+.about-the-author{
+    font-family: "Prata", serif;
+}
+.related-infor-title,
+.about-the-author-title{
+    padding: 50px 50px;
+    font-size: 25px;
+}
+.related-infor-content,
+.about-the-author-content{
+    height:500px;
+}
+.all-ratings{
+    font-family: "Prata", serif;
+    width:fit-content;
+    justify-self:center;
+    color:#302d25;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.all-ratings:hover{
+    transform: scale(1.1);
+}
+
+.rating-title{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color: #7F7B6B;
+    background-color:white;
+    font-size: 45px;
+    font-weight: 700;
+    margin:0 0;
+    position: relative;
+}
+.rating-star{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color: #58564a;
+    background-color:white;
+    font-size: 25px;
+    font-weight: 700;
+    margin:0 0;
+    position: relative;
+}
+.rating-card{
+    font-family: "Prata", serif;
+    justify-self: center;
+    width: 80%;
+    display: grid;
+    grid-template-columns:200px 1fr;
+    background-color: #EDEADF;
+    margin-bottom: 10px;
+transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.rating-card:hover {
+    transform: scale(1.05);
+    background-color: #dfdbcf;
+}
+.main-inf{
+    border-right: 5px solid #ffffff;
+    align-items: center;
+    padding-top: 10px;
+}
+.name,
+.date,
+.star{
+    justify-self: left;
+    font-size: 23px;
+    font-weight: 500;
+    padding-left:20px;;
+}
+.comment{
+    padding: 10px 0px 0px 10px;
+    width:90%;
+    font-size:18px;
+}
+.comment-title{
+    font-weight: 600;
+}
+.filter-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* --- Styling cho Input Select "Filter" --- */
+        
+        /* * Cần một div bọc ngoài để chứa <select>
+         * và pseudo-element ::after (dấu "v") 
+        */
+        .rating-command{
+            font-family: "Prata", serif;
+            justify-self: center;
+            align-items: center;
+        }
+        .filter-select-wrapper {
+            font-family: "Prata", serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .filter-select {
+            font-family: "Prata", serif;
+            /* Tắt giao diện mặc định của trình duyệt */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            
+            /* Màu sắc */
+            background-color: #e6e4e0;
+            color: #4a4a4a;
+
+            /* Font */
+            font-size: 18px;
+            font-weight: 400;
+            
+            /* Hình dáng */
+            border: none;
+            border-radius: 30px;
+            
+            /* Padding: Thêm padding bên phải để chừa chỗ cho dấu "v" */
+            padding: 6px 50px 6px 24px;
+            
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .filter-select:hover {
+            background-color: #dcdad6;
+        }
+
+        
+        .filter-select-wrapper::after {
+            content: '∨';
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a4a4a;
+            
+            position: absolute;
+            right: 24px; /* Căn phải */
+            top: 50%;
+            
+            /* Căn giữa và làm lùn đi 1 chút */
+            transform: translateY(-50%) scaleY(0.8);
+            
+            /* Quan trọng: Để con trỏ click "xuyên qua" dấu "v" */
+            pointer-events: none; 
+        }
+
+        /* --- Styling cho Button "+" --- */
+        .plus-btn {
+            align-self: center;
+            /* Reset style mặc định của button */
+            border: none;
+            background: none;
+            padding: 0;
+            margin-left:10px;
+            /* Kích thước */
+            width: 20px;
+            height: 20px;
+            
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* Vẽ dấu cộng bằng ::before và ::after */
+        .plus-btn::before,
+        .plus-btn::after {
+            content: '';
+            position: absolute;
+            background-color: #7f7f74;
+            border-radius: 2px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Thanh ngang */
+        .plus-btn::before {
+            width: 100%;
+            height: 5px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        /* Thanh dọc */
+        .plus-btn::after {
+            width: 5px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .plus-btn:hover::before,
+        .plus-btn:hover::after {
+            background-color: #5f5e58;
+        }
