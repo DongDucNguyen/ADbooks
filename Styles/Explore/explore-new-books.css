@@ -56,13 +56,13 @@
 .new-book-cover:hover {
     transform: scale(1.05);
 }
-
+.new-book-cover:active{
+    filter: brightness(0.9);
+}
 .new-book-info{
     font-family: "Afacad", sans-serif;
     margin-left: 30px;
     width: 250px;
-
-
 }
 
 .new-book-info h3 {
@@ -89,7 +89,9 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 }
-
+.book-cover-small{
+    width: 80%;
+}
 .new-books-grid .book-cover-small img {
     width: 80%;
     border-radius: 5px;
@@ -100,4 +102,26 @@
 
 .new-books-grid .book-cover-small img:hover {
     transform: scale(1.05);
+}
+.new-books-grid .book-cover-small img:active{
+    filter: brightness(0.9);
+    opacity: 0.5;
+}
+
+.new-book-card {
+    /* ... giữ nguyên các style layout hiện tại của bạn ... */
+    display: flex; /* Ví dụ */
+    gap: 2rem;    /* Ví dụ */
+
+    /* --- THÊM CÁC DÒNG SAU ĐỂ TẠO HIỆU ỨNG FADE --- */
+    opacity: 0;             /* Mặc định ẩn đi */
+    transform: translateY(20px); /* Dịch xuống dưới một chút để tạo hiệu ứng trồi lên */
+    /* Thiết lập transition cho độ mờ và vị trí trong 0.3 giây */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Khi có class 'active' (được thêm bởi JS), nó sẽ hiện lên */
+.new-book-card.active {
+    opacity: 1;
+    transform: translateY(0); /* Trở về vị trí ban đầu */
 }

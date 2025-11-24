@@ -153,12 +153,16 @@ Class .introduction-infor
 }
 .related-infor-title,
 .about-the-author-title{
-    padding: 50px 50px;
+    justify-self: center;
     font-size: 25px;
+    margin-top: 50px;
 }
 .related-infor-content,
 .about-the-author-content{
-    height:500px;
+    justify-self: center;
+    width: 80%;
+    text-align:justify;
+    margin-bottom: 100px;
 }
 .all-ratings{
     font-family: "Prata", serif;

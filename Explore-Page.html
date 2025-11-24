@@ -6,16 +6,17 @@
             body {
                 padding-top: 120;
                 margin: 0;
-            }
+            }    
+
         </style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./Styles/header.css">
-        <link rel="stylesheet" href="./Styles/general.css">
         <link rel="stylesheet" href="./Styles/Explore/explore-trending.css">
         <link rel="stylesheet" href="./Styles/Explore/explore-banner.css">
         <link rel="stylesheet" href="./Styles/Explore/explore-new-books.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="./Scripts/explore.js" type="module" defer></script>
     </head>
     <body>
         <header class="site-header">
@@ -42,15 +43,10 @@
                     <img src="./Images/elements/left-arrow.png">
                 </button>
                 
-                <div class="hero-content">
-                    <h2>Life Of The Wild</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet. Libero ipsum enim pharetra hac. Urna commodo, lectus ut magna sed aliquet. Amet, conubia sed.</p>
-                    <a href="#" class="read-more-btn">XEM THÊM &rarr;</a>
+                <div class="hero-content js-hero-content">
                 </div>
 
-                <div class="hero-image">
-                    <img src="./Images/Book-Covers/book.png " class="banner-img">
-                    <img src="./Images/Background/bg pattern.png" class="banner-bg">
+                <div class="hero-image js-hero-image">
                 </div>
 
                 <button class="arrow">
@@ -60,76 +56,10 @@
 
             <section class="trending-section">
                 
-                <div class="book-grid">
-                    <div class="book-card">
-                        <div class="book-cover">
-                            <img src="./Images/Book-Covers/b1.png">
-                        </div>
-                        <div class="book-info">
-                            <h3>All The Light We Cannot See</h3>
-                            <div class="author">By Anthony Doerr</div>
-                            <div class="rating">★★★★★ (1,000,000)</div>
-                            <a href="#" class="read-more-btn">Xem thêm</a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover">
-                             <img src="./Images/Book-Covers/b2.png">
-                        </div>
-                        <div class="book-info">
-                            <h3>Rich People Problems</h3>
-                            <div class="author">By Kevin Kwan</div>
-                            <div class="rating">★★★★☆ (1,000,000)</div>
-                            <a href="#" class="read-more-btn">Xem thêm</a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover">
-                             <img src="./Images/Book-Covers/b3.png">
-                        </div>
-                        <div class="book-info">
-                            <h3>Becoming</h3>
-                            <div class="author">By Michelle Obama</div>
-                            <div class="rating">★★★★★ (1,000,000)</div>
-                            <a href="#" class="read-more-btn">Xem thêm</a>
-                        </div>
-                    </div>
+                <div class="book-grid js-book-grid-1">
                 </div>
                 <a href="./Details/Listing-Book-Page-pink.html" class="Top-Trending" >TOP TRENDING</a>
-                <div class="book-grid">
-                    <div class="book-card">
-                        <div class="book-cover">
-                             <img src="./Images/Book-Covers/b4.png">
-                        </div>
-                        <div class="book-info">
-                            <h3>Where The Crawdads Sing</h3>
-                            <div class="author">By Delia Owens</div>
-                            <div class="rating">★★★★★ (1,000,000)</div>
-                            <a href="#" class="read-more-btn">Xem thêm</a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover">
-                             <img src="./Images/Book-Covers/b5.png">
-                        </div>
-                        <div class="book-info">
-                            <h3>Crazy Rich Asians</h3>
-                            <div class="author">By Kevin Kwan</div>
-                            <div class="rating">★★★★☆ (1,000,000)</div>
-                            <a href="#" class="read-more-btn">Xem thêm</a>
-                        </div>
-                    </div>
-                    <div class="book-card">
-                        <div class="book-cover">
-                             <img src="./Images/Book-Covers/b6.png">
-                        </div>
-                        <div class="book-info">
-                            <h3>Konspirasi Alam Semesta</h3>
-                            <div class="author">By Fiersa Besari</div>
-                            <div class="rating">★★★★☆ (1,000,000)</div>
-                            <a href="#" class="read-more-btn">Xem thêm</a>
-                        </div>
-                    </div>
+                <div class="book-grid js-book-grid-2">
                 </div>
             </section>
 

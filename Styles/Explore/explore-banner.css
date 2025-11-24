@@ -22,9 +22,12 @@
     transition: opacity 0.1s;
 }
 .arrow:hover{
+    transform: scale(1.05);
     opacity: 70%;
 }
-
+.arrow:active{
+    filter: brightness(0.9);
+}
 .arrow img{
     width: 20px;
 }
@@ -68,6 +71,14 @@
     position: relative;
     width: 250px;
     z-index: 1;              /* nằm trên */
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.banner-img:hover{
+    transform: scale(1.15);
+}
+.banner-img:active{
+    opacity: 0.6;
 }
 
 .read-more-btn {
@@ -88,4 +99,15 @@
     background-color: #333;
     color: #fff;
     border-color: #333;
+}
+.read-more-btn:active{
+    opacity: 0.5;
+}
+.hero-content, .hero-image {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.hero-content.active, .hero-image.active {
+    opacity: 1;
 }
