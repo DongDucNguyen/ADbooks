@@ -55,7 +55,7 @@ export class NewBooksSection {
                     <h3>${featuredBook.title}</h3>
                     <div class="author">By ${featuredBook.author}</div>
                     <div class="rating">
-                        <img src="./Images/ratings/${ratingImgName}" alt="Rating ${featuredBook.rating}" style="height: 16px; vertical-align: middle;">
+                        <img src="./Images/ratings/${ratingImgName}" alt="Rating ${featuredBook.rating}">
                         <span>(${featuredBook.reviewCount})</span>
                     </div>
                     <div class="description">
