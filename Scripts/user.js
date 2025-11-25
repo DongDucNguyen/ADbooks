@@ -2,7 +2,7 @@ import { BookmarkSection } from './User/bookmarks.js';
 import { UserAuthorSection } from './User/authors.js';
 import { UserRatingSection } from './User/ratings.js';
 import { UserFavoriteSection } from './User/favorites.js';
-
+import { EditProfileModal } from './User/edit-profile.js';
 // --- DỮ LIỆU MẪU (Mock Data) ---
 
 const bookmarkData = [
@@ -127,9 +127,22 @@ const favoriteData = [
     }
 ];
 
+const currentUserData = {
+    firstname: "Văn A",
+    lastname: "Nguyễn",
+    username: "listenary_fan",
+    birthday: "2000-01-01",
+    email: "nguyenana@gmail.com",
+    phone: "0901234567",
+    address: "123 Đường Sách, Quận 1, TP.HCM"
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     new BookmarkSection(bookmarkData);
     new UserAuthorSection(authorData);
     new UserRatingSection(ratingData);
     new UserFavoriteSection(favoriteData);
+    
+    // [NEW] Khởi tạo Modal sửa thông tin
+    new EditProfileModal(currentUserData);
 });

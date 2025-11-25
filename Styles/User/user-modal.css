@@ -1,0 +1,138 @@
+/* Styles/User/user-modal.css */
+@import url('https://fonts.googleapis.com/css2?family=Afacad:wght@400;600;700&family=Lato:wght@400;700&display=swap');
+
+/* Lớp phủ mờ nền */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Màu đen bán trong suốt */
+    backdrop-filter: blur(5px); /* Hiệu ứng blur nền */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Hộp Popup */
+.modal-content {
+    background-color: white;
+    width: 600px;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    font-family: 'Lato', sans-serif;
+    position: relative;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    font-family: 'Afacad', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* Grid layout cho form */
+.edit-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-family: 'Afacad', sans-serif;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.form-input {
+    padding: 10px 15px;
+    border-radius: 30px; /* Style bo tròn giống thanh search */
+    border: 1px solid #ccc;
+    outline: none;
+    font-family: 'Lato', sans-serif;
+    transition: border-color 0.3s;
+    background-color: #f9f9f9;
+}
+
+.form-input:focus {
+    border-color: #333;
+    background-color: white;
+}
+
+/* Nút bấm */
+.modal-actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Afacad', sans-serif;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.btn-cancel {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.btn-save {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Nút đóng X ở góc */
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+.close-modal-btn:hover {
+    color: #333;
+}

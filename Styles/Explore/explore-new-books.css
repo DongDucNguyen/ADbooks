@@ -16,10 +16,10 @@
     font-size: 125px;
     font-weight: 800;
     color: rgba(255, 255, 255, 0.9);
-    
+    text-decoration: none;
     position: absolute;
-    bottom: -40px;
-    left: 30%;
+    bottom: -20px;
+    left: 23%;
     transform: translateX(-50%);
     z-index: 1;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
