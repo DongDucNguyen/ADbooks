@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="./Styles/header.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="./Styles/User/user.css">
+        <script src="./Scripts/user.js" type="module" defer></script>
     </head>
     <body style="padding-top:100px;margin: 0 0;">
         <header class="site-header" style="background-color:white;">
@@ -43,193 +44,18 @@
                             </div>
                         </div>
                     </section>
-                    <section class="bookmark-container">
-                        <div class="bookmark-title">BOOKMARKS</div>
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-grid">
-                                <img src="./Images/Book-Covers/b1.png">
-                                <div class="bookmark-card-info">
-                                    <p class="bookmark-card-title">Book name</p>
-                                    <p class="bookmark-card-author">Author name</p>
-                                    <p class="bookmark-card-last-view">00:00 00/00/0000</p>
-                                </div>
-                            </div>
-                            <div class="bookmark-time">TIME</div>
-                        </div>
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-grid">
-                                <img src="./Images/Book-Covers/b1.png">
-                                <div class="bookmark-card-info">
-                                    <p class="bookmark-card-title">Book name</p>
-                                    <p class="bookmark-card-author">Author name</p>
-                                    <p class="bookmark-card-last-view">00:00 00/00/0000</p>
-                                </div>
-                            </div>
-                            <div class="bookmark-time">TIME</div>
-                        </div>
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-grid">
-                                <img src="./Images/Book-Covers/b1.png">
-                                <div class="bookmark-card-info">
-                                    <p class="bookmark-card-title">Book name</p>
-                                    <p class="bookmark-card-author">Author name</p>
-                                    <p class="bookmark-card-last-view">00:00 00/00/0000</p>
-                                </div>
-                            </div>
-                            <div class="bookmark-time">TIME</div>
-                        </div>
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-grid">
-                                <img src="./Images/Book-Covers/b1.png">
-                                <div class="bookmark-card-info">
-                                    <p class="bookmark-card-title">Book name</p>
-                                    <p class="bookmark-card-author">Author name</p>
-                                    <p class="bookmark-card-last-view">00:00 00/00/0000</p>
-                                </div>
-                            </div>
-                            <div class="bookmark-time">TIME</div>
-                        </div>
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-grid">
-                                <img src="./Images/Book-Covers/b1.png">
-                                <div class="bookmark-card-info">
-                                    <p class="bookmark-card-title">Book name</p>
-                                    <p class="bookmark-card-author">Author name</p>
-                                    <p class="bookmark-card-last-view">00:00 00/00/0000</p>
-                                </div>
-                            </div>
-                            <div class="bookmark-time">TIME</div>
-                        </div>
-                        <div class="all-bookmark">Tất cả</div>
-                    </section>
+
+                    <section class="bookmark-container js-bookmark-container"></section>
                 </div>
+
                 <div class="right-section">
-                    <section class="your-authors-container">
-                        <div class="your-authors-title">
-                            TÁC GIẢ CỦA BẠN
-                        </div>
-                        <div class="your-author-card">
-                            <div class="your-author-image">
-                                <img src="./Images/Authors/a1.jpg">
-                            </div>
-                            <div class="your-author-infor">
-                                <div class="your-author-name">TÊN TÁC GIẢ</div>
-                                <div class="your-author-books">
-                                    Sách:.............................................................</div>
-                            </div>
-                        </div>
-                        <div class="your-author-card">
-                            <div class="your-author-image">
-                                <img src="./Images/Authors/a1.jpg">
-                            </div>
-                            <div class="your-author-infor">
-                                <div class="your-author-name">TÊN TÁC GIẢ</div>
-                                <div class="your-author-books">
-                                    Sách:.............................................................</div>
-                            </div>
-                        </div>
-                        <div class="your-author-card">
-                            <div class="your-author-image">
-                                <img src="./Images/Authors/a1.jpg">
-                            </div>
-                            <div class="your-author-infor">
-                                <div class="your-author-name">TÊN TÁC GIẢ</div>
-                                <div class="your-author-books">
-                                    Sách:.............................................................</div>
-                            </div>
-                        </div>
-                        <div class="your-author-card">
-                            <div class="your-author-image">
-                                <img src="./Images/Authors/a1.jpg">
-                            </div>
-                            <div class="your-author-infor">
-                                <div class="your-author-name">TÊN TÁC GIẢ</div>
-                                <div class="your-author-books">
-                                    Sách:.............................................................</div>
-                            </div>
-                        </div>
-                        <div class="all-authors">Tất cả</div>
-                    </section>
-                    <section class="your-rating-container">
-                        <div class="rating-title">ĐÁNH GIÁ CỦA BẠN</div>
-                        <div class="your-rating">
-                            <div class="your-rating-card">
-                                <div class="main-inf">
-                                    <div class="date">Date</div>
-                                    <div class="star">★★★★★</div>
-                                </div>
-                                <div class="comment">
-                                    <div class="comment-title">Title</div>
-                                    <div class="content">"Một tuyệt tác! Câu chuyện tình yêu của Heathcliff và Catherine quá mãnh liệt, hoang dại và ám ảnh. Đọc xong mà day dứt mãi."</div>
-                                </div>
-                            </div>
-                            <div class="your-rating-card">
-                                <div class="main-inf">
-                                    <div class="date">Date</div>
-                                    <div class="star">★★★★★</div>
-                                </div>
-                                <div class="comment">
-                                    <div class="comment-title">Title</div>
-                                    <div class="content">"Một tuyệt tác! Câu chuyện tình yêu của Heathcliff và Catherine quá mãnh liệt, hoang dại và ám ảnh. Đọc xong mà day dứt mãi."</div>
-                                </div>
-                            </div>
-                            <div class="your-rating-card">
-                                <div class="main-inf">
-                                    <div class="date">Date</div>
-                                    <div class="star">★★★★★</div>
-                                </div>
-                                <div class="comment">
-                                    <div class="comment-title">Title</div>
-                                    <div class="content">"Một tuyệt tác! Câu chuyện tình yêu của Heathcliff và Catherine quá mãnh liệt, hoang dại và ám ảnh. Đọc xong mà day dứt mãi."</div>
-                                </div>
-                            </div>
-                            <div class="your-rating-card">
-                                <div class="main-inf">
-                                    <div class="date">Date</div>
-                                    <div class="star">★★★★★</div>
-                                </div>
-                                <div class="comment">
-                                    <div class="comment-title">Title</div>
-                                    <div class="content">"Một tuyệt tác! Câu chuyện tình yêu của Heathcliff và Catherine quá mãnh liệt, hoang dại và ám ảnh. Đọc xong mà day dứt mãi."</div>
-                                </div>
-                            </div>
-                            <div class="all-ratings">Tất cả</div>
-                        </div>
-                        
-                    </section>
+                    <section class="your-authors-container js-author-container"></section>
+
+                    <section class="your-rating-container js-rating-container"></section>
                 </div>
             </div>
-            <section class="favorite-container">
-                <p class="favorite-title">Yêu thích</p>
-                <div class="favorite-grid">
-                    <div class="favorite-card">
-                        <img src="./Images/Book-Covers/b11.png">
-                        <div>Book name</div>
-                    </div>
-                    <div class="favorite-card">
-                        <img src="./Images/Book-Covers/b12.png">
-                        <div>Book name</div>
-                    </div>
-                    <div class="favorite-card">
-                        <img src="./Images/Book-Covers/b13.png">
-                        <div>Book name</div>
-                    </div>
-                    <div class="favorite-card">
-                        <img src="./Images/Book-Covers/b14.png">
-                        <div>Book name</div>
-                    </div>
-                    <div class="favorite-card">
-                        <img src="./Images/Book-Covers/b15.png">
-                        <div>Book name</div>
-                    </div>
-                    <div class="favorite-card">
-                        <img src="./Images/Book-Covers/b16.png">
-                        <div>Book name</div>
-                    </div>
-                </div>
-                <div class="line"></div>
-                <div class="all-favorites">Tất cả</div>
-            </section>
+
+            <section class="favorite-container js-favorite-container"></section>
         </main>
     </body>
 </html>
