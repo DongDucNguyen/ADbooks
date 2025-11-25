@@ -162,9 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Rising Authors (Mới)
     new RisingAuthorsSection(risingAuthorsData);
 
-    document.querySelector('.genres-navigation a');addEventListener('click', function() {
-
-        const listingName = this.innerText;
-        localStorage.setItem('selectedGenre', listingName);
+    document.querySelector('.top-author-section-title').addEventListener('click', function() {
+        localStorage.setItem('selectedAuthorCategory', "TÁC GIẢ NỔI BẬT");
+    });
+    document.querySelector('.recent-activities-title').addEventListener('click', function() {
+        localStorage.setItem('selectedAuthorCategory', "HOẠT ĐỘNG GẦN ĐÂY");
+    });
+    document.querySelector('.rising-background-title').addEventListener('click', function() {
+        localStorage.setItem('selectedAuthorCategory', "TÁC GIẢ TRẺ");
     });
 });

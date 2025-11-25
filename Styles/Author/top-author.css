@@ -2,7 +2,7 @@
 
     body {
         margin: 0 0;
-        padding-top: 250px;
+        padding-top: 150px;
     }
 
     .top-author-section {
@@ -12,12 +12,10 @@
     }
 
     .top-author-section-title  {
-        
+        text-decoration: none;
         font-family: "Afacad", sans-serif;
-        position: absolute;
-        justify-self: center;
-        align-self: center;
-        top: 80px;
+        position: relative;
+        top: -70px;
         font-size: 70px;
         font-weight: 900;
         letter-spacing: 3px;

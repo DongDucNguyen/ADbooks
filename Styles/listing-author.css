@@ -1,0 +1,25 @@
+.listed-element-image{
+    justify-self: center;
+    align-self: center;
+    background-color: rgba(255, 255, 255, 0.973);
+    width: 140px;
+    height:140px;
+    overflow: hidden;
+    border: 5px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.listed-element-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Nếu chưa có thì thêm vào CSS */
+.listing-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+}

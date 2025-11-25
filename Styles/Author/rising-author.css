@@ -74,6 +74,7 @@
 }
 
 .rising-background-title {
+  text-decoration: none;
   bottom: 30px;
   font-size: 240px;
   font-weight: 700;
