@@ -136,3 +136,34 @@
 .close-modal-btn:hover {
     color: #333;
 }
+
+/* --- Bổ sung cho Confirmation Modal (Yes/No) --- */
+
+.modal-content.confirmation-type {
+    width: 400px; /* Nhỏ gọn hơn form sửa thông tin */
+    text-align: center;
+}
+
+.modal-message {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* Style cho nút màu đỏ (Dùng cho Xóa/Đăng xuất) */
+.btn-danger {
+    background-color: #ff4d4d;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #e60000;
+}
+
+/* Style cho Modal Đổi mật khẩu */
+.password-note {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 15px;
+    font-style: italic;
+}

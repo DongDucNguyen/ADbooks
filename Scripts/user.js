@@ -3,7 +3,7 @@ import { UserAuthorSection } from './User/authors.js';
 import { UserRatingSection } from './User/ratings.js';
 import { UserFavoriteSection } from './User/favorites.js';
 import { EditProfileModal } from './User/edit-profile.js';
-// --- DỮ LIỆU MẪU (Mock Data) ---
+import { SettingsManager } from './User/settings-manager.js';
 
 const bookmarkData = [
     { id: 1, img: './Images/Book-Covers/b1.png', title: "Life Of The Wild", author: "Unknown", lastView: "10:30 24/11/2025", progress: "45%", link: "#" },
@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new UserAuthorSection(authorData);
     new UserRatingSection(ratingData);
     new UserFavoriteSection(favoriteData);
-    
-    // [NEW] Khởi tạo Modal sửa thông tin
     new EditProfileModal(currentUserData);
+    new SettingsManager();
 });
