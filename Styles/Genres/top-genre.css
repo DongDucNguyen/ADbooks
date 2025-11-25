@@ -73,3 +73,9 @@
     font-weight: 600;
     font-size: 20px;
 }
+
+/* 2. Style cho Container chứa sách để làm hiệu ứng Fade */
+.books-container {
+    transition: opacity 0.4s ease-in-out; /* Thời gian mờ dần */
+    opacity: 1; /* Mặc định hiển thị */
+}
