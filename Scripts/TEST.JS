@@ -4,7 +4,7 @@
         // 2. !!! THAY THẾ BẰNG API KEY CỦA BẠN !!!
         // CẢNH BÁO: Không bao giờ đưa file này lên mạng thật. 
         // Key của bạn sẽ bị lộ.
-        const API_KEY = "AIzaSyBU-VLC9v__TdUGq8SOloFA1316Kb4p4rg";
+        const API_KEY = "";
 
         // 3. Khởi tạo
         const genAI = new GoogleGenerativeAI(API_KEY);
