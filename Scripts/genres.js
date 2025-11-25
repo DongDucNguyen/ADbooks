@@ -83,6 +83,19 @@ const featuredBooksData = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Khởi tạo các Class hiển thị cũ
     new QuoteBanner(quotesData);
     new FeaturedBooksSection(featuredBooksData);
+
+    // 2. LOGIC MỚI: Xử lý click menu thể loại
+    // Mục đích: Lưu tên thể loại vào bộ nhớ trình duyệt trước khi chuyển trang
+    const genreLinks = document.querySelectorAll('.genres-navigation a');
+
+    genreLinks.forEach(link => {
+        link.addEventListener('click', function() {
+
+            const genreName = this.innerText;
+            localStorage.setItem('selectedGenre', genreName);
+        });
+    });
 });

@@ -136,4 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const slider = new HeroSlider(banners);
     const trendingSection = new TrendingSection(trendingData);
     const newBooksSection = new NewBooksSection(newBooksData);
+    document.querySelector('.Top-Trending').addEventListener('click', function() {
+        localStorage.setItem('selectedGenre', "TOP TRENDING");
+    });
+    document.querySelector('.background-text').addEventListener('click', function() {
+        localStorage.setItem('selectedGenre', "SÁCH MỚI");
+    });
 });

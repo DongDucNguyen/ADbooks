@@ -57,7 +57,7 @@ export class RecentActivitiesSection {
         // Map từng cuốn sách thành dòng HTML: Ngày - <a href>Tên sách</a>
         return limitedBooks.map(book => {
             return `
-                <div class="activity-line">
+                <div class="activity-line" data-book-id="${book.id}">
                     <span class="activity-date">${book.date}</span> - 
                     <a href="${book.link}" class="activity-link">${book.title}</a>
                 </div>

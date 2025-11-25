@@ -73,9 +73,9 @@ const recentActivitiesData = [
         name: "Nguyễn Nhật Ánh",
         img: "./Images/Authors/a1.jpg",
         recentBooks: [
-            { date: "10/2023", title: "Mùa Hè Không Tên", link: "./Details/book1.html" },
-            { date: "05/2022", title: "Ra Bờ Suối Ngắm Hoa", link: "./Details/book2.html" },
-            { date: "12/2021", title: "Con Chim Xanh Biếc", link: "#" },
+            {id:1, date: "10/2023", title: "Mùa Hè Không Tên", link: "./Details/book1.html" },
+            {id:1, date: "05/2022", title: "Ra Bờ Suối Ngắm Hoa", link: "./Details/book2.html" },
+            {id:1, date: "12/2021", title: "Con Chim Xanh Biếc", link: "#" },
         ]
     },
     {
@@ -83,9 +83,9 @@ const recentActivitiesData = [
         name: "J.K. Rowling",
         img: "./Images/Authors/a2.png",
         recentBooks: [
-            { date: "12/2023", title: "Harry Potter Illustrated", link: "#" },
-            { date: "10/2022", title: "The Christmas Pig", link: "#" },
-            { date: "08/2020", title: "The Ickabog", link: "#" }
+            {id:1, date: "12/2023", title: "Harry Potter Illustrated", link: "#" },
+            {id:1, date: "10/2022", title: "The Christmas Pig", link: "#" },
+            {id:1, date: "08/2020", title: "The Ickabog", link: "#" }
         ]
     },
     {
@@ -93,10 +93,10 @@ const recentActivitiesData = [
         name: "Haruki Murakami",
         img: "./Images/Authors/a3.jpg",
         recentBooks: [
-            { date: "04/2023", title: "The City and Its Uncertain Walls", link: "#" },
-            { date: "07/2021", title: "First Person Singular", link: "#" },
-            { date: "10/2017", title: "Killing Commendatore", link: "#" },
-            { date: "08/2014", title: "Men Without Women", link: "#" }
+            {id:1, date: "04/2023", title: "The City and Its Uncertain Walls", link: "#" },
+            {id:1, date: "07/2021", title: "First Person Singular", link: "#" },
+            {id:1, date: "10/2017", title: "Killing Commendatore", link: "#" },
+            {id:1, date: "08/2014", title: "Men Without Women", link: "#" }
         ]
     },
     {
@@ -104,11 +104,11 @@ const recentActivitiesData = [
         name: "Stephen King",
         img: "./Images/Authors/a4.jpg",
         recentBooks: [
-            { date: "09/2023", title: "Holly", link: "#" },
-            { date: "09/2022", title: "Fairy Tale", link: "#" },
-            { date: "08/2021", title: "Billy Summers", link: "#" },
-            { date: "04/2020", title: "If It Bleeds", link: "#" },
-            { date: "09/2019", title: "The Institute", link: "#" }
+            {id:1, date: "09/2023", title: "Holly", link: "#" },
+            {id:1, date: "09/2022", title: "Fairy Tale", link: "#" },
+            {id:1, date: "08/2021", title: "Billy Summers", link: "#" },
+            {id:1, date: "04/2020", title: "If It Bleeds", link: "#" },
+            {id:1, date: "09/2019", title: "The Institute", link: "#" }
         ]
     },
     {
@@ -116,8 +116,8 @@ const recentActivitiesData = [
         name: "Dan Brown",
         img: "./Images/Authors/a5.jpg",
         recentBooks: [
-            { date: "09/2020", title: "Wild Symphony", link: "#" },
-            { date: "10/2017", title: "Origin", link: "#" }
+            {id:1, date: "09/2020", title: "Wild Symphony", link: "#" },
+            {id:1, date: "10/2017", title: "Origin", link: "#" }
         ]
     }
 ];
@@ -161,4 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Rising Authors (Mới)
     new RisingAuthorsSection(risingAuthorsData);
+
+    document.querySelector('.genres-navigation a');addEventListener('click', function() {
+
+        const listingName = this.innerText;
+        localStorage.setItem('selectedGenre', listingName);
+    });
 });
