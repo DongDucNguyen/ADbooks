@@ -1,0 +1,226 @@
+/* auth.css */
+
+/* Import font giống hệt các file cũ */
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Stick+No+Bills:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+body {
+    margin: 0;
+    padding-top: 00px; /* Tránh header che mất nội dung */
+    background: linear-gradient(0deg, #ffffff, #d5cdc0); /* Giống explore-trending.css */
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Layout chính --- */
+.auth-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.auth-wrapper.log{
+    display: flex;
+    background-color: #fff;
+    width: 900px;
+    height: 500px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Shadow mềm mại */
+    overflow: hidden; /* Để ảnh không bị tràn border-radius */
+}
+.auth-wrapper.sign{
+    display: flex;
+    background-color: #fff;
+    width: 900px;
+    height: 670px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Shadow mềm mại */
+    overflow: hidden; /* Để ảnh không bị tràn border-radius */
+}
+/* --- Cột hình ảnh (Bên trái hoặc phải) --- */
+.auth-image-side {
+    flex: 1;
+    background-image: url('../Images/Background/new-books-bg.png'); /* Dùng lại bg của sách mới hoặc ảnh bìa sách đẹp */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Lớp phủ màu để chữ dễ đọc hơn trên nền ảnh */
+.auth-image-side::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 26, 26, 0.4); 
+    z-index: 1;
+}
+
+.auth-image-content {
+    position: relative;
+    z-index: 2;
+}
+
+.auth-image-content h2 {
+    font-family: 'Stick No Bills', sans-serif;
+    font-size: 60px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.auth-image-content p {
+    font-family: 'Afacad', sans-serif;
+    font-size: 20px;
+    margin-top: 10px;
+    opacity: 0.9;
+}
+
+/* --- Cột Form (Bên phải hoặc trái) --- */
+.auth-form-side {
+    flex: 1;
+    padding: 0px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-title {
+    font-family: "Afacad", sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 15px;
+}
+
+/* --- Form Elements --- */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Afacad', sans-serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Input style giống thanh search ở header nhưng vuông vức hơn xíu để hợp form */
+.form-input {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 30px; /* Style đặc trưng của Listenary */
+    border: 1px solid #aaa;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box; /* Quan trọng để padding không làm vỡ layout */
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.form-input:focus {
+    border-color: #333;
+    background-color: #fff;
+}
+
+/* --- Button Style giống explore-banner.css --- */
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+    border: 1px solid #333;
+    background-color: #1a1a1a; /* Mặc định đen để nổi bật hành động chính */
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background-color: #fff;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.auth-btn:active {
+    opacity: 0.8;
+    transform: translateY(0);
+}
+
+/* --- Links --- */
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.auth-link {
+    color: #1a1a1a;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+    color: #555;
+}
+
+.forgot-pass {
+    display: block;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+}
+
+.forgot-pass:hover {
+    color: #1a1a1a;
+}
+
+/* Responsive cơ bản */
+@media (max-width: 768px) {
+    .auth-wrapper {
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+    }
+    .auth-image-side {
+        height: 200px;
+    }
+    .auth-form-side {
+        padding: 30px;
+    }
+}
