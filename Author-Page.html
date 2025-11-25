@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="./Styles/Author/top-author.css">
         <link rel="stylesheet" href="./Styles/Author/author-recent-activity.css">
         <link rel="stylesheet" href="./Styles/Author/rising-author.css">
+        <script src="./Scripts/author.js" type="module" defer></script>
     </head>
     <body>
         <header class="site-header">
@@ -32,27 +33,9 @@
             <section class="top-author-section">
                 <div class="top-author-section-title">TÁC GIẢ NỔI BẬT</div>
                 <div class="author-container">
-                    <!-- Thông tin bên trái -->
-                    <div class="author-info">
-                        <p><strong>Ngày Sinh:</strong> 27/10/1973</p>
-                        <p><strong>Mô Tả:</strong></p>
-                        <div class="desc-lines">Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".</div>
-                    </div>
-
-                    <!-- Ảnh chính giữa -->
-                    <a class="author-photo" href="./Details/author.html">
-                        <img src="./Images/Authors/a1.jpg">
-                    </a>
-
-                    <!-- Sách bên phải -->
-                    <div class="author-books">
-                        <img src="./Images/Book-Covers/b1.png">
-                        <img src="./Images/Book-Covers/b7.png">
-                        <img src="./Images/Book-Covers/b8.png">
-                    </div>
                 </div>
 
-                <div class="author-name">Anthony Doerr</div>
+                <div class="author-name"></div>
 
                 <div class="dots">
                     <span class="dot active"></span>
@@ -64,112 +47,11 @@
             <section class="recent-activities-section" >
                 <a class="recent-activities-title" href="./Details/Listing-Book-Page-blue.html"><div>HOẠT ĐỘNG</div> <span>Gần đây</span></a>
                 <div class="authors-container">
-                <!-- Mỗi khối tác giả -->
-                <div class="author-card up">
-                    <div class="author-image">
-                    <img src="./Images/Authors/a1.jpg" alt="Tác Giả">
-                    </div> 
-                    <div class="author-box">
-                    <p>Hoạt động</p>
-                    </div>
-                    <div class="author-name">Tác Giả</div>
-                </div>
-
-                <div class="author-card down">
-                    <div class="author-image">
-                    <img src="./Images/Authors/a2.png" alt="Tác Giả">
-                    </div>
-                    <div class="author-box">
-                    <p>Hoạt động</p>
-                    </div>
-                    <div class="author-name">Tác Giả</div>
-                </div>
-
-                <div class="author-card up">
-                    <div class="author-image">
-                    <img src="./Images/Authors/a3.jpg" alt="Tác Giả">
-                    </div>
-                    <div class="author-box">
-                    <p>Hoạt động</p>
-                    </div>
-                    <div class="author-name">Tác Giả</div>
-                </div>
-
-                <div class="author-card down">
-                    <div class="author-image">
-                    <img src="./Images/Authors/a4.jpg" alt="Tác Giả">
-                    </div>
-                    <div class="author-box">
-                    <p>Hoạt động</p>
-                    </div>
-                    <div class="author-name">Tác Giả</div>
-                </div>
-
-                <div class="author-card up">
-                    <div class="author-image">
-                    <img src="./Images/Authors/a5.jpg" alt="Tác Giả">
-                    </div>
-                    <div class="author-box">
-                    <p>Hoạt động</p>
-                    </div>
-                    <div class="author-name">Tác Giả</div>
-                </div>
                 </div>
             </section>
 
             <section class="rising-authors-section" style="padding:0 0 0 0;">
                     <div class="rising-authors-container">
-                        <div class="rising-author-card">
-                            <div class="rising-card-header">Tác Giả</div>
-                            <div class="rising-card-body">
-                            <img src="./Images/Authors/a1.jpg" alt="Tác giả">
-                            <div class="rising-card-info">
-
-                                <div class="lines">
-Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="rising-author-card">
-                            <div class="rising-card-header">Tác Giả</div>
-                            <div class="rising-card-body">
-                            <img src="./Images/Authors/a2.png" alt="Tác giả">
-                            <div class="rising-card-info">
-
-                                <div class="lines">
-                                Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="rising-author-card">
-                            <div class="rising-card-header">Tác Giả</div>
-                            <div class="rising-card-body">
-                            <img src="./Images/Authors/a3.jpg" alt="Tác giả">
-                            <div class="rising-card-info">
-
-                                <div class="lines">
-                                Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="rising-author-card">
-                            <div class="rising-card-header">Tác Giả</div>
-                            <div class="rising-card-body">
-                            <img src="./Images/Authors/a4.jpg" alt="Tác giả">
-                            <div class="rising-card-info">
-
-                                <div class="lines">
-Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".
-                                </div>
-                            </div>
-                            </div>
-                        </div>
                         </div>
                         <h1 class="rising-background-title">TÁC GIẢ TRẺ</h1>
             </section>

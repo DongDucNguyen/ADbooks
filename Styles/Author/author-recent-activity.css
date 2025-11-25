@@ -53,7 +53,7 @@ font-family: "Afacad", sans-serif;
 }
 
 .author-card .author-name{
-    
+    font-size: 23px;
     position: absolute;
     top: 130px;
 }
@@ -109,6 +109,30 @@ font-family: "Afacad", sans-serif;
   font-size: 25px;
   font-weight: 600;
 }
+
+.author-card.down .author-box .recent-activities{
+  font-family: "Afacad", sans-serif;
+  position: absolute;
+  width: 90%;
+  text-align: left;
+  justify-self: center;
+  font-size: 14px;
+  font-weight: 500;
+  top: 16px;
+}
+
+.author-card.up .author-box .recent-activities{
+  font-family: "Afacad", sans-serif;
+  position: absolute;
+  width: 90%;
+  top: 130px;
+  text-align: left;
+  justify-self: center;
+  align-self: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .author-card.up .author-box {
   top: calc(50%);
 }
@@ -138,4 +162,24 @@ font-family: "Afacad", sans-serif;
     flex-wrap: wrap;
     gap: 40px;
   }
+}
+
+/* Trong Styles/Author/author-recent-activity.css */
+
+.recent-activities .activity-line {
+    margin-bottom: 5px; /* Khoảng cách giữa các dòng */
+    font-size: 14px;    /* Cỡ chữ tùy chỉnh */
+    color: #333;
+}
+
+.recent-activities .activity-link {
+    text-decoration: none; /* Bỏ gạch chân mặc định */
+    color: #000;           /* Màu chữ tên sách */
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.recent-activities .activity-link:hover {
+    color: #ff6b6b;        /* Đổi màu khi di chuột vào (ví dụ màu hồng/đỏ) */
+    text-decoration: underline;
 }
