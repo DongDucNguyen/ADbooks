@@ -38,7 +38,7 @@ export class RegisterForm {
         if (!f.username.value.trim()) return alert("Username không được để trống!");
         if (!f.birthday.value.trim()) return alert("Ngày sinh không được để trống!");
         if (!f.email.value.trim()) return alert("Email không được để trống!");
-        if (!f.phoneNumber.value.trim()) return alert("Số điện thoại không được để trống!");
+        if (!f.phoneNumber.value.trim()) return alert("Số điện thoại không được để trống!"); // để giống db
         if (!f.password.value) return alert("Mật khẩu không được để trống!");
         if (!f.rePassword.value) return alert("Xác nhận mật khẩu không được để trống!");
         if (f.password.value !== f.rePassword.value) return alert("Mật khẩu không khớp!");

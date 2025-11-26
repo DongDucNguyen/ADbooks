@@ -85,7 +85,6 @@ export class EditProfileModal {
                         <label>Email</label>
                         <input type="email" name="email" class="form-input" value="${this.#escapeHtml(this.#userData.email || '')}">
                     </div>
-
                     <div class="form-group">
                         <label>Số điện thoại</label>
                         <input type="tel" name="phoneNumber" class="form-input" value="${this.#escapeHtml(this.#userData.phoneNumber || '')}">
