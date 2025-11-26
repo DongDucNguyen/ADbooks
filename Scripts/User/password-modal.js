@@ -99,34 +99,28 @@ export class ChangePasswordModal {
             return;
         }
 
-        // 6. KIỂM TRA MẬT KHẨU HIỆN TẠI ĐÚNG HAY KHÔNG
-        // Dữ liệu của bạn dùng field: encryptedPassword
+        // 6. Kiểm tra mật khẩu hiện tại (plain text)
         if (userData.encryptedPassword !== currentPassword) {
             return this.#showError('Mật khẩu hiện tại không đúng!');
         }
 
-        // === THÀNH CÔNG: CẬP NHẬT MẬT KHẨU MỚI ===
+        // Cập nhật mật khẩu mới
         userData.encryptedPassword = newPassword;
-
-        // Lưu lại localStorage
         localStorage.setItem('userLogin', JSON.stringify(userData));
 
-        // Thông báo thành công
         alert('Đổi mật khẩu thành công! Bạn sẽ được đăng xuất để bảo mật.');
-
         this.close();
 
-        // Buộc đăng xuất ngay lập tức (rất quan trọng về bảo mật)
+        // Buộc đăng xuất
         setTimeout(() => {
             localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('userLogin'); // hoặc giữ lại cũng được, nhưng đăng xuất
+            localStorage.removeItem('userLogin');
             window.location.href = '/Login.html';
         }, 1000);
     }
 
     #showError(message) {
         alert('Lỗi: ' + message);
-        // Nếu muốn đẹp hơn, bạn có thể thêm div lỗi màu đỏ dưới form
     }
 
     #clearErrors() {
@@ -146,3 +140,64 @@ export class ChangePasswordModal {
         this.#clearErrors();
     }
 }
+
+
+// sau khi có api
+// async #handleSave() {
+//     const formData = new FormData(this.#form);
+//     const currentPassword = (formData.get('currentPassword') || '').trim();
+//     const newPassword = (formData.get('newPassword') || '').trim();
+//     const confirmPassword = (formData.get('confirmPassword') || '').trim();
+
+//     this.#clearErrors();
+
+//     // Kiểm tra cơ bản
+//     if (!currentPassword || !newPassword || !confirmPassword) {
+//         return this.#showError('Vui lòng điền đầy đủ các trường!');
+//     }
+//     if (newPassword.length < 6) {
+//         return this.#showError('Mật khẩu mới phải có ít nhất 6 ký tự!');
+//     }
+//     if (newPassword !== confirmPassword) {
+//         return this.#showError('Mật khẩu xác nhận không khớp!');
+//     }
+//     if (newPassword === currentPassword) {
+//         return this.#showError('Mật khẩu mới không được trùng với mật khẩu cũ!');
+//     }
+
+//     try {
+//         // Gửi POST request lên API
+//         const response = await fetch('/api/change-password', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 // nếu cần token: 'Authorization': 'Bearer ' + token
+//             },
+//             body: JSON.stringify({
+//                 currentPassword,
+//                 newPassword
+//             })
+//         });
+
+//         const result = await response.json();
+
+//         if (!response.ok) {
+//             // Backend trả về lỗi
+//             return this.#showError(result.message || 'Đổi mật khẩu thất bại!');
+//         }
+
+//         alert('Đổi mật khẩu thành công! Bạn sẽ được đăng xuất để bảo mật.');
+//         this.close();
+
+//         // Buộc đăng xuất
+//         setTimeout(() => {
+//             localStorage.removeItem('isLoggedIn');
+//             localStorage.removeItem('userLogin'); // nếu bạn có lưu
+//             window.location.href = '/Login.html';
+//         }, 1000);
+
+//     } catch (error) {
+//         this.#showError('Có lỗi xảy ra. Vui lòng thử lại!');
+//         console.error(error);
+//     }
+// }
