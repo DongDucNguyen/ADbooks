@@ -39,7 +39,6 @@ export class RegisterForm {
         if (!f.birthday.value.trim()) return alert("Ngày sinh không được để trống!");
         if (!f.email.value.trim()) return alert("Email không được để trống!");
         if (!f.phoneNumber.value.trim()) return alert("Số điện thoại không được để trống!");
-        if (!f.address.value.trim()) return alert("Địa chỉ không được để trống!");
         if (!f.password.value) return alert("Mật khẩu không được để trống!");
         if (!f.rePassword.value) return alert("Xác nhận mật khẩu không được để trống!");
         if (f.password.value !== f.rePassword.value) return alert("Mật khẩu không khớp!");
@@ -58,7 +57,6 @@ export class RegisterForm {
             birthday: f.birthday.value.trim(),
             email: f.email.value.trim(),
             phoneNumber: f.phoneNumber.value.trim(),
-            address: f.address.value.trim(), 
             encryptedPassword: f.password.value.trim(),
             createdAt: new Date().toISOString()
         };

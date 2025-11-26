@@ -91,10 +91,6 @@ export class EditProfileModal {
                         <input type="tel" name="phoneNumber" class="form-input" value="${this.#escapeHtml(this.#userData.phoneNumber || '')}">
                     </div>
 
-                    <div class="form-group full-width">
-                        <label>Địa chỉ</label>
-                        <input type="text" name="address" class="form-input" value="${this.#escapeHtml(this.#userData.address || '')}">
-                    </div>
                 </form>
 
                 <div class="modal-actions">
@@ -170,5 +166,5 @@ export class EditProfileModal {
 
 const currentUser = JSON.parse(localStorage.getItem("userLogin"));
 if (currentUser) {
-    new EditProfileModal(currentUser); // An toàn 100% – không bao giờ tạo trùng
+    new EditProfileModal(currentUser); 
 }
