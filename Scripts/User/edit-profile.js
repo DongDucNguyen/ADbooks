@@ -1,26 +1,39 @@
 export class EditProfileModal {
+    // Biến static để lưu instance duy nhất
+    static #instance = null;
+
     #userData;
     #overlay;
     #form;
     #triggerBtn;
 
     constructor(userData) {
-        this.#userData = userData;
+        // Nếu đã có instance rồi → trả về luôn instance đó, không tạo mới
+        if (EditProfileModal.#instance) {
+            return EditProfileModal.#instance;
+        }
+
+        // userData phải là object user hiện tại từ localStorage
+        this.#userData = userData || {};
+
         this.#triggerBtn = this.#findTriggerButton(); // Tìm nút "Sửa thông tin"
-        
+
         if (this.#triggerBtn) {
             this.init();
         } else {
             console.error("Không tìm thấy nút 'Sửa thông tin'");
         }
+
+        // Lưu instance hiện tại để các lần sau tái sử dụng
+        EditProfileModal.#instance = this;
     }
 
     init() {
-        this.#render(); // Vẽ HTML popup
-        this.#attachEvents(); // Gán sự kiện click
+        this.#render();       // Vẽ modal (chỉ chạy 1 lần)
+        this.#attachEvents(); // Gán sự kiện
     }
 
-    // Hàm tìm nút dựa trên text content vì trong HTML bạn không đặt ID
+    // Tìm nút "Sửa thông tin" dựa trên text
     #findTriggerButton() {
         const commands = document.querySelectorAll('.setting-command');
         for (const cmd of commands) {
@@ -32,68 +45,77 @@ export class EditProfileModal {
     }
 
     #render() {
-        // Tạo element overlay và nội dung form
+        // Nếu đã có overlay rồi (do instance cũ) → không tạo nữa
+        const existingOverlay = document.querySelector('.modal-overlay');
+        if (existingOverlay) {
+            this.#overlay = existingOverlay;
+            this.#form = this.#overlay.querySelector('#edit-profile-form');
+            return;
+        }
+
         this.#overlay = document.createElement('div');
         this.#overlay.className = 'modal-overlay';
-        
+
         this.#overlay.innerHTML = `
             <div class="modal-content">
-                <button class="close-modal-btn">&times;</button>
+                <button type="button" class="close-modal-btn">&times;</button>
                 <div class="modal-header">Cập nhật thông tin</div>
-                
+
                 <form class="edit-form-grid" id="edit-profile-form">
                     <div class="form-group">
                         <label>Họ</label>
-                        <input type="text" name="lastname" class="form-input" value="${this.#userData.lastname}">
+                        <input type="text" name="lastname" class="form-input" value="${this.#escapeHtml(this.#userData.lastname || '')}">
                     </div>
                     <div class="form-group">
                         <label>Tên</label>
-                        <input type="text" name="firstname" class="form-input" value="${this.#userData.firstname}">
+                        <input type="text" name="firstname" class="form-input" value="${this.#escapeHtml(this.#userData.firstname || '')}">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" class="form-input" value="${this.#userData.username}" readonly style="background-color: #e9e9e9; cursor: not-allowed;">
+                        <input type="text" name="username" class="form-input" value="${this.#escapeHtml(this.#userData.username || '')}" readonly style="background-color: #e9e9e9; cursor: not-allowed;">
                     </div>
+
                     <div class="form-group">
                         <label>Ngày sinh</label>
-                        <input type="date" name="birthday" class="form-input" value="${this.#userData.birthday}">
+                        <input type="date" name="birthday" class="form-input" value="${this.#userData.birthday || ''}">
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-input" value="${this.#userData.email}">
+                        <input type="email" name="email" class="form-input" value="${this.#escapeHtml(this.#userData.email || '')}">
                     </div>
+
                     <div class="form-group">
                         <label>Số điện thoại</label>
-                        <input type="tel" name="phone" class="form-input" value="${this.#userData.phone}">
+                        <input type="tel" name="phoneNumber" class="form-input" value="${this.#escapeHtml(this.#userData.phoneNumber || '')}">
                     </div>
 
                     <div class="form-group full-width">
                         <label>Địa chỉ</label>
-                        <input type="text" name="address" class="form-input" value="${this.#userData.address}">
+                        <input type="text" name="address" class="form-input" value="${this.#escapeHtml(this.#userData.address || '')}">
                     </div>
                 </form>
 
                 <div class="modal-actions">
-                    <button class="btn btn-cancel js-close-modal">Hủy bỏ</button>
-                    <button class="btn btn-save js-save-modal">Lưu thay đổi</button>
+                    <button type="button" class="btn btn-cancel js-close-modal">Hủy bỏ</button>
+                    <button type="button" class="btn btn-save js-save-modal">Lưu thay đổi</button>
                 </div>
             </div>
         `;
 
-        // Thêm vào body
         document.body.appendChild(this.#overlay);
         this.#form = this.#overlay.querySelector('#edit-profile-form');
     }
 
     #attachEvents() {
-        // 1. Mở Modal
-        this.#triggerBtn.addEventListener('click', () => {
+        // Mở modal
+        this.#triggerBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             this.#overlay.classList.add('active');
         });
 
-        // 2. Đóng Modal (Nút X, Nút Hủy, Click ra ngoài)
+        // Đóng modal: nút X và nút Hủy
         const closeBtns = this.#overlay.querySelectorAll('.close-modal-btn, .js-close-modal');
         closeBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -102,14 +124,14 @@ export class EditProfileModal {
             });
         });
 
-        // Click vào vùng đen mờ thì đóng
+        // Click ngoài vùng modal → đóng
         this.#overlay.addEventListener('click', (e) => {
             if (e.target === this.#overlay) {
                 this.#close();
             }
         });
 
-        // 3. Lưu thông tin
+        // Lưu dữ liệu
         const saveBtn = this.#overlay.querySelector('.js-save-modal');
         saveBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -122,16 +144,31 @@ export class EditProfileModal {
     }
 
     #saveData() {
-        // Lấy dữ liệu từ form (Mock logic)
         const formData = new FormData(this.#form);
         const data = Object.fromEntries(formData.entries());
-        
-        console.log("Dữ liệu đã lưu:", data);
-        alert("Cập nhật thông tin thành công!");
-        
-        // Cập nhật lại dữ liệu nội bộ (nếu cần)
+
+        // Cập nhật lại this.#userData
         this.#userData = { ...this.#userData, ...data };
-        
+
+        // Lưu vào localStorage
+        localStorage.setItem("userLogin", JSON.stringify(this.#userData));
+
+        console.log("Đã lưu thông tin người dùng:", this.#userData);
+        alert("Cập nhật thông tin thành công!");
+
         this.#close();
     }
+
+    
+    #escapeHtml(text) {
+        if (typeof text !== 'string') return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+}
+
+const currentUser = JSON.parse(localStorage.getItem("userLogin"));
+if (currentUser) {
+    new EditProfileModal(currentUser); // An toàn 100% – không bao giờ tạo trùng
 }

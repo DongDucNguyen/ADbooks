@@ -1,26 +1,28 @@
-export class RegisterForm{
+export class RegisterForm {
     #form;
     #fields;
 
     constructor(formSelector) {
         this.#form = document.querySelector(formSelector);
-        if(!this.#form) return;
+        if (!this.#form) return;
 
-        // Map các input
+        // Map các input theo HTML, có address
         this.#fields = {
             lastName: this.#form.querySelector('#lastname'),
             firstName: this.#form.querySelector('#firstname'),
             username: this.#form.querySelector('#username'),
             birthday: this.#form.querySelector('#birthday'),
             email: this.#form.querySelector('#email'),
-            phoneNumber: this.#form.querySelector('#phone'),
+            phoneNumber: this.#form.querySelector('#phoneNumber'),
+            address: this.#form.querySelector('#address'), // thêm address
             password: this.#form.querySelector('#password'),
-            rePassword: this.#form.querySelector('#confirm-password'),
+            rePassword: this.#form.querySelector('#confirm-password')
         };
 
         this.#init();
     }
-    #init(){
+
+    #init() {
         this.#form.addEventListener('submit', (e) => {
             e.preventDefault();
             if (!this.#validate()) return;
@@ -37,6 +39,7 @@ export class RegisterForm{
         if (!f.birthday.value.trim()) return alert("Ngày sinh không được để trống!");
         if (!f.email.value.trim()) return alert("Email không được để trống!");
         if (!f.phoneNumber.value.trim()) return alert("Số điện thoại không được để trống!");
+        if (!f.address.value.trim()) return alert("Địa chỉ không được để trống!");
         if (!f.password.value) return alert("Mật khẩu không được để trống!");
         if (!f.rePassword.value) return alert("Xác nhận mật khẩu không được để trống!");
         if (f.password.value !== f.rePassword.value) return alert("Mật khẩu không khớp!");
@@ -46,14 +49,18 @@ export class RegisterForm{
 
     async #signUp() {
         const f = this.#fields;
+
+        // Object user đúng với JSON Server, có address
         const user = {
-            firstName: f.firstName.value.trim(),
-            lastName: f.lastName.value.trim(),
+            firstname: f.firstName.value.trim(),
+            lastname: f.lastName.value.trim(),
             username: f.username.value.trim(),
-            password: f.password.value.trim(),
             birthday: f.birthday.value.trim(),
             email: f.email.value.trim(),
             phoneNumber: f.phoneNumber.value.trim(),
+            address: f.address.value.trim(), 
+            encryptedPassword: f.password.value.trim(),
+            createdAt: new Date().toISOString()
         };
 
         try {
@@ -75,7 +82,7 @@ export class RegisterForm{
 
             alert("Đăng ký thành công!");
             this.#form.reset();
-            window.location.href = "login.html";
+            window.location.href = "Login.html";
 
         } catch (error) {
             console.error("Lỗi khi gửi đăng ký:", error);
@@ -83,4 +90,6 @@ export class RegisterForm{
         }
     }
 }
-new RegisterForm('.auth-form-grid');
+
+// Khởi tạo form
+new RegisterForm('#registerForm');
