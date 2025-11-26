@@ -65,6 +65,8 @@ export class LoginForm {
                 window.location.href = "/Explore-Page.html";
             }, 100);
 
+            sessionStorage.setItem("sessionActive", "true");
+
         } catch (error) {
             console.error("Lỗi khi đăng nhập:", error);
             alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
