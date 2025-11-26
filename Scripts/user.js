@@ -4,6 +4,9 @@ import { UserRatingSection } from './User/ratings.js';
 import { UserFavoriteSection } from './User/favorites.js';
 import { EditProfileModal } from './User/edit-profile.js';
 import { SettingsManager } from './User/settings-manager.js';
+import { setupLogout } from "./User/logout.js";
+import { setupDeleteAccount } from "./User/clearAccount.js";
+import { setupDeleteHistory } from "./User/clearHistory.js";
 
 const bookmarkData = [
     { id: 1, img: './Images/Book-Covers/b1.png', title: "Life Of The Wild", author: "Unknown", lastView: "10:30 24/11/2025", progress: "45%", link: "#" },
@@ -145,3 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new EditProfileModal(currentUserData);
     new SettingsManager();
 });
+
+setupLogout();
+setupDeleteAccount();
+setupDeleteHistory();
