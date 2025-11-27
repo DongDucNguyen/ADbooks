@@ -12,7 +12,14 @@
     <link rel="stylesheet" href="./Styles/header.css">
     <link rel="stylesheet" href="./Styles/Reading/reading-view.css">
     
-    <script src="./Scripts/Reading/reading-main.js" type="module" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Cấu hình Worker cho PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
+    <script src="./Scripts/Reading/reading-detail.js" type="module" defer></script>
+
 </head>
 <body style="padding-top:50px;">
     <header class="site-header">
@@ -32,12 +39,9 @@
     </header>
 
     <main class="reading-layout">
-        <section class="pdf-wrapper">
-            <iframe 
-                src="./1_Ba người thầy vĩ đại.pdf#toolbar=0&navpanes=0&view=FitH" 
-                class="pdf-frame js-pdf-frame" 
-                type="application/pdf">
-            </iframe>
+        <section class="pdf-wrapper js-pdf-wrapper">
+            <div id="pdf-viewer-container">
+                </div>
         </section>
 
         <aside class="control-sidebar">
@@ -55,9 +59,9 @@
 
             <div class="player-section">
                 <div class="progress-bar-wrap">
-                    <span class="time-text curr-time">00:59</span>
+                    <span class="time-text curr-time">00:00</span>
                     <input type="range" class="seek-slider" min="0" max="100" value="0">
-                    <span class="time-text total-time">12:05</span>
+                    <span class="time-text total-time">00:00</span>
                 </div>
 
                 <div class="controls-row">
@@ -67,10 +71,22 @@
                     </div>
                     
                     <button class="play-btn-large js-play-btn">
-                        <i class="fa-solid fa-pause"></i>
+                        <i class="fa-solid fa-play"></i>
                     </button>
 
-                    <div class="speed-ctrl">1.0x</div>
+                    <div class="speed-wrapper">
+                        <div class="speed-ctrl js-speed-btn">1.0x</div>
+                        <ul class="speed-dropdown js-speed-dropdown">
+                            <li data-speed="0.25">0.25x</li>
+                            <li data-speed="0.5">0.5x</li>
+                            <li data-speed="0.75">0.75x</li>
+                            <li data-speed="1.0" class="active">1.0x</li>
+                            <li data-speed="1.25">1.25x</li>
+                            <li data-speed="1.5">1.5x</li>
+                            <li data-speed="1.75">1.75x</li>
+                            <li data-speed="2.0">2.0x</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -88,7 +104,13 @@
                     </ul>
             </div>
             
-            </aside>
+        </aside>
     </main>
+
+    <audio id="main-audio" preload="metadata">
+        <source src="./1_3 Người Thầy Vĩ Đại.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+    </audio>
+
 </body>
 </html>
