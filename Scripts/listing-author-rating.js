@@ -1,4 +1,4 @@
-/* Scripts/listing-author-rating.js */
+import { RatingModal } from './rating-modal.js'; // Import Modal mới
 
 // Mock Data có thêm trường 'bookTitle'
 const MOCK_AUTHOR_REVIEWS = [
@@ -64,19 +64,20 @@ export class ListingAuthorRatingPage {
     #headerTitle;
     #headerStar;
     #filterSelect;
+    #modal; // Biến Modal
 
     constructor(data) {
         this.#data = data;
-        
         this.#container = document.querySelector('.rating'); 
         this.#headerTitle = document.querySelector('.rating-title');
         this.#headerStar = document.querySelector('.rating-star');
         this.#filterSelect = document.querySelector('.filter-select');
 
+        // Khởi tạo Modal
+        this.#modal = new RatingModal();
+
         if (this.#container && this.#headerTitle) {
             this.init();
-        } else {
-            console.warn('ListingAuthorRatingPage: Thiếu DOM');
         }
     }
 
@@ -86,31 +87,17 @@ export class ListingAuthorRatingPage {
         this.#addEventListeners();
     }
 
-    // --- KHÁC BIỆT 1: Chỉ hiện tên tác giả, không tính sao trung bình ---
     #updateHeaderInfo() {
-        // Tên tác giả (Có thể lấy từ localStorage hoặc Data tĩnh)
-        this.#headerTitle.innerText = localStorage.getItem('selectedAuthorCategory');; //lấy từ localstorage
-        
-        // Ẩn phần sao đi hoặc để trống
-        if (this.#headerStar) {
-            this.#headerStar.style.display = 'none'; 
-            // Hoặc nếu muốn hiện text phụ:
-            // this.#headerStar.innerText = "Tổng hợp đánh giá từ độc giả";
-        }
+        this.#headerTitle.innerText = localStorage.getItem('selectedAuthorCategory');
+        if (this.#headerStar) this.#headerStar.style.display = 'none'; 
     }
 
     #getStarImgPath(score) {
-        // Logic lấy ảnh sao (giữ nguyên)
+        // Logic lấy ảnh cho list (giống file modal nhưng cho list bên ngoài)
         const roundedScore = Math.round(score * 2) / 2;
         let scoreInt = roundedScore * 10; 
-        
-        let fileName = '';
-        if (scoreInt === 0) fileName = 'rating-0.png';
-        else if (scoreInt < 10) fileName = `rating-0${scoreInt}.png`;
-        else {
-            if (scoreInt > 50) scoreInt = 50;
-            fileName = `rating-${scoreInt}.png`;
-        }
+        if (scoreInt > 50) scoreInt = 50;
+        const fileName = (scoreInt === 0) ? 'rating-0.png' : (scoreInt < 10 ? `rating-0${scoreInt}.png` : `rating-${scoreInt}.png`);
         return `../Images/ratings/${fileName}`;
     }
 
@@ -120,34 +107,35 @@ export class ListingAuthorRatingPage {
         
         const cardsHtml = dataToRender.map(review => {
             const starImgSrc = this.#getStarImgPath(review.score);
-
+            // Thêm con trỏ chuột pointer và data-id
             return `
-            <div class="rating-card" data-rating-id="${review.id}">
+            <div class="rating-card" data-id="${review.id}" style="cursor: pointer;">
                 <div class="main-inf">
                     <div class="name">${review.name}</div>
                     <div class="date">${review.date}</div>
-                    <div class="star">
-                        <img src="${starImgSrc}" alt="${review.score} sao" style="height: 20px;">
-                    </div>
+                    <div class="star"><img src="${starImgSrc}" style="height: 20px;"></div>
                 </div>
                 <div class="comment">
                     <div class="review-book-ref" style="font-size: 13px; color: #666; margin-bottom: 5px; font-weight: bold; font-style: italic;">
                         <i class="fa-solid fa-book"></i> ${review.bookTitle}
                     </div>
-
                     <div class="comment-title">${review.title}</div>
-                    <div class="content">"${review.content}"</div>
+                    <div class="content" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">"${review.content}"</div>
                 </div>
-            </div>
-            `;
+            </div>`;
         }).join('');
 
-        const bottomHtml = `
-            <div class="line"></div>
-            <div class="all-ratings">Đang hiển thị (${dataToRender.length}) đánh giá</div>
-        `;
-
+        const bottomHtml = `<div class="line"></div><div class="all-ratings">Đang hiển thị (${dataToRender.length}) đánh giá</div>`;
         this.#container.innerHTML = topHtml + cardsHtml + bottomHtml;
+
+        // [SỰ KIỆN CLICK]
+        this.#container.querySelectorAll('.rating-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.dataset.id;
+                const item = this.#data.find(r => r.id == id);
+                if (item) this.#modal.show(item); // Gọi Modal
+            });
+        });
     }
 
     #addEventListeners() {

@@ -1,24 +1,27 @@
+import { RatingModal } from '../rating-modal.js';
+
 export class UserRatingSection {
     #data;
     #container;
+    #modal;
 
     constructor(data) {
         this.#data = data;
         this.#container = document.querySelector('.js-rating-container');
+        this.#modal = new RatingModal();
         if (this.#container) this.init();
     }
 
     init() {
         this.#render();
-        this.#addEventListeners(); // [NEW] Gọi hàm gắn sự kiện sau khi render
+        this.#addEventListeners();
     }
 
     #render() {
-        // ... (Giữ nguyên logic render của bạn) ...
         const listHtml = this.#data.slice(0, 4).map(rating => {
             const ratingImgName = this.#getRatingImageName(rating.star);
             return `
-                <div class="your-rating-card" data-rating-id="${rating.id}">
+                <div class="your-rating-card" data-id="${rating.id}" style="cursor: pointer;">
                     <div class="main-inf">
                         <div class="date">${rating.date}</div>
                         <div class="star">
@@ -26,11 +29,11 @@ export class UserRatingSection {
                         </div>
                     </div>
                     <div class="comment">
-                    <div class="review-book-ref" style="font-size: 13px; color: #666; margin-bottom: 4px; font-weight: bold;">
-                        <i class="fa-solid fa-book"></i> ${rating.bookTitle}
-                    </div>
+                        <div class="review-book-ref" style="font-size: 13px; color: #666; margin-bottom: 4px; font-weight: bold;">
+                            <i class="fa-solid fa-book"></i> ${rating.bookTitle}
+                        </div>
                         <div class="comment-title">${rating.Title}</div>
-                        <div class="content">"${rating.content}"</div>
+                        <div class="content" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">"${rating.content}"</div>
                     </div>
                 </div>
             `;
@@ -43,6 +46,24 @@ export class UserRatingSection {
                 <div class="all-ratings" style="cursor: pointer;">Tất cả</div>
             </div>
         `;
+
+        // [SỰ KIỆN CLICK]
+        this.#container.querySelectorAll('.your-rating-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.dataset.id;
+                const item = this.#data.find(r => r.id == id);
+                if (item) {
+                    // Chuẩn hóa dữ liệu cho Modal
+                    const modalData = {
+                        ...item,
+                        score: item.star,       // User data dùng 'star'
+                        title: item.Title,      // User data dùng 'Title' hoa
+                        name: "Bạn"             // Tên mặc định
+                    };
+                    this.#modal.show(modalData);
+                }
+            });
+        });
     }
 
     // [NEW] Hàm xử lý sự kiện click
