@@ -18,7 +18,7 @@ body {
 
 .reading-layout {
     display: flex;
-    height: calc(100vh - 90px);
+    height: calc(100vh - 50px);
     padding: 20px 40px;
     gap: 40px;
     box-sizing: border-box;
@@ -74,7 +74,7 @@ body {
 }
 
 .book-info-section { text-align: center; }
-.book-cover-wrapper img { width: 120px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 15px; }
+.book-cover-wrapper img { width: 100px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 15px; }
 .book-title { font-family: 'Afacad', sans-serif; font-size: 1.4rem; margin: 0; font-weight: 700; }
 .book-author { font-size: 0.9rem; color: var(--text-sub); margin-top: 5px; }
 .divider { border: 0; border-top: 1px solid #f0f0f0; width: 100%; margin: 0; }
@@ -88,7 +88,7 @@ body {
 .vol-ctrl { display: flex; align-items: center; gap: 8px; color: var(--text-sub); width: 80px; }
 .vol-slider { width: 100%; height: 3px; accent-color: var(--text-sub); }
 
-.play-btn-large { width: 55px; height: 55px; border-radius: 50%; background-color: var(--bg-page); border: none; font-size: 1.2rem; color: var(--text-main); cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+.play-btn-large { width: 55px; height: 50px; border-radius: 50%; background-color: var(--bg-page); border: none; font-size: 1.2rem; color: var(--text-main); cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
 .play-btn-large:hover { background-color: #eaeaea; transform: scale(1.05); }
 
 /* Speed Dropdown */
