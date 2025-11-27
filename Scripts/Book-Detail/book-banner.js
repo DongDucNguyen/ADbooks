@@ -77,7 +77,10 @@ export class BookBanner {
         // Sự kiện nút Phát
         if (this.#elements.playBtn) {
             this.#elements.playBtn.addEventListener('click', () => {
-                console.log("Phát audio...");
+                const bookId = this.#data.bookId;
+                console.log("Đang xem sách ID:", bookId);
+
+                window.location.href = "/Reading-Page.html";
             });
         }
     }
