@@ -62,7 +62,7 @@ export class FeaturedBooksSection {
         if (!books) return;
 
         const html = books.map(book => `
-            <div class="book-card" data-book-id="${book.id}" onclick="window.location.href='${book.link || '#'}'" style="cursor: pointer;">
+            <div class="book-card jstoBookDetailPage" data-book-id="${book.id}" style="cursor: pointer;">
                 <img src="${book.img}" alt="${book.title}">
                 <p class="title">${book.title}</p>
                 <p class="author">${book.author}</p>

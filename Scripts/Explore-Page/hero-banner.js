@@ -72,11 +72,11 @@ export class HeroSlider {
             this.#contentEl.innerHTML = `
                 <h2>${banner.name}</h2>
                 <p>${banner.description}</p>
-                <a href="${banner.link}" class="read-more-btn" data-book-id="${banner.id}">XEM THÊM &rarr;</a>
+                <a href="#" class="read-more-btn jstoBookDetailPage" data-book-id="${banner.id}">XEM THÊM &rarr;</div> 
             `;
             
             this.#imageEl.innerHTML = `
-                <img src="${banner.img}" class="banner-img" alt="${banner.name}" data-book-id="${banner.id}">
+                <img src="${banner.img}" class="banner-img jstoBookDetailPage" alt="${banner.name}" data-book-id="${banner.id}">
                 <img src="./Images/Background/bg pattern.png" class="banner-bg" alt="pattern">
             `;
 

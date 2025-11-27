@@ -46,7 +46,7 @@ export class TrendingSection {
 
         return `
             <div class="book-card">
-                <div class="book-cover" data-book-id="${book.id}">
+                <div class="book-cover jstoBookDetailPage" data-book-id="${book.id}">
                     <img src="${book.img}" alt="${book.title}">
                 </div>
                 <div class="book-info">
@@ -56,7 +56,7 @@ export class TrendingSection {
                         <img src="./Images/ratings/${ratingImgName}" alt="rating ${book.rating}">
                         (${book.reviewCount})
                     </div>
-                    <a href="#" class="read-more-btn" data-book-id="${book.id}">
+                    <a href="#" class="read-more-btn jstoBookDetailPage" data-book-id="${book.id}">
                         Xem thêm
                     </a>
                 </div>

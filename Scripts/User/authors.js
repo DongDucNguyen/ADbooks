@@ -19,8 +19,7 @@ export class UserAuthorSection {
             const booksHtml = author.books.map(book => 
                 `<a href="${book.link}" 
                     data-book-id="${book.id}" 
-                    class="author-book-link"
-                    onclick="event.stopPropagation();">
+                    class="author-book-link jstoBookDetailPage">
                     ${book.title}
                  </a>`
             ).join(', '); // Ngăn cách bằng dấu phẩy

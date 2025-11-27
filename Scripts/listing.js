@@ -98,7 +98,7 @@ export class ListingPage {
             const variantClass = `element-card-${(index % 3) + 1}`;
 
             return `
-            <div class="listed-element-card ${variantClass}" data-book-id="${book.id}">
+            <div class="listed-element-card ${variantClass} jstoBookDetailPage" data-book-id="${book.id}">
                 <div class="listing-grid">
                     <div class="listed-element-image">
                         <img src="${book.img}" alt="${book.title}" onerror="this.src='../Images/Book-Covers/default.png'">

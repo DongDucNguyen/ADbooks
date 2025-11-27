@@ -112,7 +112,7 @@ export class TopAuthorSlider {
             </a>
 
             <div class="author-books">
-                ${author.books.map(bookImg => `<img src="${bookImg.img}" alt="Book Cover" data-book-id="${bookImg.id}">`).join('')}
+                ${author.books.map(bookImg => `<img src="${bookImg.img}" alt="Book Cover" data-book-id="${bookImg.id}" class="jstoBookDetailPage">`).join('')}
             </div>
         `;
     }

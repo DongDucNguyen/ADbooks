@@ -49,7 +49,7 @@ export class NewBooksSection {
             // --- BƯỚC 2: CẬP NHẬT NỘI DUNG HTML MỚI ---
             this.#featuredContainer.innerHTML = `
                 <div>
-                     <img class="new-book-cover" src="${featuredBook.img}" alt="${featuredBook.title}">
+                     <img class="new-book-cover jstoBookDetailPage" src="${featuredBook.img}" alt="${featuredBook.title}" data-book-id='${featuredBook.id}'>
                 </div>
                 <div class="new-book-info">
                     <h3>${featuredBook.title}</h3>

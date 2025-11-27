@@ -14,9 +14,8 @@ export class UserFavoriteSection {
 
     #render() {
         const listHtml = this.#data.slice(0, 6).map(book => `
-            <div class="favorite-card" 
-                 data-book-id="${book.id}" 
-                 onclick="window.location.href='${book.link}'">
+            <div class="favorite-card jstoBookDetailPage" 
+                 data-book-id="${book.id}">
                  
                 <img src="${book.img}" alt="${book.title}">
                 <div>${book.title}</div>
