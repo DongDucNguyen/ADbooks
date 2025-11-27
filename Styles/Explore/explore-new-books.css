@@ -18,9 +18,9 @@
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     position: absolute;
-    bottom: -20px;
-    left: 23%;
-    transform: translateX(-50%);
+    bottom: 140px;
+    height:10px;
+    left: 30px;
     z-index: 1;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     cursor:pointer;
