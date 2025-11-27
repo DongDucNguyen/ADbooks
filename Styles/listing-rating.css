@@ -1,0 +1,193 @@
+.all-ratings{
+    font-family: "Prata", serif;
+    width:fit-content;
+    justify-self:center;
+    color:#302d25;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.all-ratings:hover{
+    transform: scale(1.1);
+}
+
+.rating-title{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color: #7F7B6B;
+    background-color:white;
+    font-size: 45px;
+    font-weight: 700;
+    margin:0 0;
+    position: relative;
+}
+.rating-star{
+    justify-self: center;
+    font-family: "Prata", serif;
+    color: #58564a;
+    background-color:white;
+    font-size: 25px;
+    font-weight: 700;
+    margin:0 0;
+    position: relative;
+}
+.rating-card{
+    font-family: "Prata", serif;
+    justify-self: center;
+    width: 80%;
+    display: grid;
+    grid-template-columns:200px 1fr;
+    background-color: #EDEADF;
+    margin-bottom: 10px;
+transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.rating-card:hover {
+    transform: scale(1.05);
+    background-color: #dfdbcf;
+}
+.main-inf{
+    border-right: 5px solid #ffffff;
+    align-items: center;
+    padding-top: 10px;
+}
+.name,
+.date,
+.star{
+    justify-self: left;
+    font-size: 18px;
+    font-weight: 500;
+    padding-left:20px;;
+}
+.comment{
+    padding: 10px 0px 0px 10px;
+    width:90%;
+    font-size:16px;
+}
+.comment-title{
+    font-weight: 600;
+}
+.filter-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* --- Styling cho Input Select "Filter" --- */
+        
+        /* * Cần một div bọc ngoài để chứa <select>
+         * và pseudo-element ::after (dấu "v") 
+        */
+        .rating-command{
+            font-family: "Prata", serif;
+            justify-self: center;
+            align-items: center;
+        }
+        .filter-select-wrapper {
+            font-family: "Prata", serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .filter-select {
+            font-family: "Prata", serif;
+            /* Tắt giao diện mặc định của trình duyệt */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            
+            /* Màu sắc */
+            background-color: #e6e4e0;
+            color: #4a4a4a;
+
+            /* Font */
+            font-size: 18px;
+            font-weight: 400;
+            
+            /* Hình dáng */
+            border: none;
+            border-radius: 30px;
+            
+            /* Padding: Thêm padding bên phải để chừa chỗ cho dấu "v" */
+            padding: 6px 50px 6px 24px;
+            
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .filter-select:hover {
+            background-color: #dcdad6;
+        }
+
+        
+        .filter-select-wrapper::after {
+            content: '∨';
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a4a4a;
+            
+            position: absolute;
+            right: 24px; /* Căn phải */
+            top: 50%;
+            
+            /* Căn giữa và làm lùn đi 1 chút */
+            transform: translateY(-50%) scaleY(0.8);
+            
+            /* Quan trọng: Để con trỏ click "xuyên qua" dấu "v" */
+            pointer-events: none; 
+        }
+
+        /* --- Styling cho Button "+" --- */
+        .plus-btn {
+            align-self: center;
+            /* Reset style mặc định của button */
+            border: none;
+            background: none;
+            padding: 0;
+            margin-left:10px;
+            /* Kích thước */
+            width: 20px;
+            height: 20px;
+            
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* Vẽ dấu cộng bằng ::before và ::after */
+        .plus-btn::before,
+        .plus-btn::after {
+            content: '';
+            position: absolute;
+            background-color: #7f7f74;
+            border-radius: 2px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Thanh ngang */
+        .plus-btn::before {
+            width: 100%;
+            height: 5px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        /* Thanh dọc */
+        .plus-btn::after {
+            width: 5px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .plus-btn:hover::before,
+        .plus-btn:hover::after {
+            background-color: #5f5e58;
+        }
+        .listing-title-content{
+            display: grid;
+        }

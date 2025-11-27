@@ -312,3 +312,66 @@ transition: transform 0.3s ease;
         .plus-btn:hover::after {
             background-color: #5f5e58;
         }
+
+/* --- Cấu hình chung cho khung chứa 3 phần này --- */
+.related-infor,
+.about-the-author {
+    font-family: "Prata", serif;
+    
+    /* 1. Độ rộng 60% và Căn giữa trang */
+    width: 80%;
+    margin: 30px auto; /* auto ở trái phải giúp căn giữa */
+    
+    /* Thiết lập vị trí để chứa watermark */
+    position: relative; 
+    overflow: hidden; /* Ẩn phần watermark nếu bị tràn ra ngoài */
+    padding: 20px;
+    background-color: transparent; /* Hoặc màu nền nhẹ nếu muốn */
+}
+
+/* --- Tạo Watermark "Generated with Gemini" --- */
+.related-infor::before,
+.about-the-author::before {
+    content: "Generated with Gemini";
+    
+    /* Định vị watermark nằm chính giữa khung */
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg); /* Xoay nhẹ -15 độ */
+    
+    /* Style cho chữ watermark */
+    font-family: "Prata", serif;
+    font-size: 4rem; /* Chữ lớn */
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.05); /* Màu đen mờ (độ trong suốt thấp) */
+    white-space: nowrap;
+    z-index: 0; /* Nằm dưới nội dung chính */
+    pointer-events: none; /* Cho phép click xuyên qua watermark */
+}
+
+/* --- Định dạng Tiêu đề --- */
+.related-infor-title,
+.about-the-author-title {
+    padding: 20px 0; /* Giảm padding ngang vì khung đã hẹp lại */
+    font-size: 25px;
+    text-align: left; /* Căn giữa tiêu đề cho đẹp */
+    position: relative;
+    z-index: 1; /* Nổi lên trên watermark */
+}
+
+/* --- Định dạng Nội dung chữ --- */
+.related-infor-content,
+.about-the-author-content {
+    /* 2. Căn lề đều 2 bên (Justify) */
+    text-align: justify;
+    
+    /* Đảm bảo nội dung nổi trên watermark */
+    position: relative;
+    z-index: 1;
+    
+    /* Thay height tĩnh bằng min-height để tự co giãn theo nội dung text */
+    min-height: 200px; 
+    height: auto; 
+    line-height: 1.6; /* Tăng khoảng cách dòng cho dễ đọc */
+}

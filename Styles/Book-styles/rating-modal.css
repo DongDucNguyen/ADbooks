@@ -1,0 +1,141 @@
+/* Styles/Book-styles/rating-modal.css */
+@import url('https://fonts.googleapis.com/css2?family=Afacad:wght@400;600;700&family=Lato:wght@400;700&display=swap');
+
+/* --- Modal Overlay --- */
+.rating-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px); /* Hiệu ứng mờ nền */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.rating-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- Modal Box --- */
+.rating-modal-content {
+    background-color: white;
+    width: 500px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    font-family: 'Lato', sans-serif;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.rating-modal-overlay.active .rating-modal-content {
+    transform: scale(1);
+}
+
+.rating-modal-header {
+    text-align: center;
+    font-family: 'Afacad', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+/* --- Star Interaction --- */
+.star-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.star-input-group i {
+    font-size: 32px;
+    color: #ddd; /* Màu xám mặc định */
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Class active để tô vàng sao */
+.star-input-group i.active {
+    color: #FFD700; 
+}
+
+/* --- Form Inputs --- */
+.rating-form-group {
+    margin-bottom: 15px;
+}
+
+.rating-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    background-color: #f9f9f9;
+}
+
+.rating-input:focus {
+    border-color: #333;
+    background-color: #fff;
+}
+
+textarea.rating-input {
+    resize: none;
+    height: 100px;
+}
+
+/* --- Buttons --- */
+.rating-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-btn {
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-cancel {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.btn-submit {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.modal-btn:hover {
+    opacity: 0.8;
+}
+
+/* Nút đóng X */
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}

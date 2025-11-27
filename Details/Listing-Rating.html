@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tên Listing</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Styles/header.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="../Styles/listing.css">
+        <link rel="stylesheet" href="../Styles/listing-rating.css">
+        <link rel="stylesheet" href="../Styles/Book-styles/rating-modal.css">
+        <script src="../Scripts/listing-rating.js" type="module" defer></script>
+    </head>
+    <body style="padding-top: 100px; margin:0 0;">
+        <header class="site-header">
+            <a href="../Explore-Page.html" class="logo"><span>LISTEN</span>ARY</a>
+
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
+
+            <nav class="navigation">
+                <a href="../Explore-Page.html">KHÁM PHÁ</a>
+                <a href="../Author-Page.html">TÁC GIẢ</a>
+                <a href="../Genres-Page.html">THỂ LOẠI</a>
+                <a href="../User-Page.html" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </nav>            
+        </header>
+        <main>
+            <div class="listing-title"> 
+                <div class="rec-decoration"></div>
+                <div class="listing-title-content">
+                    <div class="rating-title">BOOK NAME</div>
+                    <div class="rating-star">★★★★★ - 5.0</div>
+                </div>
+                <div class="rec-decoration"></div>
+            </div>
+            <section class="rating-container">
+                        <div class="rating-command">
+                            <div class="filter-select-wrapper">
+                            <select class="filter-select">
+                                <option value="all" selected>Tất cả</option> 
+                                <option value="option1">★★★★★ (5 sao)</option>
+                                <option value="option2">★★★★ (4 sao)</option>
+                                <option value="option3">★★★ (3 sao)</option>
+                                <option value="option4">★★ (2 sao)</option>
+                                <option value="option5">★ (1 sao)</option>
+                            </select>
+                        </div>
+                        <button class="plus-btn"></button>
+                        </div>
+                        
+                        <div class="rating">
+                        </div>
+                </section>
+        </main>
+    </body>
+</html>
