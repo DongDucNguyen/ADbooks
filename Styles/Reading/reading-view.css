@@ -1,0 +1,296 @@
+:root {
+    --bg-page: #F8F9FA; /* Màu nền tổng thể hơi xám cực nhạt để làm nổi bật trang giấy trắng */
+    --bg-white: #ffffff;
+    --text-main: #333333;
+    --text-sub: #777777;
+    --accent-color: #333; /* Màu đen chủ đạo */
+    --btn-gray: #9E9E9E; /* Màu nút xám */
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+body {
+    background-color: var(--bg-page);
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: var(--text-main);
+    overflow: hidden; /* Chặn scroll body */
+}
+
+/* BỐ CỤC CHÍNH: Chia 70% - 30% */
+.reading-layout {
+    display: flex;
+    height: calc(100vh - 90px); /* Trừ header */
+    padding: 20px 40px;
+    gap: 40px; /* Tăng khoảng cách giữa 2 bên cho thoáng */
+    box-sizing: border-box;
+}
+
+/* --- TRÁI: KHUNG PDF --- */
+.pdf-wrapper {
+    flex: 2.5; /* Chiếm rộng hơn */
+    background-color: var(--bg-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
+    /* Tạo cảm giác như tờ giấy */
+    border: 1px solid #eee;
+}
+
+.pdf-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* --- PHẢI: SIDEBAR --- */
+.control-sidebar {
+    flex: 1; /* Chiếm nhỏ hơn */
+    background-color: var(--bg-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 30px; /* Tăng padding để nội dung ko bị dính lề */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto; /* Cho phép cuộn sidebar nếu màn hình bé */
+    min-width: 320px;
+}
+
+/* 1. Book Info */
+.book-info-section {
+    text-align: center;
+}
+.book-cover-wrapper img {
+    width: 120px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    margin-bottom: 15px;
+}
+.book-title {
+    font-family: 'Afacad', sans-serif;
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 700;
+}
+.book-author {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    margin-top: 5px;
+}
+
+/* Divider line */
+.divider {
+    border: 0;
+    border-top: 1px solid #f0f0f0;
+    width: 100%;
+    margin: 0;
+}
+
+/* 2. Player Section */
+.player-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    font-weight: 600;
+}
+.seek-slider {
+    flex: 1;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+.seek-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: var(--text-main);
+    border-radius: 50%;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.vol-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-sub);
+    width: 80px;
+}
+.vol-slider {
+    width: 100%;
+    height: 3px;
+    accent-color: var(--text-sub);
+}
+
+.play-btn-large {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: var(--bg-page); /* Nền nút play nhạt */
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.play-btn-large:hover {
+    background-color: #eaeaea;
+    transform: scale(1.05);
+}
+
+.speed-ctrl {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--text-sub);
+    cursor: pointer;
+}
+
+/* 3. Action Buttons (Pills) */
+.action-buttons-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+.action-pill {
+    flex: 1;
+    border: none;
+    background-color: var(--btn-gray); /* Màu xám theo hình */
+    color: white;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.action-pill:hover {
+    opacity: 0.9;
+}
+.action-pill.active {
+    background-color: #F4A261; /* Màu cam nâu khi active */
+}
+
+/* 4. Chapter List */
+.chapter-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.section-title {
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+    font-family: 'Afacad', sans-serif;
+}
+.chapter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+/* Scrollbar đẹp cho list */
+.chapter-list::-webkit-scrollbar { width: 4px; }
+.chapter-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+
+.chapter-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+}
+.chapter-item:hover { color: #000; }
+.chapter-item.active { font-weight: bold; color: #000; }
+
+.back-link {
+    text-align: right;
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.back-link:hover { text-decoration: underline; }
+.chapter-section {
+    flex: 1; /* Quan trọng: Lệnh này giúp mục lục chiếm hết khoảng trống còn lại */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ẩn phần thừa nếu có */
+    min-height: 0;    /* Fix lỗi flexbox trên một số trình duyệt để scroll hoạt động */
+    margin-bottom: 0; /* Đảm bảo không có khoảng hở dưới cùng */
+}
+
+.section-title {
+    font-size: 1rem;
+    margin: 0 0 15px 0; /* Tăng khoảng cách title một chút cho thoáng */
+    font-family: 'Afacad', sans-serif;
+    flex-shrink: 0; /* Không cho tiêu đề bị co lại */
+}
+
+/* Danh sách cuộn UL */
+.chapter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    flex: 1; /* Chiếm hết chiều cao của cha (.chapter-section) */
+    
+    /* Tùy chỉnh thanh cuộn cho đẹp */
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+}
+
+.chapter-list::-webkit-scrollbar { 
+    width: 4px; 
+}
+.chapter-list::-webkit-scrollbar-thumb { 
+    background: #ccc; 
+    border-radius: 10px; 
+}
+
+.chapter-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 5px; /* Thêm chút padding ngang */
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.chapter-item:hover { 
+    color: #000; 
+    background-color: #f9f9f9; /* Hiệu ứng hover nhẹ */
+}
+
+.chapter-item.active { 
+    font-weight: bold; 
+    color: #000; 
+}

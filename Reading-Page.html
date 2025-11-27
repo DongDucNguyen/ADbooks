@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading View - Listenary</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="./Styles/header.css">
+    <link rel="stylesheet" href="./Styles/Reading/reading-view.css">
+    
+    <script src="./Scripts/Reading/reading-main.js" type="module" defer></script>
+</head>
+<body style="padding-top:50px;">
+    <header class="site-header">
+        <a href="./Explore-Page.html" class="logo"><span>LISTEN</span>ARY</a>
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search">
+        </div>
+        <nav class="navigation">
+            <a href="./Explore-Page.html">KHÁM PHÁ</a>
+            <a href="./Author-Page.html">TÁC GIẢ</a>
+            <a href="./Genres-Page.html">THỂ LOẠI</a>
+            <a href="./User-Page.html" class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </nav>            
+    </header>
+
+    <main class="reading-layout">
+        <section class="pdf-wrapper">
+            <iframe 
+                src="./1_Ba người thầy vĩ đại.pdf#toolbar=0&navpanes=0&view=FitH" 
+                class="pdf-frame js-pdf-frame" 
+                type="application/pdf">
+            </iframe>
+        </section>
+
+        <aside class="control-sidebar">
+            <div class="book-info-section">
+                <div class="book-cover-wrapper">
+                    <img src="./Images/Book-Covers/book.png" alt="Book Cover">
+                </div>
+                <div class="book-text">
+                    <h3 class="book-title">Người Thầy Vĩ Đại</h3>
+                    <p class="book-author">Robin Sharma</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="player-section">
+                <div class="progress-bar-wrap">
+                    <span class="time-text curr-time">00:59</span>
+                    <input type="range" class="seek-slider" min="0" max="100" value="0">
+                    <span class="time-text total-time">12:05</span>
+                </div>
+
+                <div class="controls-row">
+                    <div class="vol-ctrl">
+                        <i class="fa-solid fa-volume-low"></i>
+                        <input type="range" class="vol-slider" min="0" max="100" value="50">
+                    </div>
+                    
+                    <button class="play-btn-large js-play-btn">
+                        <i class="fa-solid fa-pause"></i>
+                    </button>
+
+                    <div class="speed-ctrl">1.0x</div>
+                </div>
+            </div>
+
+            <div class="action-buttons-row">
+                <button class="action-pill js-fav-btn">Yêu thích</button>
+                <button class="action-pill js-autoscroll-btn">Tự động cuộn</button>
+                <button class="action-pill js-fullscreen-btn">Toàn màn hình</button>
+            </div>
+
+            <hr class="divider">
+
+            <div class="chapter-section">
+                <h4 class="section-title">Mục lục</h4>
+                <ul class="chapter-list js-chapter-list">
+                    </ul>
+            </div>
+            
+            </aside>
+    </main>
+</body>
+</html>

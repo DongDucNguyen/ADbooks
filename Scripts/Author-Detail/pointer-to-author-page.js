@@ -1,4 +1,7 @@
 document.addEventListener('click', function(e) {
+    if (e.target.closest('.jstoBookDetailPage')) {
+        return; 
+    }
     // Tìm phần tử được click (hoặc cha của nó) có class 'jstoBookDetailPage' hay không
     const targetButton = e.target.closest('.jstoAuthorPage');
 

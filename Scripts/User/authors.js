@@ -17,12 +17,12 @@ export class UserAuthorSection {
         const listHtml = this.#data.slice(0, 4).map(author => {
             // Xử lý danh sách sách
             const booksHtml = author.books.map(book => 
+                // BỎ dòng: onclick="event.stopPropagation()"
                 `<a href="${book.link}" 
                     data-book-id="${book.id}" 
-                    class="author-book-link jstoBookDetailPage"
-                    onclick="event.stopPropagation()">
+                    class="author-book-link jstoBookDetailPage"> 
                     ${book.title}
-                 </a>`
+                </a>`
             ).join(', ');
 
             return `
