@@ -10,27 +10,27 @@ export class UserAuthorSection {
 
     init() {
         this.#render();
+        this.#addEventListeners(); // [NEW] Gọi hàm lắng nghe sự kiện
     }
 
     #render() {
         const listHtml = this.#data.slice(0, 4).map(author => {
-            // Xử lý danh sách sách: Biến mỗi sách thành 1 thẻ <a>
-            // Thêm onclick="event.stopPropagation()" để không bị xung đột với click của thẻ cha
+            // Xử lý danh sách sách
             const booksHtml = author.books.map(book => 
                 `<a href="${book.link}" 
                     data-book-id="${book.id}" 
-                    class="author-book-link jstoBookDetailPage">
+                    class="author-book-link jstoBookDetailPage"
+                    onclick="event.stopPropagation()">
                     ${book.title}
                  </a>`
-            ).join(', '); // Ngăn cách bằng dấu phẩy
+            ).join(', ');
 
             return `
-                <div class="your-author-card" 
-                     data-author-id="${author.id}" 
-                     onclick="window.location.href='${author.link}'">
+                <div class="your-author-card jstoAuthorPage" 
+                     data-author-id="${author.id}">
                     
                     <div class="your-author-image" data-author-id="${author.id}">
-                        <img src="${author.img}" alt="${author.name}">
+                        <img src="${author.img}" alt="${author.name}" onerror="this.src='../Images/Authors/default.jpg'">
                     </div>
                     
                     <div class="your-author-infor">
@@ -44,7 +44,22 @@ export class UserAuthorSection {
         this.#container.innerHTML = `
             <div class="your-authors-title">TÁC GIẢ CỦA BẠN</div>
             ${listHtml}
-            <div class="all-authors">Tất cả</div>
+            <div class="all-authors" style="cursor: pointer;">Tất cả</div>
         `;
+    }
+
+    // [NEW] Xử lý sự kiện click "Tất cả"
+    #addEventListeners() {
+        const viewAllBtn = this.#container.querySelector('.all-authors');
+
+        if (viewAllBtn) {
+            viewAllBtn.addEventListener('click', () => {
+                // 1. Lưu tiêu đề mong muốn cho trang Listing Author
+                localStorage.setItem('selectedAuthorCategory', "TÁC GIẢ CỦA BẠN");
+
+                // 2. Điều hướng tới trang danh sách tác giả
+                window.location.href = "./Details/Listing-Authors.html";
+            });
+        }
     }
 }

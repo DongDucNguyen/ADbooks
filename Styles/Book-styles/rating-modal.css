@@ -139,3 +139,56 @@ textarea.rating-input {
     cursor: pointer;
     color: #999;
 }
+/* --- Bổ sung vào Styles/Book-styles/rating-modal.css --- */
+
+/* Style riêng cho modal xem chi tiết */
+.rating-modal-content.view-mode {
+    width: 600px; /* Rộng hơn chút để đọc cho sướng */
+    text-align: left;
+}
+
+.view-rating-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view-user-info .name {
+    font-weight: 700;
+    font-size: 18px;
+    color: #1a1a1a;
+}
+
+.view-user-info .date {
+    font-size: 13px;
+    color: #888;
+}
+
+.view-rating-star img {
+    height: 25px; /* Sao to hơn */
+}
+
+.view-rating-body {
+    max-height: 400px;
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+    padding-right: 10px;
+}
+
+.view-rating-title {
+    font-family: 'Afacad', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.view-rating-content {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    white-space: pre-wrap; /* Giữ nguyên xuống dòng của người viết */
+}

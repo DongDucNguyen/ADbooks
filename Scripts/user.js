@@ -66,6 +66,7 @@ const ratingData = [
         bookTitle: "Đồi Gió Hú", 
         date: "24/11/2025", 
         star: 5.0, // Sẽ map ra rating-50.png
+        Title: "Great",
         content: "Một tuyệt tác! Câu chuyện tình yêu quá mãnh liệt." 
     },
     { 
@@ -73,6 +74,7 @@ const ratingData = [
         bookTitle: "Nhà Giả Kim", 
         date: "20/11/2025", 
         star: 4.5, // Sẽ map ra rating-45.png
+        Title: "Great",
         content: "Sách nhẹ nhàng, nhiều bài học triết lý." 
     },
     { 
@@ -80,6 +82,7 @@ const ratingData = [
         bookTitle: "Harry Potter", 
         date: "15/11/2025", 
         star: 5.0, // Sẽ map ra rating-50.png
+        Title: "Great",
         content: "Tuổi thơ ùa về. Đọc lại vẫn thấy hay." 
     },
     { 
@@ -87,6 +90,7 @@ const ratingData = [
         bookTitle: "Mắt Biếc", 
         date: "10/11/2025", 
         star: 4.0, // Sẽ map ra rating-40.png
+        Title: "Great",
         content: "Buồn quá. Ngạn ơi là Ngạn." 
     }
 ];

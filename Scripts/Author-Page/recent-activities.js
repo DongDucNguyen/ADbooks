@@ -31,7 +31,7 @@ export class RecentActivitiesSection {
 
             return `
                 <div class="author-card ${positionClass}">
-                    <div class="author-image" data-author-id="${author.id}">
+                    <div class="author-image jstoAuthorPage" data-author-id="${author.id}">
                         <img src="${author.img}" alt="${author.name}">
                     </div> 
                     <div class="author-box">

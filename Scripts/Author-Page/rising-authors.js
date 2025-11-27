@@ -24,7 +24,7 @@ export class RisingAuthorsSection {
 
         const html = this.#authors.map(author => {
             return `
-                <div class="rising-author-card" data-id="${author.id}" onclick="window.location.href='${author.link}'"">
+                <div class="rising-author-card jstoAuthorPage" data-id="${author.id}" onclick="window.location.href='${author.link}'"">
                     <div class="rising-card-header">${author.name}</div>
                     <div class="rising-card-body">
                         <img src="${author.img}" alt="${author.name}">

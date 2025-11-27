@@ -10,13 +10,13 @@ export class UserRatingSection {
 
     init() {
         this.#render();
+        this.#addEventListeners(); // [NEW] Gọi hàm gắn sự kiện sau khi render
     }
 
     #render() {
+        // ... (Giữ nguyên logic render của bạn) ...
         const listHtml = this.#data.slice(0, 4).map(rating => {
-            // 1. Lấy tên file ảnh dựa trên điểm số (ví dụ: 4.5 -> rating-45.png)
             const ratingImgName = this.#getRatingImageName(rating.star);
-            
             return `
                 <div class="your-rating-card" data-rating-id="${rating.id}">
                     <div class="main-inf">
@@ -26,7 +26,10 @@ export class UserRatingSection {
                         </div>
                     </div>
                     <div class="comment">
-                        <div class="comment-title">${rating.bookTitle}</div>
+                    <div class="review-book-ref" style="font-size: 13px; color: #666; margin-bottom: 4px; font-weight: bold;">
+                        <i class="fa-solid fa-book"></i> ${rating.bookTitle}
+                    </div>
+                        <div class="comment-title">${rating.Title}</div>
                         <div class="content">"${rating.content}"</div>
                     </div>
                 </div>
@@ -37,23 +40,31 @@ export class UserRatingSection {
             <div class="rating-title">ĐÁNH GIÁ CỦA BẠN</div>
             <div class="your-rating">
                 ${listHtml}
-                <div class="all-ratings">Tất cả</div>
+                <div class="all-ratings" style="cursor: pointer;">Tất cả</div>
             </div>
         `;
     }
 
-    // Hàm chuyển đổi điểm số thành tên file ảnh (Logic chuẩn theo folder ảnh của bạn)
-    #getRatingImageName(score) {
-        // Nhân 10 để lấy số nguyên (4.5 -> 45)
-        let scoreInt = Math.round(score * 10); 
+    // [NEW] Hàm xử lý sự kiện click
+    #addEventListeners() {
+        const viewAllBtn = this.#container.querySelector('.all-ratings');
         
-        // Làm tròn về bội số của 5 gần nhất (đề phòng dữ liệu lẻ như 4.3 -> 45)
-        scoreInt = Math.round(scoreInt / 5) * 5;
+        if (viewAllBtn) {
+            viewAllBtn.addEventListener('click', () => {
+                // 1. Lưu Title vào LocalStorage
+                localStorage.setItem('selectedAuthorCategory', "ĐÁNH GIÁ CỦA BẠN");
+                
+                // 2. Điều hướng
+                // Lưu ý: Kiểm tra lại đường dẫn "../Details" hay "./Details" tùy vào file HTML của bạn nằm ở đâu
+                window.location.href = "./Details/Listing-Author-Rating.html"; 
+            });
+        }
+    }
 
-        // Xử lý trường hợp 0
+    #getRatingImageName(score) {
+        let scoreInt = Math.round(score * 10); 
+        scoreInt = Math.round(scoreInt / 5) * 5;
         if (scoreInt === 0) return 'rating-0.png';
-        
-        // Thêm số 0 đằng trước nếu nhỏ hơn 10 (ví dụ 5 -> 05)
         const scoreStr = scoreInt < 10 ? `0${scoreInt}` : `${scoreInt}`;
         return `rating-${scoreStr}.png`;
     }

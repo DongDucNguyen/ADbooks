@@ -107,7 +107,7 @@ export class TopAuthorSlider {
                 <div class="desc-lines">${author.description}</div>
             </div>
 
-            <a class="author-photo" href="${author.link}">
+            <a class="author-photo jstoAuthorPage" href="${author.link}">
                 <img src="${author.img}" alt="${author.name}">
             </a>
 

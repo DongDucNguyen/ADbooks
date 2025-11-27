@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Danh Sách Tác Giả</title>
+        <title>Đánh giá Tác Giả</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../Styles/header.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="../Styles/listing.css">
-        <link rel="stylesheet" href="../Styles/listing-author.css">
+        <link rel="stylesheet" href="../Styles/listing-rating.css">
         
-        <script src="../Scripts/listing-authors.js" type="module" defer></script>
-        <script src="../Scripts/Author-Detail/pointer-to-author-page.js" type="module" defer></script>
+        <script src="../Scripts/listing-author-rating.js" type="module" defer></script>
     </head>
     <body style="padding-top: 100px; margin:0 0;">
         <header class="site-header">
@@ -31,14 +30,30 @@
         <main>
             <div class="listing-title"> 
                 <div class="rec-decoration"></div>
-                <div class="listing-title-content">Đang tải...</div>
+                <div class="listing-title-content">
+                    <div class="rating-title">Loading...</div>
+                    <div class="rating-star"></div>
+                </div>
                 <div class="rec-decoration"></div>
             </div>
-
-            <div class="listing-container">
+            <section class="rating-container">
+                <div class="rating-command">
+                    <div class="filter-select-wrapper">
+                        <select class="filter-select">
+                            <option value="all" selected>Tất cả</option> 
+                            <option value="option1">★★★★★ (5 sao)</option>
+                            <option value="option2">★★★★ (4 sao)</option>
+                            <option value="option3">★★★ (3 sao)</option>
+                            <option value="option4">★★ (2 sao)</option>
+                            <option value="option5">★ (1 sao)</option>
+                        </select>
+                    </div>
+                    <button class="plus-btn" style="display: none;"></button>
                 </div>
-
-            <div class="line"></div>
+                
+                <div class="rating">
+                    </div>
+            </section>
         </main>
     </body>
 </html>

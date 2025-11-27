@@ -67,7 +67,7 @@ export class ListingPage {
     #updateTitle() {
         // Lấy dữ liệu từ localStorage (được lưu bên genres.js)
         const savedGenre = localStorage.getItem('selectedGenre');
-        if (savedGenre === "TOP TRENDING") {
+        if (savedGenre === "TOP TRENDING" || savedGenre === "YÊU THÍCH") {
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.href = "../Styles/pink-color.css";

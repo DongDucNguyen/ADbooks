@@ -77,7 +77,7 @@ export class ListingAuthorsPage {
             link.href = "../Styles/pink-color.css";
             document.head.appendChild(link);
         }
-        else if (savedTitle === "HOẠT ĐỘNG GẦN ĐÂY") {
+        else if (savedTitle === "HOẠT ĐỘNG GẦN ĐÂY" || savedTitle === "TÁC GIẢ CỦA BẠN") {
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.href = "../Styles/blue-color.css";
@@ -100,7 +100,7 @@ export class ListingAuthorsPage {
             const variantClass = `element-card-${(index % 3) + 1}`;
 
             return `
-            <div class="listed-element-card ${variantClass}" data-author-id="${author.id}">
+            <div class="listed-element-card ${variantClass} jstoAuthorPage" data-author-id="${author.id}">
                 <div class="listing-grid">
                     <div class="listed-element-image">
                         <img src="${author.img}" alt="${author.name}" onerror="this.src='../Images/Authors/default.jpg'">
