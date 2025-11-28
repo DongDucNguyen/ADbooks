@@ -14,7 +14,6 @@ export class RegisterForm {
             birthday: this.#form.querySelector('#birthday'),
             email: this.#form.querySelector('#email'),
             phoneNumber: this.#form.querySelector('#phoneNumber'),
-            address: this.#form.querySelector('#address'), // thêm address
             password: this.#form.querySelector('#password'),
             rePassword: this.#form.querySelector('#confirm-password')
         };
@@ -49,7 +48,6 @@ export class RegisterForm {
     async #signUp() {
         const f = this.#fields;
 
-        // Object user đúng với JSON Server, có address
         const user = {
             firstname: f.firstName.value.trim(),
             lastname: f.lastName.value.trim(),
@@ -57,12 +55,11 @@ export class RegisterForm {
             birthday: f.birthday.value.trim(),
             email: f.email.value.trim(),
             phoneNumber: f.phoneNumber.value.trim(),
-            encryptedPassword: f.password.value.trim(),
-            createdAt: new Date().toISOString()
+            password: f.password.value.trim()
         };
 
         try {
-            const response = await fetch("http://localhost:3000/user", {
+            const response = await fetch("http://localhost:8080/api/auth/signup", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -87,6 +84,8 @@ export class RegisterForm {
             alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
         }
     }
+
+
 }
 
 // Khởi tạo form
