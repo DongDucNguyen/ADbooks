@@ -11,6 +11,37 @@ export class BookmarkSection {
         }
     }
 
+    async #fetchBookmarks() {
+        try {
+            const token = localStorage.getItem("token"); // Lấy JWT từ localStorage
+            const response = await fetch(`http://localhost:8080/api/v1/user/bookmarks?page=${page}&size=${size}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            // Lấy content từ page response
+            this.#data = data.content.map(item => ({
+                id: item.bookId,
+                title: item.title,
+                author: item.author || 'Unknown', // nếu có field author
+                img: item.img || '../Images/Book-Covers/default.png',
+                progress: item.progress + '%',
+                lastView: item.lastView || ''
+            }));
+
+            this.init();
+        } catch (err) {
+            console.error("Failed to fetch bookmarks:", err);
+        }
+    }
+
     init() {
         this.#render();
     }
