@@ -20,9 +20,8 @@ const BOOK_DATA_SOURCE = {
     resources: {
         pdfUrl: "./1_Ba người thầy vĩ đại.pdf",
         audioId: "main-audio",
-        // Thêm &cache=123 vào cuối để ép trình duyệt tải mới
-// Thêm đoạn đuôi này vào
-audioMp3Url: "https://crimson-voice-0636.dongducnguyen05.workers.dev/?fileId=13yM_JdlEJjaHvtPMOZsZtbW4tdSKjf-E&version=fix_lan_cuoi"
+        // Thêm đoạn đuôi này vào
+    audioMp3Url: "https://crimson-voice-0636.dongducnguyen05.workers.dev/?fileId=13yM_JdlEJjaHvtPMOZsZtbW4tdSKjf-E&version=fix_lan_cuoi"
     },
     chapters: [
         { title: "Mở đầu", duration: 310 },         
@@ -46,11 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
     pdfViewer.loadPdf(BOOK_DATA_SOURCE.resources.pdfUrl); 
 
     // 3. Khởi tạo Player (Thanh nhạc)
-    new ReadingPlayer(BOOK_DATA_SOURCE.resources.audioId, BOOK_DATA_SOURCE.resources.audioUrl);
+    new ReadingPlayer(BOOK_DATA_SOURCE.resources.audioId, BOOK_DATA_SOURCE.resources.audioMp3Url);
 
     // 4. Khởi tạo Chapter List (Danh sách chương)
-    // Phải gọi đúng tên .audioMp3Url mà bạn đã khai báo ở trên
-    new ReadingPlayer(BOOK_DATA_SOURCE.resources.audioId, BOOK_DATA_SOURCE.resources.audioMp3Url);
+    new ReadingChapters(BOOK_DATA_SOURCE.chapters, BOOK_DATA_SOURCE.resources.audioId);
 
     // 5. Khởi tạo Controls (Các nút chức năng)
     new ReadingControls(
