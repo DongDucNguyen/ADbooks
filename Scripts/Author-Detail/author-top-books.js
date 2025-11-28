@@ -1,35 +1,31 @@
 export class AuthorTopBooks {
-    #books;
-    #container;
-    #authorNameEl;
-
-    constructor(data, authorName) {
-        this.#books = data;
-        this.#container = document.querySelector('.top-books-grid');
-        this.#authorNameEl = document.querySelector('.top-books-author-name');
-        
-        // Cập nhật tên tác giả ở header section này
-        if (this.#authorNameEl) {
-            this.#authorNameEl.textContent = authorName;
-        }
-
-        if (this.#container) {
-            this.init();
-        }
+    constructor(books, authorName) {
+        this.books = books;
+        this.authorName = authorName;
     }
 
     init() {
-        this.#render();
-    }
+        // Cập nhật tên tác giả ở tiêu đề section
+        const nameEl = document.querySelector('.top-books-author-name');
+        if (nameEl) nameEl.textContent = this.authorName;
 
-    #render() {
-        if (!this.#books || this.#books.length === 0) return;
+        // Render danh sách sách
+        const grid = document.querySelector('.top-books-grid');
+        if (grid) {
+            if (this.books.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">Chưa có sách nào.</p>';
+                return;
+            }
 
-        this.#container.innerHTML = this.#books.map(book => `
-            <div class="top-book-card jstoBookDetailPage" data-book-id="${book.id}" style="cursor: pointer;">
-                <img src="${book.img}" alt="${book.title}" onerror="this.src='../Images/Book-Covers/default.png'">
-                <div class="book-name">${book.title}</div>
-            </div>
-        `).join('');
+            grid.innerHTML = this.books.map(book => `
+                <div class="top-book-card" 
+                     onclick="window.location.href='book.html?id=${book.id}'" 
+                     style="cursor: pointer;">
+                    <img src="${book.img}" alt="${book.title}" 
+                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+                    <div class="book-name" style="margin-top: 10px; font-weight: 500;">${book.title}</div>
+                </div>
+            `).join('');
+        }
     }
 }

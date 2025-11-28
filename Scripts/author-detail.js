@@ -1,90 +1,93 @@
+import { authorService } from './API/author-service.js';
 import { AuthorIntro } from './Author-Detail/author-intro.js';
 import { AuthorTopBooks } from './Author-Detail/author-top-books.js';
 import { AuthorInfo } from './Author-Detail/author-info.js';
 import { AuthorRatingSection } from './Author-Detail/author-rating.js';
 
-// --- MOCK DATA ---
-const MOCK_AUTHOR_DATA = {
-    id: "a1",
-    name: "Anthony Doerr",
-    dob: "27/10/1973",
-    img: "../Images/Authors/a1.jpg",
-    shortDesc: `Là một tác giả tiểu thuyết và truyện ngắn người Mỹ. Ông được công chúng biết đến rộng rãi với cuốn tiểu thuyết " All the Light We Cannot See" (Ánh Sáng Chúng Ta Không Thể Thấy) xuất bản năm 2014 , tác phẩm đã giành giải Pulitzer cho tiểu thuyết hư cấu .`,
-    
-    topBooks: [
-        { id: "b1", title: "All The Light We Cannot See", img: "../Images/Book-Covers/b1.png" },
-        { id: "b2", title: "Cloud Cuckoo Land", img: "../Images/Book-Covers/b2.png" },
-        { id: "b3", title: "About Grace", img: "../Images/Book-Covers/b3.png" },
-        { id: "b4", title: "Four Seasons in Rome", img: "../Images/Book-Covers/b4.png" },
-        { id: "b5", title: "The Shell Collector", img: "../Images/Book-Covers/b5.png" },
-        { id: "b6", title: "Memory Wall", img: "../Images/Book-Covers/b6.png" }
-    ],
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Lấy ID từ URL (ví dụ: author.html?id=1)
+    const urlParams = new URLSearchParams(window.location.search);
+    const authorId = urlParams.get('id');
 
-    fullDescription: `
-        <p>Anthony Doerr sinh ra và lớn lên ở Cleveland, Ohio...</p>
-    `,
-    relatedInfo: `
-        <p>Quốc tịch: Mỹ</p>
-        <p>Giải thưởng: Pulitzer Prize (2015)</p>
-    `,
+    if (!authorId) {
+        alert("Không tìm thấy ID tác giả!");
+        window.location.href = '../Author-Page.html';
+        return;
+    }
 
-    // [UPDATE] Thêm ID và Book Title vào reviews
-    reviews: [
-        {
-            id: 201, // ID riêng
-            bookTitle: "All The Light We Cannot See", // Tên sách được review
-            name: "Độc giả A",
-            date: "22/11/2024",
-            score: 5.0,
-            title: "Tác giả yêu thích",
-            content: "Văn phong của Anthony Doerr thực sự rất đẹp, giàu hình ảnh và cảm xúc."
-        },
-        {
-            id: 202,
-            bookTitle: "Cloud Cuckoo Land",
-            name: "Độc giả B",
-            date: "10/11/2024",
-            score: 4.5,
-            title: "Tuyệt vời",
-            content: "Cốt truyện đan xen quá khứ và hiện tại rất khéo léo."
-        },
-        {
-            id: 203,
-            bookTitle: "About Grace",
-            name: "Độc giả C",
-            date: "05/11/2024",
-            score: 3.0,
-            title: "Hơi khó đọc",
-            content: "Mạch truyện chậm, cần kiên nhẫn."
-        },
-        {
-            id: 204,
-            bookTitle: "All The Light We Cannot See",
-            name: "Độc giả D",
-            date: "01/11/2024",
-            score: 5.0,
-            title: "Ánh sáng vô hình",
-            content: "Cuốn sách hay nhất mình từng đọc trong năm nay."
-        },
-        {
-            id: 205,
-            bookTitle: "Memory Wall",
-            name: "Độc giả E",
-            date: "20/10/2024",
-            score: 2.0,
-            title: "Không hợp gu",
-            content: "Quá nhiều miêu tả, ít đối thoại."
+    try {
+        // 2. Gọi API lấy chi tiết
+        const author = await authorService.getAuthorById(authorId);
+
+        // 3. Map dữ liệu API sang cấu trúc UI
+        const authorData = {
+            id: author.id,
+            name: author.fullName,
+            dob: formatDate(author.birthday),
+            img: getSafeImageUrl(author.imageUrl),
+            
+            // Xử lý mô tả
+            shortDesc: author.description || "Đang cập nhật thông tin...",
+            fullDescription: `<p>${author.description || "Chưa có tiểu sử chi tiết."}</p>`,
+            
+            // Thông tin liên quan
+            relatedInfo: `
+                <p><strong>Tổng số sách:</strong> ${author.totalBooks || 0}</p>
+                <p><strong>Ngày sinh:</strong> ${formatDate(author.birthday)}</p>
+            `,
+
+            // Map danh sách sách (API: thumbnailUrl -> UI: img)
+            topBooks: (author.books || []).map(book => ({
+                id: book.id,
+                title: book.name,
+                img: getSafeImageUrl(book.thumbnailUrl, true)
+            })),
+
+            // Mock Reviews (API chưa có, tạo giả để không lỗi giao diện)
+            reviews: [
+                {
+                    id: 1,
+                    name: "Hệ thống",
+                    date: "Hôm nay",
+                    score: 5.0,
+                    title: "Thông báo",
+                    content: "Hiện tại chưa có đánh giá nào cho tác giả này.",
+                    bookTitle: "N/A"
+                }
+            ]
+        };
+
+        // 4. Khởi tạo UI
+        new AuthorIntro(authorData);
+        new AuthorTopBooks(authorData.topBooks, authorData.name);
+        new AuthorInfo(authorData);
+        new AuthorRatingSection(authorData.reviews);
+
+        // Event Listener cho nút xem tất cả đánh giá
+        const ratingBtn = document.querySelector('.all-ratings');
+        if(ratingBtn) {
+            ratingBtn.addEventListener('click', () => {
+                localStorage.setItem('selectedAuthorCategory', authorData.name);
+            });
         }
-    ]
-};
 
-// --- MAIN EXECUTION ---
-document.addEventListener('DOMContentLoaded', () => {
-    new AuthorIntro(MOCK_AUTHOR_DATA);
-    new AuthorTopBooks(MOCK_AUTHOR_DATA.topBooks, MOCK_AUTHOR_DATA.name);
-    new AuthorInfo(MOCK_AUTHOR_DATA);
-    new AuthorRatingSection(MOCK_AUTHOR_DATA.reviews);
-    document.querySelector('.all-ratings').addEventListener('click', function() {
-        localStorage.setItem('selectedAuthorCategory', MOCK_AUTHOR_DATA.name);
-    });
+    } catch (error) {
+        console.error("Lỗi tải chi tiết tác giả:", error);
+        document.querySelector('main').innerHTML = `<div style="text-align:center; padding: 50px; color: red;">Lỗi: ${error.message}</div>`;
+    }
 });
+
+// --- Helper Functions ---
+function getSafeImageUrl(url, isBook = false) {
+    // Lưu ý: Đường dẫn lùi 1 cấp (..) vì đang ở trong thư mục Details
+    if (!url || url === "string" || url.trim() === "") {
+        return isBook ? '../Images/Book-Covers/default-book.png' : '../Images/Authors/default-author.png';
+    }
+    return url;
+}
+
+function formatDate(dateString) {
+    if (!dateString) return "N/A";
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+}

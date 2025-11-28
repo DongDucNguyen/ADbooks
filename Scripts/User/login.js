@@ -1,78 +1,48 @@
-export class LoginForm {
-    #form;
-    #emailInput;
-    #passwordInput;
+// 1. Import service
+import { authService } from '../API/auth-service.js';
 
-    constructor(formSelector) {
-        this.#form = document.querySelector(formSelector);
-        if (!this.#form) return;
-
-        this.#emailInput = this.#form.querySelector("#email");
-        this.#passwordInput = this.#form.querySelector("#password");
-
-        this.#init();
-    }
-
-    #init() {
-        this.#form.addEventListener("submit", (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('formLogin');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            this.#submit();
+
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const errorMessageElement = document.getElementById('error-message');
+            const submitBtn = loginForm.querySelector('button'); // Lấy nút button
+            
+            // 1. Khai báo biến này ở ngoài try để finally dùng được
+            const originalBtnText = submitBtn.innerText; 
+
+            const email = emailInput.value; // Đảm bảo biến này chứa email (vd: test@gmail.com)
+            const password = passwordInput.value;
+
+            try {
+                submitBtn.innerText = 'Đang xử lý...';
+                submitBtn.disabled = true;
+                if (errorMessageElement) errorMessageElement.style.display = 'none';
+
+                // Gọi hàm login với email
+                await authService.login(email, password);
+
+                window.location.href = 'index.html';
+
+            } catch (error) {
+                console.error('Login Error:', error); // Log rõ lỗi ra
+                if (errorMessageElement) {
+                    // Hiển thị message lỗi cụ thể từ server nếu có
+                    errorMessageElement.innerText = error.message || 'Email hoặc mật khẩu không đúng!';
+                    errorMessageElement.style.display = 'block';
+                } else {
+                    alert('Đăng nhập thất bại: ' + (error.message || 'Lỗi không xác định'));
+                }
+            } finally {
+                // 2. Giờ thì biến này đã tồn tại
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }
         });
     }
-
-    async #submit() {
-        const email = this.#emailInput.value.trim().toLowerCase();
-        const password = this.#passwordInput.value;
-
-        if (!email || !password) {
-            alert("Email và mật khẩu không được để trống!");
-            return;
-        }
-
-        try {
-            // 1️⃣ GET user chỉ theo email
-            const response = await fetch(
-                `http://localhost:3000/user?email=${encodeURIComponent(email)}`
-            );
-
-            if (!response.ok) {
-                alert("Không thể kết nối tới server!");
-                return;
-            }
-
-            const data = await response.json();
-
-            if (data.length === 0) {
-                alert("Tài khoản không tồn tại!");
-                return;
-            }
-
-            const user = data[0];
-
-            // 2️⃣ So sánh mật khẩu trong JS
-            if (user.encryptedPassword !== password) {
-                alert("Mật khẩu không đúng!");
-                return;
-            }
-
-            // 3️⃣ Lưu trạng thái đăng nhập localStorage
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userLogin", JSON.stringify(user));
-
-            // 4️⃣ Thông báo và chuyển hướng
-            alert("Đăng nhập thành công!");
-            setTimeout(() => {
-                window.location.href = "/Explore-Page.html";
-            }, 100);
-
-            sessionStorage.setItem("sessionActive", "true");
-
-        } catch (error) {
-            console.error("Lỗi khi đăng nhập:", error);
-            alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
-        }
-    }
-}
-
-// Khởi tạo form
-new LoginForm("#formLogin");
+});

@@ -56,7 +56,7 @@ export class SettingsManager {
                     () => {
                         console.log('Đã xóa tài khoản');
                         alert('Tài khoản đã bị xóa. Tạm biệt!');
-                        window.location.href = './Explore-Page.html';
+                        window.location.href = './index.html';
                     }
                 );
                 break;

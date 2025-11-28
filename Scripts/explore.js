@@ -1,145 +1,92 @@
-import {HeroSlider} from "./Explore-Page/hero-banner.js";
+import { HeroSlider } from './Explore-Page/hero-banner.js';
 import { TrendingSection } from './Explore-Page/top-trending.js';
-import { NewBooksSection } from './Explore-Page/new-books.js'; // <--- Import mới
-const banners = [
-    {
-        id: "1",
-        name: 'Life Of The Wild',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet. Libero ipsum enim pharetra hac. Urna commodo, lectus ut magna sed aliquet. Amet, conubia sed.',
-        link: '#',
-        img: './Images/Book-Covers/book.png'
-    },
-    {
-        id: "2",
-        name: 'Journey Through Time',
-        description: 'Aliquam erat volutpat. Duis ac orci vitae libero imperdiet varius. Pellentesque habitant morbi tristique senectus et netus.',
-        link: '#',
-        img: './Images/Book-Covers/b2.png'
-    },
-    {
-        id: "3",
-        name: 'Mystery Of The Ocean',
-        description: 'Suspendisse potenti. Quisque sit amet accumsan tortor. Proin vel nulla vitae arcu convallis placerat.',
-        link: '#',
-        img: './Images/Book-Covers/b3.png'
-    }
-];
+import { NewBooksSection } from './Explore-Page/new-books.js';
 
-const trendingData = [
+// Cấu hình API (Đã xác nhận chạy ở port 8080 qua Postman)
+const API_BASE_URL = 'http://localhost:8080/api/v1';
+
+// Dữ liệu cứng cho Banner (Giữ nguyên)
+const STATIC_BANNERS = [
     {
         id: 1,
-        title: "All The Light We Cannot See",
-        author: "Anthony Doerr",
+        name: "Dune",
+        description: "Hành trình của Paul Atreides...",
         img: "./Images/Book-Covers/b1.png",
-        rating: 5.0, // Sẽ map thành rating-50.png
-        reviewCount: "1,000,000"
+        link: "./Details/book.html?id=1"
     },
     {
         id: 2,
-        title: "Rich People Problems",
-        author: "Kevin Kwan",
+        name: "Nhà Giả Kim",
+        description: "Tiểu thuyết kể về hành trình đi tìm kho báu của chàng chăn cừu Santiago.",
         img: "./Images/Book-Covers/b2.png",
-        rating: 4.5, // Sẽ map thành rating-45.png
-        reviewCount: "850,000"
+        link: "./Details/book.html?id=2"
     },
     {
         id: 3,
-        title: "Becoming",
-        author: "Michelle Obama",
+        name: "Đắc Nhân Tâm",
+        description: "Cuốn sách nổi tiếng nhất về nghệ thuật giao tiếp và thu phục lòng người.",
         img: "./Images/Book-Covers/b3.png",
-        rating: 4.8, // Làm tròn map thành rating-50.png hoặc logic tùy chỉnh
-        reviewCount: "2,000,000"
-    },
-    {
-        id: 4,
-        title: "Where The Crawdads Sing",
-        author: "Delia Owens",
-        img: "./Images/Book-Covers/b4.png",
-        rating: 4.0, // Sẽ map thành rating-40.png
-        reviewCount: "1,500,000"
-    },
-    {
-        id: 5,
-        title: "Crazy Rich Asians",
-        author: "Kevin Kwan",
-        img: "./Images/Book-Covers/b5.png",
-        rating: 3.5, // Sẽ map thành rating-35.png
-        reviewCount: "900,000"
-    },
-    {
-        id: 6,
-        title: "Konspirasi Alam Semesta",
-        author: "Fiersa Besari",
-        img: "./Images/Book-Covers/b6.png",
-        rating: 4.5, // Sẽ map thành rating-45.png
-        reviewCount: "120,000"
+        link: "./Details/book.html?id=3"
     }
 ];
 
-const newBooksData = [
-    {
-        id: 101,
-        title: "All The Light We Cannot See",
-        author: "Anthony Doerr",
-        img: "./Images/Book-Covers/b1.png",
-        rating: 5.0,
-        reviewCount: "1,000,000",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae enim eget, tempus."
-    },
-    {
-        id: 102,
-        title: "Journey Through Time",
-        author: "H.G. Wells",
-        img: "./Images/Book-Covers/b2.png",
-        rating: 4.5,
-        reviewCount: "500,000",
-        description: "A breathtaking journey through the ages, exploring the mysteries of time travel."
-    },
-    {
-        id: 103,
-        title: "Mystery Of The Ocean",
-        author: "Jules Verne",
-        img: "./Images/Book-Covers/b3.png",
-        rating: 4.8,
-        reviewCount: "800,000",
-        description: "Dive deep into the unknown depths of the ocean where strange creatures lurk."
-    },
-    {
-        id: 104,
-        title: "Where The Crawdads Sing",
-        author: "Delia Owens",
-        img: "./Images/Book-Covers/b4.png",
-        rating: 4.7,
-        reviewCount: "1,200,000",
-        description: "A painfuly beautiful first novel that is at once a murder mystery and a coming-of-age narrative."
-    },
-    {
-        id: 105,
-        title: "Crazy Rich Asians",
-        author: "Kevin Kwan",
-        img: "./Images/Book-Covers/b5.png",
-        rating: 4.2,
-        reviewCount: "950,000",
-        description: "The outrageously funny debut novel about three super-rich, pedigreed Chinese families."
-    },
-    {
-        id: 106,
-        title: "Konspirasi Alam Semesta",
-        author: "Fiersa Besari",
-        img: "./Images/Book-Covers/b6.png",
-        rating: 4.6,
-        reviewCount: "300,000",
-        description: "A touching story about destiny, love, and the conspiracy of the universe."
+// Hàm gọi API chung
+async function fetchFromAPI(endpoint) {
+    try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`);
+        if (!response.ok) {
+            console.warn(`API ${endpoint} lỗi: ${response.status}`);
+            return [];
+        }
+        const data = await response.json();
+        // Spring Boot trả về Page, dữ liệu nằm trong 'content'
+        return data.content || []; 
+    } catch (error) {
+        console.error(`Lỗi kết nối API ${endpoint}:`, error);
+        return [];
     }
-];
-document.addEventListener('DOMContentLoaded', () => {
-    const slider = new HeroSlider(banners);
-    const trendingSection = new TrendingSection(trendingData);
-    const newBooksSection = new NewBooksSection(newBooksData);
-    document.querySelector('.Top-Trending').addEventListener('click', function() {
-        localStorage.setItem('selectedGenre', "TOP TRENDING");
-    });
-    document.querySelector('.background-text').addEventListener('click', function() {
-        localStorage.setItem('selectedGenre', "SÁCH MỚI");
-    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Hiển thị Banner tĩnh
+    new HeroSlider(STATIC_BANNERS);
+
+    console.log('Đang tải dữ liệu từ Server...');
+    
+    // 2. Gọi API
+    const [trendingBooks, newBooks] = await Promise.all([
+        // TRENDING: Sắp xếp theo viewCount giảm dần (desc) để lấy sách xem nhiều nhất
+        fetchFromAPI('/books?page=0&size=6&sort=viewCount,desc'),
+        
+        // NEW BOOKS: Sắp xếp theo ngày phát hành hoặc ID mới nhất
+        fetchFromAPI('/books?page=0&size=6&sort=id,desc')
+    ]);
+
+    // 3. Hàm Map dữ liệu (Cập nhật theo JSON Postman)
+    const mapBookData = (book) => {
+        // Lấy tên tác giả đầu tiên từ mảng authors
+        const authorName = (book.authors && book.authors.length > 0) 
+            ? book.authors[0].fullName 
+            : 'Unknown Author';
+
+        return {
+            id: book.id,
+            title: book.name, // JSON trả về 'name', không phải 'title'
+            author: authorName,
+            img: book.thumbnailUrl || './Images/Book-Covers/book.png', // JSON trả về 'thumbnailUrl'
+            rating: book.averageRating || 0,
+            reviewCount: book.totalReviews || 0,
+            description: book.description || '',
+            link: `./Details/book.html?id=${book.id}`
+        };
+    };
+
+    // 4. Render giao diện
+    if (trendingBooks.length > 0) {
+        new TrendingSection(trendingBooks.map(mapBookData));
+    }
+
+    if (newBooks.length > 0) {
+        new NewBooksSection(newBooks.map(mapBookData));
+    }
 });

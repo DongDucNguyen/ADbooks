@@ -1,174 +1,95 @@
+import { authorService } from './API/author-service.js';
 import { TopAuthorSlider } from './Author-Page/top-author.js';
-import { RecentActivitiesSection } from './Author-Page/recent-activities.js'; // <--- Import mới
+import { RecentActivitiesSection } from './Author-Page/recent-activities.js';
 import { RisingAuthorsSection } from './Author-Page/rising-authors.js';
-const topAuthorsData = [
-    {
-        id: 1,
-        name: "Anthony Doerr",
-        birthDate: "27/10/1973",
-        description: 'Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".',
-        link: './Details/author.html',
-        img: './Images/Authors/a1.jpg',
-                books: [{
-                img : './Images/Book-Covers/b1.png',
-                id : '1'
-            },
-            {
-                img : './Images/Book-Covers/b7.png',
-                id : '2'
-            },
-            {
-                img : './Images/Book-Covers/b8.png',
-                id : '3'
-            }
-        ]
-    },
-    {
-        id: 2,
-        name: "J.K. Rowling",
-        birthDate: "31/07/1965",
-        description: 'Tác giả người Anh, nổi tiếng toàn cầu với bộ truyện Harry Potter. Bà là một trong những nhà văn giàu nhất và có ảnh hưởng nhất thế giới.',
-        link: './Details/author.html',
-        img: './Images/Authors/a2.png', // Đảm bảo bạn có ảnh này
-        books: [{
-                img : './Images/Book-Covers/b2.png',
-                id : '1'
-            },
-            {
-                img : './Images/Book-Covers/b3.png',
-                id : '2'
-            },
-            {
-                img : './Images/Book-Covers/b4.png',
-                id : '3'
-            }
-        ]
-    },
-    {
-        id: 3,
-        name: "Haruki Murakami",
-        birthDate: "12/01/1949",
-        description: 'Nhà văn Nhật Bản hiện đại nổi tiếng với phong cách siêu thực. Các tác phẩm của ông thường đề cập đến sự cô đơn và khao khát của con người.',
-        link: './Details/author.html',
-        img: './Images/Authors/a3.jpg', // Đảm bảo bạn có ảnh này
-            books: [{
-                img : './Images/Book-Covers/b6.png',
-                id : '1'
-            },
-            {
-                img : './Images/Book-Covers/b7.png',
-                id : '2'
-            },
-            {
-                img : './Images/Book-Covers/b1.png',
-                id : '3'
-            }
-        ]
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // 1. Gọi API lấy 12 tác giả
+        const authors = await authorService.getAuthors({ page: 0, size: 12 });
+
+        if (!authors || authors.length === 0) {
+            console.warn("API trả về danh sách rỗng");
+            return;
+        }
+
+        // 2. Chia dữ liệu giả lập (Slice array)
+        const topAuthorsRaw = authors.slice(0, 3);       // 3 người đầu -> Slider
+        const recentAuthorsRaw = authors.slice(3, 7);    // 4 người tiếp -> Recent
+        const risingAuthorsRaw = authors.slice(7, 11);   // 4 người sau -> Rising
+
+        // 3. Mapping dữ liệu & Render
+
+        // --- SECTION 1: TOP AUTHORS (Slider) ---
+        const topAuthorsData = topAuthorsRaw.map(a => ({
+            id: a.id,
+            name: a.fullName,
+            birthDate: formatDate(a.birthday),
+            description: a.description || "Chưa có mô tả.",
+            link: `./Details/author.html?id=${a.id}`,
+            img: getSafeImageUrl(a.imageUrl),
+            // Map sách: API trả về 'thumbnailUrl', UI cần 'img'
+            books: (a.books || []).slice(0, 3).map(b => ({
+                id: b.id,
+                img: getSafeImageUrl(b.thumbnailUrl, true)
+            }))
+        }));
+        if (topAuthorsData.length > 0) new TopAuthorSlider(topAuthorsData);
+
+        // --- SECTION 2: RECENT ACTIVITIES ---
+        const recentActivitiesData = recentAuthorsRaw.map(a => ({
+            id: a.id,
+            name: a.fullName,
+            img: getSafeImageUrl(a.imageUrl),
+            recentBooks: (a.books || []).slice(0, 3).map(b => ({
+                id: b.id,
+                // API trả về YYYY-MM-DD -> Cắt lấy YYYY-MM
+                date: b.releaseDate ? b.releaseDate.substring(0, 7) : "Mới nhất", 
+                title: b.name,
+                link: `./Details/book.html?id=${b.id}`
+            }))
+        }));
+        if (recentActivitiesData.length > 0) new RecentActivitiesSection(recentActivitiesData);
+
+        // --- SECTION 3: RISING AUTHORS ---
+        const risingAuthorsData = risingAuthorsRaw.map(a => ({
+            id: a.id,
+            name: a.fullName,
+            img: getSafeImageUrl(a.imageUrl),
+            link: `./Details/author.html?id=${a.id}`,
+            bio: a.description ? a.description.substring(0, 100) + "..." : "Tác giả trẻ đầy triển vọng."
+        }));
+        if (risingAuthorsData.length > 0) new RisingAuthorsSection(risingAuthorsData);
+
+        setupCategoryLinks();
+
+    } catch (error) {
+        console.error("Lỗi tải trang Author:", error);
     }
-];
-
-const recentActivitiesData = [
-    {
-        id: 101,
-        name: "Nguyễn Nhật Ánh",
-        img: "./Images/Authors/a1.jpg",
-        recentBooks: [
-            {id:1, date: "10/2023", title: "Mùa Hè Không Tên", link: "./Details/book1.html" },
-            {id:1, date: "05/2022", title: "Ra Bờ Suối Ngắm Hoa", link: "./Details/book2.html" },
-            {id:1, date: "12/2021", title: "Con Chim Xanh Biếc", link: "#" },
-        ]
-    },
-    {
-        id: 102,
-        name: "J.K. Rowling",
-        img: "./Images/Authors/a2.png",
-        recentBooks: [
-            {id:1, date: "12/2023", title: "Harry Potter Illustrated", link: "#" },
-            {id:1, date: "10/2022", title: "The Christmas Pig", link: "#" },
-            {id:1, date: "08/2020", title: "The Ickabog", link: "#" }
-        ]
-    },
-    {
-        id: 103,
-        name: "Haruki Murakami",
-        img: "./Images/Authors/a3.jpg",
-        recentBooks: [
-            {id:1, date: "04/2023", title: "The City and Its Uncertain Walls", link: "#" },
-            {id:1, date: "07/2021", title: "First Person Singular", link: "#" },
-            {id:1, date: "10/2017", title: "Killing Commendatore", link: "#" },
-            {id:1, date: "08/2014", title: "Men Without Women", link: "#" }
-        ]
-    },
-    {
-        id: 104,
-        name: "Stephen King",
-        img: "./Images/Authors/a4.jpg",
-        recentBooks: [
-            {id:1, date: "09/2023", title: "Holly", link: "#" },
-            {id:1, date: "09/2022", title: "Fairy Tale", link: "#" },
-            {id:1, date: "08/2021", title: "Billy Summers", link: "#" },
-            {id:1, date: "04/2020", title: "If It Bleeds", link: "#" },
-            {id:1, date: "09/2019", title: "The Institute", link: "#" }
-        ]
-    },
-    {
-        id: 105,
-        name: "Dan Brown",
-        img: "./Images/Authors/a5.jpg",
-        recentBooks: [
-            {id:1, date: "09/2020", title: "Wild Symphony", link: "#" },
-            {id:1, date: "10/2017", title: "Origin", link: "#" }
-        ]
-    }
-];
-const risingAuthorsData = [
-    {
-        id: 201,
-        name: "Ocean Vuong",
-        img: "./Images/Authors/a1.jpg", // Thay bằng ảnh thật nếu có
-        link: "./Details/author-ocean-vuong.html",
-        bio: 'Nhà thơ, tiểu thuyết gia người Mỹ gốc Việt. Tác phẩm "On Earth We\'re Briefly Gorgeous" đã gây tiếng vang lớn trên văn đàn quốc tế.'
-    },
-    {
-        id: 202,
-        name: "Rupi Kaur",
-        img: "./Images/Authors/a2.png",
-        link: "#",
-        bio: 'Nhà thơ, nghệ sĩ biểu diễn người Canada gốc Ấn. Nổi tiếng với tập thơ "Milk and Honey", cô là đại diện tiêu biểu cho dòng thơ Instapoetry.'
-    },
-    {
-        id: 203,
-        name: "Sally Rooney",
-        img: "./Images/Authors/a3.jpg",
-        link: "#",
-        bio: 'Nữ nhà văn trẻ người Ireland, được mệnh danh là "tiếng nói của thế hệ millennials" với các tác phẩm như "Normal People".'
-    },
-    {
-        id: 204,
-        name: "Đinh Phương",
-        img: "./Images/Authors/a4.jpg",
-        link: "#",
-        bio: 'Một cây bút trẻ đầy triển vọng của văn học Việt Nam với lối viết ma mị, khai thác sâu vào tâm lý và lịch sử.'
-    }
-];
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Top Slider
-    new TopAuthorSlider(topAuthorsData);
-
-    // 2. Recent Activities
-    new RecentActivitiesSection(recentActivitiesData);
-
-    // 3. Rising Authors (Mới)
-    new RisingAuthorsSection(risingAuthorsData);
-
-    document.querySelector('.top-author-section-title').addEventListener('click', function() {
-        localStorage.setItem('selectedAuthorCategory', "TÁC GIẢ NỔI BẬT");
-    });
-    document.querySelector('.recent-activities-title').addEventListener('click', function() {
-        localStorage.setItem('selectedAuthorCategory', "HOẠT ĐỘNG GẦN ĐÂY");
-    });
-    document.querySelector('.rising-background-title').addEventListener('click', function() {
-        localStorage.setItem('selectedAuthorCategory', "TÁC GIẢ TRẺ");
-    });
 });
+
+// --- HELPER FUNCTIONS ---
+function getSafeImageUrl(url, isBook = false) {
+    // Xử lý trường hợp API trả về null, rỗng hoặc chuỗi "string" mặc định của Swagger
+    if (!url || url === "string" || url.trim() === "") {
+        return isBook ? './Images/Book-Covers/default-book.png' : './Images/Authors/default-author.png';
+    }
+    return url;
+}
+
+function formatDate(dateString) {
+    if (!dateString) return "N/A";
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+}
+
+function setupCategoryLinks() {
+    const setCat = (name) => localStorage.setItem('selectedAuthorCategory', name);
+    const topTitle = document.querySelector('.top-author-section-title');
+    const recentTitle = document.querySelector('.recent-activities-title');
+    const risingTitle = document.querySelector('.rising-background-title');
+
+    if(topTitle) topTitle.addEventListener('click', () => setCat("TÁC GIẢ NỔI BẬT"));
+    if(recentTitle) recentTitle.addEventListener('click', () => setCat("HOẠT ĐỘNG GẦN ĐÂY"));
+    if(risingTitle) risingTitle.addEventListener('click', () => setCat("TÁC GIẢ TRẺ"));
+}

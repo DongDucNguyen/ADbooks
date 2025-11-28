@@ -1,29 +1,13 @@
 export class AuthorInfo {
-    #data;
-    #aboutContainer;
-    #relatedContainer;
-
     constructor(data) {
-        this.#data = data;
-        this.#aboutContainer = document.querySelector('.about-the-author-content');
-        this.#relatedContainer = document.querySelector('.related-infor-content');
-
-        if (this.#aboutContainer || this.#relatedContainer) {
-            this.init();
-        }
+        this.data = data;
     }
 
     init() {
-        this.#render();
-    }
+        const aboutContent = document.querySelector('.about-the-author-content');
+        const relatedContent = document.querySelector('.related-infor-content');
 
-    #render() {
-        if (this.#aboutContainer && this.#data.fullDescription) {
-            this.#aboutContainer.innerHTML = this.#data.fullDescription;
-        }
-        
-        if (this.#relatedContainer && this.#data.relatedInfo) {
-            this.#relatedContainer.innerHTML = this.#data.relatedInfo;
-        }
+        if (aboutContent) aboutContent.innerHTML = this.data.fullDescription;
+        if (relatedContent) relatedContent.innerHTML = this.data.relatedInfo;
     }
 }

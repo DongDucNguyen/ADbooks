@@ -1,3 +1,5 @@
+import { authService } from '../API/auth-service.js';
+
 export class RegisterForm {
     #form;
     #fields;
@@ -90,3 +92,55 @@ export class RegisterForm {
 
 // Khởi tạo form
 new RegisterForm('#registerForm');
+
+document.addEventListener('DOMContentLoaded', () => {
+    const registerForm = document.getElementById('formRegister') || document.querySelector('form');
+
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Lấy dữ liệu từ form
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Validate mật khẩu khớp nhau
+            if (password !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+
+            try {
+                const submitBtn = registerForm.querySelector('button');
+                const originalText = submitBtn.innerText;
+                submitBtn.innerText = 'Đang đăng ký...';
+                submitBtn.disabled = true;
+
+                // Gọi API với object dữ liệu đầy đủ
+                await authService.register({
+                    username,
+                    email,
+                    password,
+                    firstName,
+                    lastName
+                });
+
+                // Thành công
+                alert('Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.');
+                window.location.href = 'Login.html';
+
+            } catch (error) {
+                console.error(error);
+                alert('Đăng ký thất bại: ' + error.message);
+            } finally {
+                const submitBtn = registerForm.querySelector('button');
+                submitBtn.innerText = 'ĐĂNG KÝ'; // Hoặc lấy từ biến originalText nếu muốn
+                submitBtn.disabled = false;
+            }
+        });
+    }
+});

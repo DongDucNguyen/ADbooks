@@ -15,44 +15,40 @@
                 <h2 class="auth-title">Tạo Tài Khoản</h2>
                 <p class="auth-subtitle">Nhập thông tin cá nhân để tham gia cộng đồng</p>
 
-                <form id="registerForm" class="auth-form-grid">
+                <form id="formRegister">
+                    <!-- Thêm 2 ô nhập Họ và Tên -->
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="firstName">Họ</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Nguyễn" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="lastName">Tên</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Văn A" required>
+                        </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="lastname">Họ</label>
-                        <input type="text" id="lastname" name="lastname" class="form-input" placeholder="Nguyễn" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname">Tên</label>
-                        <input type="text" id="firstname" name="firstname" class="form-input" placeholder="Văn A" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" class="form-input" placeholder="listenary_fan" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthday">Ngày sinh</label>
-                        <input type="date" id="birthday" name="birthday" class="form-input" required>
+                        <label for="username">Tên đăng nhập</label>
+                        <input type="text" id="username" name="username" class="form-input" placeholder="nguoidung123" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="example@gmail.com" required>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="example@email.com" required>
                     </div>
-                    <div class="form-group">
-                        <label for="phoneNumber">Số điện thoại</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="0901234567" required>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="password">Mật khẩu</label>
-                        <input type="password" id="password" name="encryptedPassword" class="form-input" placeholder="••••••••" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Xác nhận mật khẩu</label>
-                        <input type="password" id="confirm-password" class="form-input" placeholder="••••••••" required>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
                     </div>
 
-                    <button type="submit" class="auth-btn">ĐĂNG KÝ NGAY</button>
+                    <div class="form-group">
+                        <label for="confirm-password">Xác nhận mật khẩu</label>
+                        <input type="password" id="confirm-password" name="confirm-password" class="form-input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="auth-btn">ĐĂNG KÝ</button>
                 </form>
 
                 <div class="auth-footer">
