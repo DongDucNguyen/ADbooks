@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <title>Kết Quả Tìm Kiếm - Listenary</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        
+        <link rel="stylesheet" href="./Styles/header.css">
+        <link rel="stylesheet" href="./Styles/search-results.css">
+        <script src="./Scripts/search-results.js" type="module" defer></script>
+        <script src="./Scripts/Book-Detail/pointer-to-book.js" type="module" defer></script>
+        <script src="./Scripts/Author-Detail/pointer-to-author-page.js" type="module" defer></script>
+        <script src="./Scripts/search-bar.js" type="module" defer></script>
+    </head>
+    
+    <body style="padding-top: 120px; margin: 0;">
+        
+        <header class="site-header">
+            <a href="./Explore-Page.html" class="logo"><span>LISTEN</span>ARY</a>
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
+            <nav class="navigation">
+                <a href="./Explore-Page.html">KHÁM PHÁ</a>
+                <a href="./Author-Page.html">TÁC GIẢ</a>
+                <a href="./Genres-Page.html">THỂ LOẠI</a>
+                <a href="./User-Page.html" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </nav>            
+        </header>
+        
+        <main>
+            <div class="search-title-section"> 
+                <div class="rec-decoration"></div>
+                <div class="search-title-content">Kết Quả Tìm Kiếm</div>
+                <div class="rec-decoration"></div>
+            </div>
+
+            <div class="search-results-container">
+                
+                <div class="result-card book-card-type">
+                    <div class="card-background"></div>
+                    <div class="card-content-layout">
+                        <img src="./Images/Book-Covers/b1.png" class="book-cover-img" alt="All The Light We Cannot See">
+                        
+                        <div class="info-area">
+                            <h3 class="item-title">All The Light We Cannot See</h3>
+                            <p class="item-subtitle">Anthony Doerr</p>
+                            <p class="item-meta">Xuất bản: 06/05/2014</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card author-card-type">
+                    <div class="card-background"></div>
+                    <div class="card-content-layout author-layout">
+                        <img src="./Images/Authors/a1.jpg" class="author-avatar-img" alt="Anthony Doerr">
+                        
+                        <div class="info-area author-info">
+                            <h3 class="item-title">Anthony Doerr</h3>
+                            <p class="item-meta">Sinh ngày: 27/10/1973</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card book-card-type">
+                    <div class="card-background"></div>
+                    <div class="card-content-layout">
+                        <img src="./Images/Book-Covers/b4.png" class="book-cover-img" alt="Where The Crawdads Sing">
+                        
+                        <div class="info-area">
+                            <h3 class="item-title">Where The Crawdads Sing</h3>
+                            <p class="item-subtitle">Delia Owens</p>
+                            <p class="item-meta">Xuất bản: 14/08/2018</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-card author-card-type">
+                    <div class="card-background"></div>
+                    <div class="card-content-layout author-layout">
+                        <img src="./Images/Authors/a1.jpg" class="author-avatar-img" alt="Anthony Doerr">
+                        
+                        <div class="info-area author-info">
+                            <h3 class="item-title">Anthony Doerr</h3>
+                            <p class="item-meta">Sinh ngày: 27/10/1973</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-card book-card-type">
+                    <div class="card-background"></div>
+                    <div class="card-content-layout">
+                        <img src="./Images/Book-Covers/b4.png" class="book-cover-img" alt="Where The Crawdads Sing">
+                        
+                        <div class="info-area">
+                            <h3 class="item-title">Where The Crawdads Sing</h3>
+                            <p class="item-subtitle">Delia Owens</p>
+                            <p class="item-meta">Xuất bản: 14/08/2018</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card book-card-type">
+                    <div class="card-background"></div>
+                    <div class="card-content-layout">
+                        <img src="./Images/Book-Covers/b1.png" class="book-cover-img" alt="All The Light We Cannot See">
+                        
+                        <div class="info-area">
+                            <h3 class="item-title">All The Light We Cannot See</h3>
+                            <p class="item-subtitle">Anthony Doerr</p>
+                            <p class="item-meta">Xuất bản: 06/05/2014</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="line"></div>
+        </main>
+    </body>
+</html>

@@ -70,6 +70,7 @@
     transform: translateY(-50%); /* Căn icon vào giữa theo chiều dọc */
     color: #555;
     font-size: 1.1rem;
+    cursor: pointer;
 }
 
 /* --- Menu điều hướng --- */
