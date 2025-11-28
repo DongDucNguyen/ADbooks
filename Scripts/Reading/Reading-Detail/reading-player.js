@@ -3,8 +3,15 @@ export class ReadingPlayer {
     #audioEl;
     #elements;
 
-    constructor(audioElementId) {
+    // SỬA: Thêm tham số audioUrl vào constructor
+    constructor(audioElementId, audioUrl = null) {
         this.#audioEl = document.getElementById(audioElementId);
+        console.log("LINK NHẠC NHẬN ĐƯỢC LÀ:", audioUrl);
+        // [NEW] Logic gán nguồn nhạc động
+        if (this.#audioEl && audioUrl) {
+            this.#audioEl.src = audioUrl;
+            this.#audioEl.load(); // Bắt buộc gọi load() để trình duyệt nhận nguồn mới
+        }
         
         // Gom nhóm các elements
         this.#elements = {
