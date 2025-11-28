@@ -52,75 +52,96 @@ export class SearchResultsPage {
     #data;
     #container;
     #titleElement;
+    #input;
 
-    constructor(data) {
-        this.#data = data;
-        // Lấy container lưới
-        this.#container = document.querySelector('.search-results-container');
-        // Lấy tiêu đề để cập nhật (nếu cần hiển thị từ khóa tìm kiếm)
-        this.#titleElement = document.querySelector('.search-title-content');
+    constructor(inputSelector, containerSelector, titleSelector) {
+        this.#container = document.querySelector(containerSelector);
+        this.#titleElement = document.querySelector(titleSelector);
+        this.#input = document.querySelector(inputSelector);
 
-        if (this.#container) {
-            this.init();
-        } else {
-            console.warn('SearchResultsPage: Không tìm thấy .search-results-container');
+        if (!this.#container || !this.#input) {
+            console.warn('SearchResultsPage: Không tìm thấy container hoặc input');
+            return;
+        }
+
+        this.#init();
+    }
+
+    #init() {
+        this.#input.addEventListener('input', () => this.#search());
+    }
+
+    async #search() {
+        const keyword = this.#input.value.trim();
+        if (!keyword) {
+            this.#container.innerHTML = '';
+            return;
+        }
+
+        try {
+            // Gọi API tác giả
+            const authorsResp = await fetch(`http://localhost:8080/api/v1/authors?keyword=${encodeURIComponent(keyword)}`);
+            const authorsJson = await authorsResp.json();
+            const authors = authorsJson.content || [];
+
+            // Gọi API sách
+            const booksResp = await fetch(`http://localhost:8080/api/v1/books?keyword=${encodeURIComponent(keyword)}`);
+            const booksJson = await booksResp.json();
+            const books = booksJson.content || [];
+
+            this.#data = [...books.map(b => ({...b, type: 'book'})), ...authors.map(a => ({...a, type: 'author'}))];
+            this.#render();
+
+        } catch (err) {
+            console.error("Lỗi khi tìm kiếm:", err);
+            this.#container.innerHTML = '<p>Có lỗi xảy ra. Vui lòng thử lại.</p>';
         }
     }
 
-    init() {
-        // Có thể thêm logic lấy từ khóa tìm kiếm từ URL tại đây
-        // Ví dụ: const urlParams = new URLSearchParams(window.location.search);
-        // const query = urlParams.get('q');
-        
-        this.#render();
-    }
-
     #render() {
-        this.#container.innerHTML = ''; // Xóa nội dung HTML tĩnh cũ
+        this.#container.innerHTML = ''; // Xóa nội dung cũ
+
+        if (!this.#data.length) {
+            this.#container.innerHTML = '<p>Không tìm thấy kết quả.</p>';
+            return;
+        }
 
         const html = this.#data.map(item => {
-            if (item.type === 'book') {
-                return this.#createBookCard(item);
-            } else if (item.type === 'author') {
-                return this.#createAuthorCard(item);
-            }
+            if (item.type === 'book') return this.#createBookCard(item);
+            if (item.type === 'author') return this.#createAuthorCard(item);
             return '';
         }).join('');
 
         this.#container.innerHTML = html;
     }
 
-    // Template HTML cho Sách (Khớp với cấu trúc bạn đã sửa)
+    // Template HTML cho sách
     #createBookCard(book) {
-        // Thêm class 'jstoBookDetailPage' và 'data-book-id' vào thẻ cha
         return `
             <div class="result-card book-card-type jstoBookDetailPage" data-book-id="${book.id}">
                 <div class="card-background"></div>
                 <div class="card-content-layout">
-                    <img src="${book.img}" class="book-cover-img" alt="${book.title}" onerror="this.src='./Images/Book-Covers/default.png'">
-                    
+                    <img src="${book.img || './Images/Book-Covers/default.png'}" class="book-cover-img" alt="${book.title}">
                     <div class="info-area">
                         <h3 class="item-title">${book.title}</h3>
-                        <p class="item-subtitle">${book.author}</p>
-                        <p class="item-meta">Xuất bản: ${book.publishDate}</p>
+                        <p class="item-subtitle">${book.authorName || book.author}</p>
+                        <p class="item-meta">Xuất bản: ${book.publishDate || ''}</p>
                     </div>
                 </div>
             </div>
         `;
     }
 
-    // Template HTML cho Tác giả (Khớp với cấu trúc bạn đã sửa)
+    // Template HTML cho tác giả
     #createAuthorCard(author) {
-        // Thêm class 'jstoAuthorPage' và 'data-author-id' vào thẻ cha
         return `
             <div class="result-card author-card-type jstoAuthorPage" data-author-id="${author.id}">
                 <div class="card-background"></div>
                 <div class="card-content-layout author-layout">
-                    <img src="${author.img}" class="author-avatar-img" alt="${author.name}" onerror="this.src='./Images/elements/user-default.png'">
-                    
+                    <img src="${author.img || './Images/elements/user-default.png'}" class="author-avatar-img" alt="${author.firstname || author.name}">
                     <div class="info-area author-info">
-                        <h3 class="item-title">${author.name}</h3>
-                        <p class="item-meta">Sinh ngày: ${author.birthDate}</p>
+                        <h3 class="item-title">${author.firstname ? author.firstname + ' ' + author.lastname : author.name}</h3>
+                        <p class="item-meta">Sinh ngày: ${author.birthday || author.birthDate || ''}</p>
                     </div>
                 </div>
             </div>
@@ -128,7 +149,15 @@ export class SearchResultsPage {
     }
 }
 
-// Khởi chạy
+// main.js
+import { SearchResultsPage } from "./search.js";
+
 document.addEventListener('DOMContentLoaded', () => {
-    new SearchResultsPage(MOCK_SEARCH_DATA);
+    new SearchResultsPage('#searchInput', '.search-results-container', '.search-title-content');
 });
+
+
+// // Khởi chạy
+// document.addEventListener('DOMContentLoaded', () => {
+//     new SearchResultsPage(MOCK_SEARCH_DATA);
+// });
