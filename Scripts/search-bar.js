@@ -39,3 +39,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+/* --- THÊM ĐOẠN NÀY VÀO CUỐI FILE --- */
+
+document.addEventListener('click', function(e) {
+    // 1. Xử lý khi click vào thẻ Sách (class: jstoBookDetailPage)
+    const bookCard = e.target.closest('.jstoBookDetailPage');
+    if (bookCard) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a (nếu có)
+        
+        // Lấy ID từ data-book-id hoặc data-id
+        const bookId = bookCard.dataset.bookId || bookCard.dataset.id;
+        
+        if (bookId) {
+            console.log("Navigating to Book ID:", bookId);
+            
+            // Kiểm tra xem đang ở thư mục gốc hay thư mục Details để chỉnh đường dẫn
+            // Nếu URL hiện tại chứa '/Details/', nghĩa là đang ở trong thư mục con
+            const isInDetails = window.location.pathname.includes('/Details/');
+            
+            // Nếu đang ở trong Details thì link là ./book-detail.html
+            // Nếu đang ở ngoài (Home) thì link là ./Details/book-detail.html
+            const targetPath = isInDetails ? './book-detail.html' : './Details/book-detail.html';
+            
+            window.location.href = `${targetPath}?id=${bookId}`;
+        }
+    }
+
+    // 2. Xử lý khi click vào thẻ Tác giả (class: jstoAuthorPage)
+    const authorLink = e.target.closest('.jstoAuthorPage');
+    if (authorLink) {
+        e.preventDefault();
+        
+        const authorId = authorLink.dataset.authorId || authorLink.dataset.id;
+        
+        if (authorId) {
+            console.log("Navigating to Author ID:", authorId);
+            
+            const isInDetails = window.location.pathname.includes('/Details/');
+            const targetPath = isInDetails ? './author.html' : './Details/author.html';
+            
+            window.location.href = `${targetPath}?id=${authorId}`;
+        }
+    }
+});

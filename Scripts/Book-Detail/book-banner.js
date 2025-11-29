@@ -1,15 +1,17 @@
+// Scripts/Book-Detail/book-banner.js
+
 export class BookBanner {
     #data;
     #container;
     #elements;
-    
-    // [UPDATE] Biến trạng thái private
-    #isFavorite; 
+
+    // Biến trạng thái private để quản lý trạng thái yêu thích
+    #isFavorite;
 
     constructor(data) {
         this.#data = data;
         // Khởi tạo trạng thái từ dữ liệu đầu vào
-        this.#isFavorite = data.isFavorite || false; 
+        this.#isFavorite = data.isFavorite || false;
 
         this.#container = document.querySelector('.introduction-banner');
 
@@ -20,7 +22,7 @@ export class BookBanner {
                 author: this.#container.querySelector('.author-name'),
                 date: this.#container.querySelector('.publish-date'),
                 shortInfo: this.#container.querySelector('.book-infor-content'),
-                // Lấy nút buttons (Giả sử nút thứ 2 là nút Yêu thích như trong HTML)
+                // Giả định nút thứ 1 là Phát, nút thứ 2 là Yêu thích
                 playBtn: this.#container.querySelector('.function-buttons button:nth-child(1)'),
                 favBtn: this.#container.querySelector('.function-buttons button:nth-child(2)')
             };
@@ -35,52 +37,57 @@ export class BookBanner {
     }
 
     #render() {
-        if (!this.#data) return;
-        if (this.#elements.cover) this.#elements.cover.src = this.#data.img;
-        if (this.#elements.title) this.#elements.title.textContent = this.#data.title;
-        if (this.#elements.author) this.#elements.author.textContent = this.#data.author;
-        if (this.#elements.date) this.#elements.date.textContent = `Publish Date: ${this.#data.publishDate}`;
-        if (this.#elements.shortInfo) this.#elements.shortInfo.textContent = this.#data.shortInfo;
+        if (!this.#elements.cover || !this.#data) return;
+
+        this.#elements.cover.src = this.#data.img || '../Images/Book-Covers/default.png';
+        this.#elements.title.textContent = this.#data.title || 'N/A';
+        this.#elements.author.textContent = this.#data.author || 'N/A';
+        this.#elements.date.textContent = this.#data.publishDate || 'N/A';
+        this.#elements.shortInfo.textContent = this.#data.shortInfo || 'Không có thông tin tóm tắt.';
     }
 
-    // [UPDATE] Hàm riêng để cập nhật giao diện nút Favorite dựa trên biến #isFavorite
     #updateFavoriteUI() {
-        const btn = this.#elements.favBtn;
-        if (!btn) return;
+        if (!this.#elements.favBtn) return;
 
+        // Cập nhật class/text để phản ánh trạng thái
         if (this.#isFavorite) {
-            btn.classList.add('active'); 
-            btn.style.backgroundColor = 'pink'; // Hoặc màu bạn muốn
-            btn.innerText = "Đã thích";
+            this.#elements.favBtn.classList.add('active');
+            this.#elements.favBtn.textContent = 'Đã Thêm';
         } else {
-            btn.classList.remove('active');
-            btn.style.backgroundColor = ''; // Reset màu
-            btn.innerText = "Yêu thích";
+            this.#elements.favBtn.classList.remove('active');
+            this.#elements.favBtn.textContent = 'Yêu Thích';
         }
     }
 
     #addEventListeners() {
-        // Sự kiện nút Yêu thích
+        // Sự kiện nút Yêu thích (Tương tác UI)
         if (this.#elements.favBtn) {
             this.#elements.favBtn.addEventListener('click', () => {
-                // Đổi trạng thái (Toggle)
+                // Tích hợp logic gọi API /favorite ở đây (nếu cần)
+
                 this.#isFavorite = !this.#isFavorite;
-                
-                // Cập nhật lại UI
                 this.#updateFavoriteUI();
-                
-                // Log kiểm tra
+
                 console.log(`Favorite status changed to: ${this.#isFavorite}`);
             });
         }
-        
-        // Sự kiện nút Phát
+
+        // Sự kiện nút Phát Ngay (Navigation)
         if (this.#elements.playBtn) {
             this.#elements.playBtn.addEventListener('click', () => {
-                const bookId = this.#data.bookId;
-                console.log("Đang xem sách ID:", bookId);
 
-                window.location.href = "/Reading-Page.html";
+                // [FIX QUAN TRỌNG] Lấy ID sách từ dữ liệu đã fetch
+                const bookId = this.#data.id;
+
+                if (!bookId) {
+                    console.error("Lỗi: Không tìm thấy ID sách để chuyển hướng.");
+                    alert("Không thể phát sách: Thiếu thông tin ID.");
+                    return;
+                }
+
+                // [FIX CHÍNH] Nối ID vào URL để trang đọc có thể tải tài nguyên
+                console.log("Đang chuyển hướng đến sách ID:", bookId);
+                window.location.href = `/Reading-Page.html?id=${bookId}`;
             });
         }
     }

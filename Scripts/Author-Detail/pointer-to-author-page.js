@@ -1,21 +1,27 @@
 document.addEventListener('click', function(e) {
+    // Prevent conflict if clicking a book inside an author card
     if (e.target.closest('.jstoBookDetailPage')) {
         return; 
     }
-    // Tìm phần tử được click (hoặc cha của nó) có class 'jstoBookDetailPage' hay không
+    
     const targetButton = e.target.closest('.jstoAuthorPage');
 
-    // Nếu tìm thấy (tức là người dùng đã click vào đúng nút/ảnh sách)
     if (targetButton) {
-        // Ngăn chặn hành vi mặc định (nếu là thẻ a)
         e.preventDefault(); 
         
-        // Lấy ID sách nếu cần (để dùng sau này)
-        const authorId = targetButton.dataset.authorId;
-        console.log("Đang xem sách ID:", authorId);
-
-        // Chuyển hướng
+        // Get ID from data attribute (support both conventions)
+        const authorId = targetButton.dataset.authorId || targetButton.dataset.id;
         
-        window.location.href = "/Details/author.html";
+        if (authorId) {
+            console.log("Navigating to Author ID:", authorId);
+
+            // Determine path based on current location (Root vs Details folder)
+            const isInDetails = window.location.pathname.includes('/Details/');
+            const targetUrl = isInDetails ? `./author.html?id=${authorId}` : `./Details/author.html?id=${authorId}`;
+            
+            window.location.href = targetUrl;
+        } else {
+            console.warn("No author ID found on element");
+        }
     }
 });

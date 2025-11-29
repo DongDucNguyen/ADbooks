@@ -1,23 +1,41 @@
 export class AuthorIntro {
+    #data;
+    #container;
+    #elements;
+
     constructor(data) {
-        this.data = data;
+        this.#data = data;
+        this.#container = document.querySelector('.introduction-section');
+
+        if (this.#container) {
+            this.#elements = {
+                bgImage: this.#container.querySelector('.introduction-grid-img'),
+                avatar: this.#container.querySelector('.author-image img'),
+                name: this.#container.querySelector('.introduction-name'),
+                dob: this.#container.querySelector('.introduction-DoB'),
+                description: this.#container.querySelector('.introduction-des')
+            };
+            this.init();
+        }
     }
 
     init() {
-        // Cập nhật ảnh nền và ảnh đại diện
-        const bgImg = document.querySelector('.introduction-grid-img');
-        const avatarImg = document.querySelector('.author-image img');
+        this.#render();
+    }
+
+    #render() {
+        if (!this.#data) return;
+
+        // Map API fields to UI
+        if (this.#elements.bgImage) this.#elements.bgImage.src = this.#data.imageUrl || '../Images/Authors/default.jpg';
+        if (this.#elements.avatar) this.#elements.avatar.src = this.#data.imageUrl || '../Images/Authors/default.jpg';
         
-        if (bgImg) bgImg.src = this.data.img;
-        if (avatarImg) avatarImg.src = this.data.img;
-
-        // Cập nhật text
-        const nameEl = document.querySelector('.introduction-name');
-        const dobEl = document.querySelector('.introduction-DoB');
-        const desEl = document.querySelector('.introduction-des');
-
-        if (nameEl) nameEl.textContent = this.data.name;
-        if (dobEl) dobEl.textContent = this.data.dob;
-        if (desEl) desEl.textContent = this.data.shortDesc;
+        if (this.#elements.name) this.#elements.name.textContent = this.#data.fullName;
+        if (this.#elements.dob) this.#elements.dob.textContent = this.#data.birthday || 'N/A';
+        
+        // Use description from API
+        if (this.#elements.description) {
+            this.#elements.description.textContent = this.#data.description || '';
+        }
     }
 }

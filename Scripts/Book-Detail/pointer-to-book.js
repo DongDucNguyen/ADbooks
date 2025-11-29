@@ -12,7 +12,9 @@ document.addEventListener('click', function(e) {
         console.log("Đang xem sách ID:", bookId);
 
         // Chuyển hướng
-        
-        window.location.href = "/Details/book.html";
+        if (bookId) {
+            localStorage.setItem('selectedBookId', bookId);
+            window.location.href = `/Details/book.html?id=${bookId}`;
+        }
     }
 });
