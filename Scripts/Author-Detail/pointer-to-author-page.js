@@ -1,21 +1,22 @@
 document.addEventListener('click', function(e) {
     if (e.target.closest('.jstoBookDetailPage')) {
-        return; 
+        return;
     }
-    // Tìm phần tử được click (hoặc cha của nó) có class 'jstoBookDetailPage' hay không
+
     const targetButton = e.target.closest('.jstoAuthorPage');
 
-    // Nếu tìm thấy (tức là người dùng đã click vào đúng nút/ảnh sách)
     if (targetButton) {
-        // Ngăn chặn hành vi mặc định (nếu là thẻ a)
-        e.preventDefault(); 
-        
-        // Lấy ID sách nếu cần (để dùng sau này)
-        const authorId = targetButton.dataset.authorId;
-        console.log("Đang xem sách ID:", authorId);
+        e.preventDefault();
 
-        // Chuyển hướng
-        
-        window.location.href = "/Details/author.html";
+        const authorId = targetButton.dataset.authorId;
+        console.log("Đang xem tác giả ID:", authorId);
+
+        // Chuyển hướng, truyền ID tác giả qua query parameter
+        if (authorId) {
+            window.location.href = `/Details/author.html?id=${authorId}`;
+        } else {
+            console.error("Không tìm thấy authorId trên element.");
+            window.location.href = "/Details/author.html";
+        }
     }
 });

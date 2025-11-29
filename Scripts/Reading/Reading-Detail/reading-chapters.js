@@ -1,98 +1,89 @@
 // Scripts/Reading/Reading-Detail/reading-chapters.js
 export class ReadingChapters {
-    #data;
+    #chaptersData;
     #container;
     #audioEl;
-    #processedChapters;
-    #currentChapterIndex;
+    #playerInstance;
+    #currentChapterId;
 
-    constructor(chaptersData, audioElementId) {
+    constructor(chaptersData, audioElementId, playerInstance, initialChapterId) {
         this.#container = document.querySelector('.js-chapter-list');
         this.#audioEl = document.getElementById(audioElementId);
-        this.#processedChapters = this.#processData(chaptersData);
-        this.#currentChapterIndex = 0;
+        this.#playerInstance = playerInstance;
+        this.#chaptersData = this.#processData(chaptersData);
+
+        // NEW: Sử dụng ID chapter ban đầu từ bookmark/first chapter
+        this.#currentChapterId = initialChapterId;
 
         if (this.#container) {
             this.init();
         }
     }
 
-    init() {
-        this.#render();
-        this.#setupSyncWithAudio();
-    }
-
+    // NEW: Hàm xử lý raw data từ API
     #processData(rawChapters) {
-        let cumulativeTime = 0;
         return rawChapters.map(chap => {
-            const start = cumulativeTime;
-            const durationSec = chap.duration;
-            cumulativeTime += durationSec;
-            
-            // Format time display
+            const durationSec = parseInt(chap.duration) || 0; // Đảm bảo là số
             const m = Math.floor(durationSec / 60);
             const s = durationSec % 60;
             const timeStr = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
 
             return {
-                title: chap.title,
-                startTime: start,
+                id: chap.id, // Lấy ID
+                number: chap.number,
+                title: chap.name,
+                audioUrl: chap.audioUrl,
+                duration: durationSec,
                 durationDisplay: timeStr
             };
         });
     }
 
+    init() {
+        this.#render();
+        // Không cần setupSyncWithAudio vì player đã tự xử lý currentTime
+        // Ta chỉ cần update UI sau khi render
+        this.#updateActiveUI(this.#currentChapterId);
+    }
+
     #render() {
-        this.#container.innerHTML = this.#processedChapters.map((chap, index) => `
-            <li class="chapter-item ${index === 0 ? 'active' : ''}" data-index="${index}">
-                <span>${chap.title}</span>
+        this.#container.innerHTML = this.#chaptersData.map((chap, index) => {
+            // Highlight chapter đang đọc ban đầu
+            const isActive = chap.id === this.#currentChapterId;
+            return `
+            <li class="chapter-item ${isActive ? 'active' : ''}" data-chapter-id="${chap.id}" data-index="${index}">
+                <span>Chương ${chap.number}: ${chap.title}</span>
                 <span class="chapter-duration">${chap.durationDisplay}</span>
             </li>
-        `).join('');
+        `}).join('');
 
         // Add Click Events
         this.#container.querySelectorAll('.chapter-item').forEach(item => {
             item.addEventListener('click', () => {
-                const idx = parseInt(item.dataset.index);
-                this.#handleChapterClick(idx);
+                const chapterId = parseInt(item.dataset.chapterId);
+                this.#handleChapterClick(chapterId);
             });
         });
     }
 
-    #handleChapterClick(index) {
-        if(!this.#audioEl) return;
-        const chap = this.#processedChapters[index];
-        this.#audioEl.currentTime = chap.startTime;
-        if (this.#audioEl.paused) this.#audioEl.play();
-        
-        // Update UI ngay lập tức
-        this.#updateActiveUI(index);
-    }
+    #handleChapterClick(chapterId) {
+        if(!this.#playerInstance) return;
 
-    #setupSyncWithAudio() {
-        if(!this.#audioEl) return;
-        this.#audioEl.addEventListener('timeupdate', () => {
-            const currentTime = this.#audioEl.currentTime;
-            this.#autoDetectChapter(currentTime);
-        });
-    }
+        const chap = this.#chaptersData.find(c => c.id === chapterId);
 
-    #autoDetectChapter(time) {
-        let activeIndex = 0;
-        for (let i = 0; i < this.#processedChapters.length; i++) {
-            if (time >= this.#processedChapters[i].startTime) activeIndex = i;
-            else break; 
-        }
-        
-        if (activeIndex !== this.#currentChapterIndex) {
-            this.#updateActiveUI(activeIndex);
+        if (chap) {
+            // Cập nhật Player với chapter mới
+            this.#playerInstance.setChapter(chap.id, chap.audioUrl, 0); // Bắt đầu từ 0
+            this.#updateActiveUI(chap.id);
         }
     }
 
-    #updateActiveUI(index) {
-        this.#currentChapterIndex = index;
+    // NEW: Cập nhật UI active
+    #updateActiveUI(chapterId) {
+        this.#currentChapterId = chapterId;
         const items = this.#container.querySelectorAll('.chapter-item');
-        items.forEach(item => item.classList.remove('active'));
-        if(items[index]) items[index].classList.add('active');
+        items.forEach(item => {
+            item.classList.toggle('active', parseInt(item.dataset.chapterId) === chapterId);
+        });
     }
 }

@@ -1,3 +1,4 @@
+// Scripts/User/login.js
 export class LoginForm {
     #form;
     #emailInput;
@@ -36,6 +37,7 @@ export class LoginForm {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                // Đảm bảo body gửi đi đúng format DTO của Java
                 body: JSON.stringify({
                     email: email,
                     password: password
@@ -44,20 +46,18 @@ export class LoginForm {
 
             // 2️⃣ Backend trả lỗi (401, 400, 500)
             if (!response.ok) {
+                // RẤT QUAN TRỌNG: Đọc nội dung lỗi từ Backend để hiển thị chi tiết (ví dụ: "Sai email hoặc mật khẩu")
                 const err = await response.json().catch(() => ({}));
 
-                alert(err.message || "Đăng nhập thất bại!");
+                // Nếu có lỗi 401/Bad Credentials hoặc các lỗi khác từ GlobalExceptionHandler
+                const errorMessage = err.message || `Đăng nhập thất bại (Mã lỗi: ${response.status}).`;
+
+                alert(errorMessage);
                 return;
             }
 
             // 3️⃣ Nhận JWT từ backend
             const data = await response.json();
-
-            // Expect: { token: "...", type: "Bearer", email: "...", roles: [...] }
-            if (!data.token) {
-                alert("Không nhận được token từ server!");
-                return;
-            }
 
             // 4️⃣ Lưu token và user info
             localStorage.setItem("token", data.token);
@@ -68,12 +68,14 @@ export class LoginForm {
             sessionStorage.setItem("sessionActive", "true");
 
             setTimeout(() => {
+                // Chuyển hướng về trang Khám phá
                 window.location.href = "/Explore-Page.html";
             }, 100);
 
         } catch (error) {
+            // Xử lý lỗi TypeError: Failed to fetch (thường là lỗi CORS hoặc server offline)
             console.error("Lỗi khi đăng nhập:", error);
-            alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
+            alert("LỖI KẾT NỐI: Không thể liên hệ được Server (Có thể do lỗi CORS hoặc Server chưa hoạt động).");
         }
     }
 }

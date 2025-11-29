@@ -1,40 +1,65 @@
-export class UserFavoriteSection {
-    #data;
-    #container;
-    #token;
+import { AuthService } from "../Auth/AuthService.js"; // Import AuthService
 
-    constructor(data) {
-        this.#data = data;
-        this.#container = document.querySelector('.js-favorite-container');
-        this.#token = token
-        if (this.#container) this.init();
-    }
+ export class UserFavoriteSection {
+     #data;
+     #container;
 
-    async init() {
-        await this.#fetchFavorites();
-        this.#render();
-        this.#addEventListeners(); // [NEW] Gọi hàm lắng nghe sự kiện
-    }
+     // Xóa #token khỏi constructor
+     constructor(data) {
+         this.#data = data; // Vẫn dùng mock data ban đầu để giữ UI không vỡ nếu fetch fail
+         this.#container = document.querySelector('.js-favorite-container');
+         // Xóa this.#token = token;
+         if (this.#container) this.init();
+     }
 
-    async #fetchFavorites(page = 0, size = 6) {
-        try {
-            const res = await fetch(`http://localhost:8080/api/v1/books/favorites?page=${page}&size=${size}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.#token}`
-                }
-            });
+     async init() {
+         // Gọi fetch API ngay lập tức
+         await this.#fetchFavorites();
+         this.#render();
+         this.#addEventListeners();
+     }
 
-            if (!res.ok) throw new Error('Failed to fetch favorites');
+     async #fetchFavorites(page = 0, size = 6) {
+         const token = AuthService.getAccessToken(); // Lấy Token từ Auth Service
 
-            const result = await res.json();
-            this.#data = result.content; // mảng sách
-        } catch (err) {
-            console.error('Error fetching favorites:', err);
-            this.#data = [];
-        }
-    }
+         if (!token) {
+             console.warn('UserFavoriteSection: Không tìm thấy Token, không thể tải danh sách Yêu thích.');
+             this.#data = [];
+             return;
+         }
+
+         try {
+             const res = await fetch(`http://localhost:8080/api/v1/books/favorites?page=${page}&size=${size}`, {
+                 method: 'GET',
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'Authorization': `Bearer ${token}` // Gửi Token
+                 }
+             });
+
+             if (!res.ok) {
+                 // Nếu lỗi 401/403, có thể chuyển hướng về Login
+                 if (res.status === 401 || res.status === 403) {
+                      // AuthService.navigateToLogin(); // Có thể thực hiện nếu muốn nghiêm ngặt
+                 }
+                 throw new Error(`Failed to fetch favorites: ${res.statusText}`);
+             }
+
+             const result = await res.json();
+             // Cần ánh xạ DTO từ Backend (BookSlimResponse) sang cấu trúc mock data Frontend
+             this.#data = result.content.map(book => ({
+                 id: book.id,
+                 title: book.name,
+                 img: book.thumbnailUrl || './Images/Book-Covers/default.png',
+                 link: `./Details/book.html?id=${book.id}` // Link cần có ID để load chi tiết
+             }));
+
+         } catch (err) {
+             console.error('Error fetching favorites:', err);
+             // Giữ lại mock data ban đầu nếu thất bại
+             // this.#data = this.#data;
+         }
+     }
 
     #render() {
         if (!this.#data.length) {

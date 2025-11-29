@@ -1,17 +1,14 @@
+// Scripts/Explore-Page/new-books.js
 export class NewBooksSection {
-    #books;
-    #currentIndex;
-    #autoSlideInterval;
-    #slideDuration;
+    #books = [];
+    #currentIndex = 0;
+    #autoSlideInterval = null;
+    #slideDuration = 5000;
     #featuredContainer;
     #listContainer;
 
-    constructor(books) {
-        this.#books = books;
-        this.#currentIndex = 0;
-        this.#autoSlideInterval = null;
-        this.#slideDuration = 5000;
-
+    // Sửa constructor: Không nhận data, tự fetch
+    constructor() {
         this.#featuredContainer = document.querySelector('.new-book-card');
         this.#listContainer = document.querySelector('.new-books-grid');
 
@@ -22,34 +19,64 @@ export class NewBooksSection {
         }
     }
 
-    init() {
-        // Lần render đầu tiên không cần chờ delay fade-out
+    async init() {
+        await this.#fetchData();
+        if (this.#books.length === 0) return;
+
         this.#render(false);
         this.#addEventListeners();
         this.#startAutoSlide();
     }
 
+    async #fetchData() {
+        try {
+            // API: Lấy New Releases, giới hạn 8 cuốn để đủ cho featured và grid
+            const response = await fetch("http://localhost:8080/api/v1/books?type=new&size=8");
+            if (!response.ok) throw new Error('Failed to fetch new books');
+
+            const data = await response.json();
+
+            // Map dữ liệu từ BookSlimResponse sang cấu trúc FE
+            this.#books = data.content.map(book => ({
+                id: book.id,
+                title: book.name,
+                author: book.authorNames,
+                img: book.thumbnailUrl,
+                rating: book.averageRating,
+                reviewCount: book.ratingCount ? book.ratingCount.toLocaleString('en-US') : '0',
+                description: "Đang cập nhật mô tả..." // Dùng mô tả giả
+            }));
+
+        } catch (error) {
+            console.error("Error fetching new books:", error);
+            this.#books = [];
+        }
+    }
+
     #render(withFade = true) {
+        if (this.#books.length === 0) {
+            this.#featuredContainer.innerHTML = '<p>Không có sách mới.</p>';
+            this.#listContainer.innerHTML = '';
+            return;
+        }
+
         const featuredBook = this.#books[this.#currentIndex];
-        const otherBooks = this.#books.map((book, index) => ({ ...book, originalIndex: index }))
-                                      .filter(book => book.originalIndex !== this.#currentIndex);
+        // Chỉ lấy 3 cuốn đầu tiên của danh sách CÒN LẠI để hiển thị trong grid nhỏ
+        const otherBooks = this.#books.filter(book => book.id !== featuredBook.id).slice(0, 3);
         const ratingImgName = this.#getRatingImageName(featuredBook.rating);
 
         // --- BƯỚC 1: BẮT ĐẦU FADE OUT ---
         if (withFade) {
-            // Loại bỏ class 'active' để kích hoạt CSS transition fade-out
             this.#featuredContainer.classList.remove('active');
         }
 
-        // Thời gian chờ fade-out hoàn tất (nên khớp với CSS transition, v.d. 300ms)
-        // Nếu là lần render đầu (withFade=false) thì không cần chờ.
         const delay = withFade ? 300 : 0;
 
         setTimeout(() => {
             // --- BƯỚC 2: CẬP NHẬT NỘI DUNG HTML MỚI ---
             this.#featuredContainer.innerHTML = `
                 <div>
-                     <img class="new-book-cover jstoBookDetailPage" src="${featuredBook.img}" alt="${featuredBook.title}" data-book-id='${featuredBook.id}'>
+                     <img class="new-book-cover jstoBookDetailPage" src="${featuredBook.img}" alt="${featuredBook.title}" data-book-id='${featuredBook.id}' onerror="this.src='./Images/Book-Covers/default.png'">
                 </div>
                 <div class="new-book-info">
                     <h3>${featuredBook.title}</h3>
@@ -66,14 +93,13 @@ export class NewBooksSection {
 
             // Cập nhật danh sách nhỏ bên phải luôn
             this.#listContainer.innerHTML = otherBooks.map(book => `
-                <div class="book-cover-small js-small-book" data-index="${book.originalIndex}" style="cursor: pointer; transition: all 0.3s ease;">
-                    <img src="${book.img}" alt="${book.title}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                <div class="book-cover-small js-small-book jstoBookDetailPage" data-book-id="${book.id}" style="cursor: pointer; transition: all 0.3s ease;">
+                    <img src="${book.img}" alt="${book.title}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" onerror="this.src='./Images/Book-Covers/default.png'">
                 </div>
             `).join('');
             this.#addGridListeners();
 
             // --- BƯỚC 3: BẮT ĐẦU FADE IN ---
-            // Sử dụng requestAnimationFrame để đảm bảo browser đã nhận biết nội dung mới trước khi thêm class
             requestAnimationFrame(() => {
                  this.#featuredContainer.classList.add('active');
             });
@@ -85,25 +111,30 @@ export class NewBooksSection {
         let scoreInt = Math.round(score * 10);
         scoreInt = Math.round(scoreInt / 5) * 5;
         if (scoreInt === 0) return 'rating-0.png';
+        if (scoreInt > 50) scoreInt = 50;
         const scoreStr = scoreInt < 10 ? `0${scoreInt}` : `${scoreInt}`;
         return `rating-${scoreStr}.png`;
     }
 
     #addGridListeners() {
+        // Sự kiện click vào sách nhỏ để chuyển thành featured
         const smallBooks = this.#listContainer.querySelectorAll('.js-small-book');
         smallBooks.forEach(el => {
             el.addEventListener('click', () => {
-                const newIndex = parseInt(el.dataset.index);
-                this.#handleSwap(newIndex);
+                const bookId = el.dataset.bookId;
+                const newIndex = this.#books.findIndex(b => b.id == bookId);
+                if (newIndex !== -1) {
+                    this.#handleSwap(newIndex);
+                }
             });
         });
     }
 
     #handleSwap(index) {
-        if (index === this.#currentIndex) return; // Không làm gì nếu click vào sách đang hiển thị
+        if (index === this.#currentIndex) return;
         this.#currentIndex = index;
         this.#resetAutoSlide();
-        this.#render(true); // Gọi render với hiệu ứng fade
+        this.#render(true);
     }
 
     #addEventListeners() {

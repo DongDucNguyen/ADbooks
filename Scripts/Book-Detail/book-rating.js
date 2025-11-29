@@ -1,22 +1,25 @@
+// Scripts/Book-Detail/book-rating.js
 import { AddRatingModal } from './add-rating-modal.js';
 import { ViewRatingModal } from './view-rating-modal.js';
 
 export class BookRatingSection {
-    #data;         
-    #container;    
-    #headerStar;   
-    #filterSelect; 
-    #plusBtn; 
-    #viewModal; // Instance modal xem chi tiết
+    #data;
+    #bookId; // [NEW] ID sách
+    #container;
+    #headerStar;
+    #filterSelect;
+    #plusBtn;
+    #viewModal;
 
-    constructor(data) {
+    // Thêm bookId vào constructor
+    constructor(data, bookId) {
         this.#data = data;
-        this.#container = document.querySelector('.rating'); 
+        this.#bookId = bookId;
+        this.#container = document.querySelector('.rating');
         this.#headerStar = document.querySelector('.rating-star');
         this.#filterSelect = document.querySelector('.filter-select');
         this.#plusBtn = document.querySelector('.plus-btn');
 
-        // Khởi tạo Modal Xem
         this.#viewModal = new ViewRatingModal();
 
         if (this.#container) {
@@ -31,14 +34,68 @@ export class BookRatingSection {
         this.#initAddRatingModal();
     }
 
-    #initAddRatingModal() {
-        if (!this.#plusBtn) return;
-        const addModal = new AddRatingModal((newReview) => {
-            this.#data.unshift(newReview);
-            if (this.#filterSelect) this.#filterSelect.value = 'all';
+    // [NEW] API Call: Gửi đánh giá
+    async #submitReview(newReview) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert("Vui lòng đăng nhập để đánh giá.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/books/${this.#bookId}/reviews`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    stars: newReview.score,
+                    title: newReview.title,
+                    description: newReview.content
+                })
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                alert(`Gửi đánh giá thất bại: ${result.message || 'Lỗi không xác định'}`);
+                return;
+            }
+
+            alert("Đánh giá của bạn đã được gửi thành công!");
+
+            // Thêm review mới vào list (Giả lập. Thực tế nên reload reviews từ API)
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            const userFullName = userInfo ? `${userInfo.lastName} ${userInfo.firstName}` : 'Người dùng';
+
+            this.#data.unshift({
+                ...newReview,
+                name: userFullName,
+                date: new Date().toLocaleDateString('vi-VN')
+            });
+            this.#filterSelect.value = 'all';
             this.#renderList(this.#data);
             this.#updateHeaderInfo();
             this.#container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        } catch (error) {
+            console.error("Lỗi khi gửi đánh giá:", error);
+            alert("Lỗi kết nối. Không thể gửi đánh giá.");
+        }
+    }
+
+
+    #initAddRatingModal() {
+        if (!this.#plusBtn) return;
+
+        const token = localStorage.getItem('token');
+        if (!this.#bookId || !token) {
+            this.#plusBtn.style.display = 'none';
+            return;
+        }
+
+        const addModal = new AddRatingModal((newReview) => {
+            this.#submitReview(newReview);
         });
         this.#plusBtn.addEventListener('click', () => addModal.show());
     }
@@ -59,7 +116,7 @@ export class BookRatingSection {
 
     #getStarImgPath(score) {
         const roundedScore = Math.round(score * 2) / 2;
-        let scoreInt = roundedScore * 10; 
+        let scoreInt = roundedScore * 10;
         if(scoreInt > 50) scoreInt = 50;
         const fileName = (scoreInt === 0) ? 'rating-0.png' : (scoreInt < 10 ? `rating-0${scoreInt}.png` : `rating-${scoreInt}.png`);
         return `../Images/ratings/${fileName}`;
@@ -67,7 +124,7 @@ export class BookRatingSection {
 
     #renderList(dataToRender) {
         this.#container.innerHTML = '';
-        const displayData = dataToRender.slice(0, 5); 
+        const displayData = dataToRender.slice(0, 5);
 
         const topHtml = `<div class="line"></div>`;
         const cardsHtml = displayData.map(review => {
@@ -108,7 +165,10 @@ export class BookRatingSection {
         // Nút xem tất cả
         const viewAllBtn = this.#container.querySelector('.all-ratings');
         if (viewAllBtn) {
-            viewAllBtn.addEventListener('click', () => window.location.href = '../Details/Listing-Rating.html');
+            viewAllBtn.addEventListener('click', () => {
+                // Chuyển hướng, truyền ID sách qua query parameter
+                window.location.href = `../Details/Listing-Rating.html?id=${this.#bookId}`;
+            });
         }
     }
 

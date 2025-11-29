@@ -3,56 +3,129 @@ import { ReadingPlayer } from './Reading-Detail/reading-player.js';
 import { ReadingPdfViewer } from './Reading-Detail/reading-pdf.js';
 import { ReadingChapters } from './Reading-Detail/reading-chapters.js';
 import { ReadingControls } from './Reading-Detail/reading-controls.js';
-import { ReadingInfo } from './Reading-Detail/reading-info.js'; // <--- Import mới
+import { ReadingInfo } from './Reading-Detail/reading-info.js';
 
-// --- MOCK DATA (Mô phỏng dữ liệu đầy đủ từ Backend) ---
-const BOOK_DATA_SOURCE = {
-    id: "book-101",
-    metadata: {
-        title: "Người Thầy Vĩ Đại",
-        author: "Robin Sharma",
-        coverUrl: "./Images/Book-Covers/book.png",
-    },
-    userStatus: {
-        isFavorite: true,  // <-- Thử đổi thành false để test
-        lastReadChapter: 1
-    },
-    resources: {
-        pdfUrl: "./1_Ba người thầy vĩ đại.pdf",
-        audioId: "main-audio",
-        // Thêm đoạn đuôi này vào
-    audioMp3Url: "https://crimson-voice-0636.dongducnguyen05.workers.dev/?fileId=13yM_JdlEJjaHvtPMOZsZtbW4tdSKjf-E&version=fix_lan_cuoi"
-    },
-    chapters: [
-        { title: "Mở đầu", duration: 310 },         
-        { title: "Chương 1", duration: 920 },       
-        { title: "Chương 2", duration: 600 },       
-        { title: "Chương 3", duration: 525 },       
-        { title: "Kết thúc", duration: 140 }        
-    ]
+// Utility functions
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 
+// API Call: Lấy chi tiết sách
+async function fetchBookData(bookId) {
+    const API_BASE = "http://localhost:8080/api/v1/books";
+    try {
+        const bookResp = await fetch(`${API_BASE}/${bookId}`);
+        if (!bookResp.ok) throw new Error('Failed to fetch book details');
+        const bookData = await bookResp.json();
+
+        // Sắp xếp chapters theo thứ tự
+        const sortedChapters = bookData.chapters.sort((a, b) => a.number - b.number);
+        const firstChapter = sortedChapters[0];
+
+        // Giả sử API để lấy trạng thái favorite và last read (cần API riêng hoặc gộp)
+        let isFavorite = false;
+        let lastReadChapter = null; // Mặc định là null
+
+        const token = localStorage.getItem('token');
+        if(token) {
+            // Check Favorite (sử dụng endpoint toggle favorite để check trạng thái)
+            const favCheck = await fetch(`${API_BASE}/${bookId}/favorite`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).then(res => res.json()).catch(() => ({}));
+
+            isFavorite = favCheck.isFavorite || false;
+
+            // Revert trạng thái sau khi check (vì nó là toggle, nên phải gọi lại lần nữa)
+            await fetch(`${API_BASE}/${bookId}/favorite`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            // Check Last Read Chapter (sử dụng API /user/bookmarks)
+            const bookmarkCheck = await fetch(`http://localhost:8080/api/v1/user/bookmarks?size=100`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).then(res => res.json()).catch(() => ({}));
+
+            const lastBookmark = bookmarkCheck.content.find(b => b.bookId == bookId);
+            if (lastBookmark) {
+                lastReadChapter = {
+                    chapterId: lastBookmark.chapterId,
+                    audioTimeline: lastBookmark.audioTimeline,
+                    audiobookUrl: sortedChapters.find(c => c.id === lastBookmark.chapterId)?.audioUrl || firstChapter.audioUrl
+                };
+            }
+        }
+
+        return {
+            id: bookData.id,
+            metadata: {
+                title: bookData.name,
+                author: bookData.authors.map(a => `${a.firstName} ${a.lastName}`).join(', '),
+                coverUrl: bookData.thumbnailUrl,
+            },
+            userStatus: {
+                isFavorite: isFavorite,
+                // Nếu không có bookmark, trả về chapter đầu tiên
+                lastRead: lastReadChapter || {
+                    chapterId: firstChapter.id,
+                    audioTimeline: 0,
+                    audiobookUrl: firstChapter.audioUrl
+                }
+            },
+            resources: {
+                pdfUrl: bookData.ebookFileUrl,
+                audioId: "main-audio",
+            },
+            chapters: sortedChapters
+        };
+
+    } catch (error) {
+        console.error("Lỗi khi fetch chi tiết sách:", error);
+        document.querySelector('main').innerHTML = '<h2 style="text-align:center;">Không tìm thấy sách hoặc lỗi kết nối.</h2>';
+        return null;
+    }
+}
+
+
 // --- MAIN EXECUTION ---
-document.addEventListener('DOMContentLoaded', () => {
-    
+document.addEventListener('DOMContentLoaded', async () => {
+    const bookId = getUrlParameter('id');
+    const bookData = await fetchBookData(bookId);
+
+    if (!bookData) return;
+
     // 1. Render Thông tin sách (Bìa, Tên, Tác giả)
-    new ReadingInfo(BOOK_DATA_SOURCE.metadata);
+    new ReadingInfo(bookData.metadata);
 
-    // 2. Khởi tạo PDF Viewer (Truyền URL từ data)
-    const pdfViewer = new ReadingPdfViewer(BOOK_DATA_SOURCE.resources.audioId);
-    // Lưu ý: Cần sửa nhẹ ReadingPdfViewer để nhận URL từ hàm start thay vì hardcode,
-    // hoặc gọi phương thức load công khai ở đây:
-    pdfViewer.loadPdf(BOOK_DATA_SOURCE.resources.pdfUrl); 
+    // 2. Khởi tạo PDF Viewer
+    const pdfViewer = new ReadingPdfViewer(bookData.resources.audioId);
+    pdfViewer.loadPdf(bookData.resources.pdfUrl);
 
-    // 3. Khởi tạo Player (Thanh nhạc)
-    new ReadingPlayer(BOOK_DATA_SOURCE.resources.audioId, BOOK_DATA_SOURCE.resources.audioMp3Url);
+    // 3. Khởi tạo Player
+    const readingPlayer = new ReadingPlayer(
+        bookData.resources.audioId,
+        bookId,
+        bookData.userStatus.lastRead.chapterId,
+        bookData.userStatus.lastRead.audiobookUrl,
+        bookData.userStatus.lastRead.audioTimeline
+    );
 
-    // 4. Khởi tạo Chapter List (Danh sách chương)
-    new ReadingChapters(BOOK_DATA_SOURCE.chapters, BOOK_DATA_SOURCE.resources.audioId);
+    // 4. Khởi tạo Chapter List
+    const readingChapters = new ReadingChapters(
+        bookData.chapters,
+        bookData.resources.audioId,
+        readingPlayer,
+        bookData.userStatus.lastRead.chapterId // ID chapter đang đọc
+    );
 
-    // 5. Khởi tạo Controls (Các nút chức năng)
+    // 5. Khởi tạo Controls
     new ReadingControls(
-        pdfViewer, 
-        BOOK_DATA_SOURCE.userStatus.isFavorite // <-- Truyền vào đây
+        pdfViewer,
+        bookId,
+        bookData.userStatus.isFavorite
     );
 });

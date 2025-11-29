@@ -2,18 +2,24 @@
 export class ReadingPlayer {
     #audioEl;
     #elements;
+    #bookId; // NEW
+    #chapterId; // NEW
+    #token = localStorage.getItem('token'); // NEW
 
-    // SỬA: Thêm tham số audioUrl vào constructor
-    constructor(audioElementId, audioUrl = null) {
+    // SỬA: Thêm bookId, chapterId, audioUrl và initialTime
+    constructor(audioElementId, bookId, chapterId, audioUrl = null, initialTime = 0) {
         this.#audioEl = document.getElementById(audioElementId);
-        console.log("LINK NHẠC NHẬN ĐƯỢC LÀ:", audioUrl);
-        // [NEW] Logic gán nguồn nhạc động
+        this.#bookId = bookId;
+        this.#chapterId = chapterId;
+
+        // [NEW] Logic gán nguồn nhạc động và thời gian
         if (this.#audioEl && audioUrl) {
             this.#audioEl.src = audioUrl;
-            this.#audioEl.load(); // Bắt buộc gọi load() để trình duyệt nhận nguồn mới
+            this.#audioEl.load();
+            // Chỉ set currentTime nếu lớn hơn 0
+            this.#audioEl.currentTime = initialTime > 0 ? initialTime : 0;
         }
-        
-        // Gom nhóm các elements
+
         this.#elements = {
             playBtn: document.querySelector('.js-play-btn'),
             playIcon: document.querySelector('.js-play-btn i'),
@@ -30,15 +36,67 @@ export class ReadingPlayer {
         }
     }
 
+    // Public: Update Chapter ID (khi click vào mục lục)
+    setChapter(chapterId, audioUrl, initialTime = 0) {
+        this.#chapterId = chapterId;
+        if (this.#audioEl) {
+            this.#audioEl.src = audioUrl;
+            this.#audioEl.load();
+            this.#audioEl.currentTime = initialTime;
+            this.#audioEl.play();
+        }
+    }
+
+    // Public: Trả về chapter ID đang phát
+    get currentChapterId() {
+        return this.#chapterId;
+    }
+
     init() {
         this.#setupAudioListeners();
         this.#setupUIListeners();
+        this.#startProgressUpdater(); // NEW
+    }
+
+    // NEW: Gửi tiến độ lên API sau mỗi 5s
+    #startProgressUpdater() {
+        // Chỉ update nếu có token và bookId
+        if (!this.#token || !this.#bookId) return;
+
+        setInterval(() => {
+            if (!this.#audioEl.paused && this.#chapterId) {
+                // Đảm bảo timeline không vượt quá duration
+                const timeline = Math.min(Math.floor(this.#audioEl.currentTime), Math.floor(this.#audioEl.duration));
+                if (!isNaN(timeline)) {
+                    this.#sendProgressUpdate(timeline);
+                }
+            }
+        }, 5000); // Mỗi 5 giây
+    }
+
+    async #sendProgressUpdate(timeline) {
+        try {
+            await fetch("http://localhost:8080/api/v1/user/progress", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.#token}`
+                },
+                body: JSON.stringify({
+                    bookId: this.#bookId,
+                    chapterId: this.#chapterId,
+                    timeline: timeline
+                })
+            });
+        } catch (error) {
+            console.error("Failed to update progress:", error);
+        }
     }
 
     // --- AUDIO EVENT LISTENERS ---
     #setupAudioListeners() {
         this.#audioEl.addEventListener('loadedmetadata', () => this.#syncSliderMax());
-        
+
         this.#audioEl.addEventListener('timeupdate', () => {
             const currentTime = this.#audioEl.currentTime;
             const duration = this.#audioEl.duration;
@@ -59,6 +117,9 @@ export class ReadingPlayer {
             this.#elements.playIcon.classList.replace('fa-pause', 'fa-play');
             this.#elements.seekSlider.value = 0;
             this.#updateSliderColor(this.#elements.seekSlider, 0, 100);
+
+            // NEW: Gửi tiến độ hoàn thành chapter cuối
+            if(this.#chapterId) this.#sendProgressUpdate(Math.floor(this.#audioEl.duration));
         });
     }
 

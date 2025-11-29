@@ -1,78 +1,121 @@
+// Scripts/book-detail.js (Bản đã sửa lỗi Module Scope)
+
 import { BookBanner } from './Book-Detail/book-banner.js';
 import { BookContent } from './Book-Detail/book-content.js';
 import { BookRatingSection } from './Book-Detail/book-rating.js';
 
-// --- MOCK DATA ---
-const MOCK_BOOK_DETAIL = {
-    id: "b9",
-    title: "Đồi Gió Hú",
-    author: "Emily Brontë",
-    publishDate: "20/11/2024",
-    img: "../Images/Book-Covers/b9.png",
-    shortInfo: "Một tác phẩm kinh điển về tình yêu và hận thù...",
-    
-    // [UPDATE 1] Trạng thái yêu thích ban đầu
-    isFavorite: false, 
+// --- MAIN EXECUTION (ENTRY POINT) ---
+document.addEventListener('DOMContentLoaded', async () => {
 
-    description: `<p>"Đồi gió hú" là tiểu thuyết duy nhất của Emily Brontë...</p>`,
-    authorNote: `<p>Emily Brontë (1818–1848) là một nhà thơ và tiểu thuyết gia...</p>`,
-    relatedInfo: `<p>Thể loại: Văn học cổ điển, Lãng mạn.</p>`,
+    // 1. Khai báo các hàm Service (Đưa vào phạm vi cục bộ của DOMContentLoaded)
 
-    // [UPDATE 2] Thêm ID cho từng review
-    reviewsList: [
-        {
-            id: 101, // ID riêng biệt
-            name: "Nguyễn Văn A",
-            date: "20/11/2024",
-            score: 5.0,
-            title: "Tuyệt phẩm!",
-            content: "Một tuyệt tác! Câu chuyện tình yêu quá mãnh liệt."
-        },
-        {
-            id: 102,
-            name: "Trần Thị B",
-            date: "18/11/2024",
-            score: 4.5,
-            title: "Rất hay",
-            content: "Sách in đẹp, giao hàng nhanh."
-        },
-        {
-            id: 103,
-            name: "User C",
-            date: "15/11/2024",
-            score: 3.0,
-            title: "Tạm ổn",
-            content: "Nội dung hơi kén người đọc."
-        },
-        {
-            id: 104,
-            name: "User D",
-            date: "10/11/2024",
-            score: 5.0,
-            title: "Kinh điển",
-            content: "Không có gì để chê. Phải đọc 1 lần trong đời."
-        },
-        {
-            id: 105,
-            name: "User E",
-            date: "05/11/2024",
-            score: 2.0,
-            title: "Khó hiểu",
-            content: "Văn phong cổ quá đọc thấy mệt."
-        },
-        {
-            id: 106,
-            name: "User F",
-            date: "01/11/2024",
-            score: 5.0,
-            title: "Xuất sắc",
-            content: "Bìa đẹp, nội dung sâu sắc."
+    /**
+     * Hàm fetch an toàn, xử lý lỗi chung (500, JSON Parsing)
+     */
+    async function safeFetch(url, options = {}) {
+        try {
+            // [TÍCH HỢP AUTH] Thêm Authorization header nếu có token
+            const token = localStorage.getItem("token");
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            };
+
+            const response = await fetch(url, { headers, ...options });
+
+            if (!response.ok) {
+                let errorMessage = `Lỗi Server (${response.status}): Vui lòng kiểm tra Server và DB.`;
+                try {
+                    const errorBody = await response.json();
+                    errorMessage = errorBody.message || errorBody.error || errorMessage;
+                } catch (e) {
+                    // Nếu không phải JSON (thường 500 hoặc 401/403 Spring Security)
+                    if (response.status === 401 || response.status === 403) {
+                        errorMessage = "Phiên hết hạn hoặc truy cập bị từ chối.";
+                    }
+                }
+                alert(errorMessage);
+                throw new Error(errorMessage);
+            }
+
+            return await response.json();
+
+        } catch (error) {
+            console.error("LỖI KẾT NỐI:", error.message);
+            return null; // Trả về null khi fetch thất bại
         }
-    ]
-};
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-    new BookBanner(MOCK_BOOK_DETAIL);
-    new BookContent(MOCK_BOOK_DETAIL);
-    new BookRatingSection(MOCK_BOOK_DETAIL.reviewsList);
-});
+    /**
+     * Tải chi tiết sách (Public)
+     */
+    async function fetchBookDetail(bookId) {
+        const url = `http://localhost:8080/api/v1/books/${bookId}`;
+        // Gọi safeFetch với options rỗng vì đây là GET public
+        return await safeFetch(url, { method: 'GET' });
+    }
+
+    // --- Các hàm fetch khác (tối giản để giữ cấu trúc) ---
+    async function fetchBookReviews(bookId) {
+        const url = `http://localhost:8080/api/v1/books/${bookId}/reviews?page=0&size=5`;
+        const responseData = await safeFetch(url, { method: 'GET' });
+
+        if (!responseData || !responseData.content) return [];
+
+        return responseData.content.map(review => ({
+            id: review.id,
+            name: review.userFullName || 'Độc giả',
+            date: new Date(review.createdAt).toLocaleDateString('vi-VN'),
+            score: review.stars,
+            title: review.title,
+            content: review.content,
+        }));
+    }
+
+    async function fetchAIAnalysis(bookTitle, authorName) {
+        if (!bookTitle) return null;
+        const payload = { bookTitle, authorName };
+        return await safeFetch("http://localhost:8080/api/v1/books/ai/analyze", {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+    }
+
+    async function fetchIsFavoriteStatus(bookId) { return false; } // Tạm thời bỏ qua Auth Status
+
+    // 2. Bắt đầu luồng thực thi
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookId = urlParams.get('id') || "1";
+
+    const bookData = await fetchBookDetail(bookId);
+    if (!bookData) return; // Dừng nếu tải sách chính thất bại
+
+    // 3. Chuẩn bị dữ liệu
+    const authorNames = bookData.authors ? bookData.authors.map(a => `${a.firstName} ${a.lastName}`).join(', ') : 'N/A';
+    const bookTitle = bookData.name || '';
+
+    const [aiAnalysis, reviews] = await Promise.all([
+        bookTitle ? fetchAIAnalysis(bookTitle, authorNames) : null,
+        fetchBookReviews(bookData.id)
+    ]);
+
+    const mappedData = {
+        id: bookData.id,
+        title: bookTitle,
+        author: authorNames,
+        publishDate: bookData.releaseDate,
+        img: bookData.thumbnailUrl,
+        isFavorite: await fetchIsFavoriteStatus(bookData.id),
+
+        // Content: Ưu tiên nội dung AI
+        shortInfo: bookData.description ? bookData.description.substring(0, 150) + '...' : '',
+        description: (aiAnalysis && aiAnalysis.description) ? aiAnalysis.description : bookData.description,
+        authorNote: (aiAnalysis && aiAnalysis.authorNote) ? aiAnalysis.authorNote : `Tác giả: ${authorNames}`,
+        relatedInfo: (aiAnalysis && aiAnalysis.relatedInfo) ? aiAnalysis.relatedInfo : `Quốc gia: ${bookData.country}, Ngôn ngữ: ${bookData.language}, NXB: ${bookData.publishingHouseName}`,
+    };
+
+    // 4. Khởi tạo Modules
+    new BookBanner(mappedData);
+    new BookContent(mappedData);
+    new BookRatingSection(reviews);
+});\

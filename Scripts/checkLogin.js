@@ -1,39 +1,38 @@
+import { AuthService } from "./Auth/AuthService.js";
+
 export class CheckLogin {
-    #publicPages;
+    // Chỉ chứa các trang không cần đăng nhập
+    #publicPages = ["Login.html", "Register.html"];
 
-    constructor(publicPages = ["Login.html", "Register.html"]) {
-        this.#publicPages = publicPages;
-
+    constructor() {
         this.#check();
     }
 
     #check() {
         const currentPage = this.#getCurrentPage();
-
-        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-        const userData = localStorage.getItem("userLogin");
-        const sessionActive = sessionStorage.getItem("sessionActive") === "true";
-
+        const isLoggedIn = AuthService.isLogedIn;
         const isPublic = this.#publicPages.includes(currentPage);
 
-        // ❗ Nếu session không tồn tại → xem như tab mới mở → bắt login lại
-        if (!sessionActive) {
-            console.log("→ Tab mới mở, không có session → buộc logout");
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("userLogin");
-            return window.location.replace("/Login.html");
+        // Cập nhật trạng thái Active session nếu đã đăng nhập
+        if (isLoggedIn) {
+            sessionStorage.setItem("sessionActive", "true");
         }
 
-        // ❗ Chưa đăng nhập → không được vào private page
-        if (!isLoggedIn || !userData) {
-            if (!isPublic) return window.location.replace("/Login.html");
-            return;
+        // ❗ 1. Chưa đăng nhập & truy cập trang PRIVATE -> Chuyển đến Login
+        if (!isLoggedIn && !isPublic) {
+            console.log("-> Chưa đăng nhập, chặn truy cập trang riêng tư.");
+            return AuthService.navigateToLogin();
         }
 
-        // ❗ Đã đăng nhập mà vào login/register → chặn
-        if (isLoggedIn && userData && isPublic) {
-            return window.location.replace("/index.html");
+        // ❗ 2. Đã đăng nhập & truy cập trang PUBLIC (Login/Register) -> Chuyển đến Home
+        if (isLoggedIn && isPublic) {
+            console.log("-> Đã đăng nhập, chặn truy cập Login/Register.");
+            return AuthService.navigateToHome();
         }
+
+        // 3. Các trường hợp còn lại:
+        // - Chưa login + trang public: OK
+        // - Đã login + trang private: OK
     }
 
     #getCurrentPage() {
