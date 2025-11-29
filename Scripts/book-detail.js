@@ -1,78 +1,92 @@
+// Scripts/book-detail.js
 import { BookBanner } from './Book-Detail/book-banner.js';
 import { BookContent } from './Book-Detail/book-content.js';
 import { BookRatingSection } from './Book-Detail/book-rating.js';
 
-// --- MOCK DATA ---
-const MOCK_BOOK_DETAIL = {
-    id: "b9",
-    title: "Đồi Gió Hú",
-    author: "Emily Brontë",
-    publishDate: "20/11/2024",
-    img: "../Images/Book-Covers/b9.png",
-    shortInfo: "Một tác phẩm kinh điển về tình yêu và hận thù...",
-    
-    // [UPDATE 1] Trạng thái yêu thích ban đầu
-    isFavorite: false, 
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Lấy ID từ URL (Ví dụ: book.html?id=12 -> lấy được "12")
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookId = urlParams.get('id');
 
-    description: `<p>"Đồi gió hú" là tiểu thuyết duy nhất của Emily Brontë...</p>`,
-    authorNote: `<p>Emily Brontë (1818–1848) là một nhà thơ và tiểu thuyết gia...</p>`,
-    relatedInfo: `<p>Thể loại: Văn học cổ điển, Lãng mạn.</p>`,
+    if (!bookId) {
+        alert("Không tìm thấy ID sách!");
+        return;
+    }
 
-    // [UPDATE 2] Thêm ID cho từng review
-    reviewsList: [
-        {
-            id: 101, // ID riêng biệt
-            name: "Nguyễn Văn A",
-            date: "20/11/2024",
-            score: 5.0,
-            title: "Tuyệt phẩm!",
-            content: "Một tuyệt tác! Câu chuyện tình yêu quá mãnh liệt."
-        },
-        {
-            id: 102,
-            name: "Trần Thị B",
-            date: "18/11/2024",
-            score: 4.5,
-            title: "Rất hay",
-            content: "Sách in đẹp, giao hàng nhanh."
-        },
-        {
-            id: 103,
-            name: "User C",
-            date: "15/11/2024",
-            score: 3.0,
-            title: "Tạm ổn",
-            content: "Nội dung hơi kén người đọc."
-        },
-        {
-            id: 104,
-            name: "User D",
-            date: "10/11/2024",
-            score: 5.0,
-            title: "Kinh điển",
-            content: "Không có gì để chê. Phải đọc 1 lần trong đời."
-        },
-        {
-            id: 105,
-            name: "User E",
-            date: "05/11/2024",
-            score: 2.0,
-            title: "Khó hiểu",
-            content: "Văn phong cổ quá đọc thấy mệt."
-        },
-        {
-            id: 106,
-            name: "User F",
-            date: "01/11/2024",
-            score: 5.0,
-            title: "Xuất sắc",
-            content: "Bìa đẹp, nội dung sâu sắc."
+    try {
+        // 2. Tải dữ liệu từ database-last.json
+        // Lưu ý: File html ở trong thư mục Details, nên cần lùi lại 1 cấp (..) để tìm file json
+        const response = await fetch('../database-last.json');
+        if (!response.ok) throw new Error("Không thể tải dữ liệu.");
+        
+        const db = await response.json();
+
+        // 3. Tìm sách theo ID
+        // Lưu ý: ID trong JSON là số (12), trên URL là chuỗi ("12") nên dùng == để so sánh
+        const book = db.books.find(b => b.id == bookId);
+
+        if (!book) {
+            document.body.innerHTML = "<h1 style='text-align:center; margin-top:50px;'>Không tìm thấy cuốn sách này!</h1>";
+            return;
         }
-    ]
-};
 
-document.addEventListener('DOMContentLoaded', () => {
-    new BookBanner(MOCK_BOOK_DETAIL);
-    new BookContent(MOCK_BOOK_DETAIL);
-    new BookRatingSection(MOCK_BOOK_DETAIL.reviewsList);
+        // 4. Tìm tên tác giả (Mapping)
+        let authorName = "Unknown Author";
+        if (db.authorsOfBooks && db.author) {
+            const link = db.authorsOfBooks.find(l => l.BookId == bookId);
+            if (link) {
+                const authorObj = db.author.find(a => a.id == link.AuthorId);
+                if (authorObj) {
+                    authorName = getFullName(authorObj);
+                }
+            }
+        }
+
+        // 5. Chuẩn hóa dữ liệu để đưa vào các Class hiển thị
+        const bookData = {
+            id: book.id,
+            title: book.name,
+            author: authorName,
+            publishDate: book.releaseDate || "Đang cập nhật",
+            img: book.thumbnailUrl || "../Images/Book-Covers/default.png",
+            
+            // Tạo thông tin ngắn từ description (lấy 150 ký tự đầu)
+            shortInfo: book.description ? book.description.substring(0, 150) + "..." : "Đang cập nhật...",
+            
+            isFavorite: false, // Mặc định chưa thích
+            
+            // Nội dung chi tiết
+            description: book.description ? `<p>${book.description}</p>` : "<p>Chưa có mô tả.</p>",
+            
+            // Các thông tin phụ (có thể fix cứng hoặc lấy thêm từ JSON nếu có)
+            authorNote: `<p>Tác giả: <strong>${authorName}</strong></p>`,
+            relatedInfo: `<p>Số trang: ${book.pageNumber || 'N/A'}</p><p>Ngôn ngữ: ${book.language || 'Tiếng Việt'}</p>`,
+
+            // Review giả lập (vì JSON chưa có bảng Review)
+            reviewsList: [
+                { id: 1, name: "Người đọc ẩn danh", date: "Hôm nay", score: 5, title: "Sách hay", content: "Nội dung rất ý nghĩa." }
+            ]
+        };
+
+        // 6. Cập nhật Title của trang Web
+        document.title = bookData.title + " - Listenary";
+
+        // 7. Khởi tạo các thành phần giao diện
+        new BookBanner(bookData);
+        new BookContent(bookData);
+        new BookRatingSection(bookData.reviewsList);
+
+    } catch (error) {
+        console.error("Lỗi:", error);
+        alert("Có lỗi khi tải dữ liệu sách.");
+    }
 });
+
+// Helper: Ghép tên tác giả
+function getFullName(author) {
+    const first = author.firstName || "";
+    const last = author.lastName || "";
+    const vnSurnames = ["Nguyễn", "Trần", "Lê", "Phạm", "Hoàng", "Huỳnh", "Phan", "Vũ", "Võ", "Đặng", "Bùi", "Đỗ", "Hồ", "Ngô", "Dương", "Lý", "Chu", "Sơn", "Tô", "Trương", "Phùng", "Kim", "Nam"];
+    if (vnSurnames.includes(last)) return `${last} ${first}`.trim();
+    return `${first} ${last}`.trim();
+}

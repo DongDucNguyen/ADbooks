@@ -17,45 +17,78 @@ const bookmarkData = [
 ];
 
 const authorData = [
-    { 
-        id: "au-01", // ID Tác giả
-        name: "Nguyễn Nhật Ánh", 
-        img: "./Images/Authors/a1.jpg", 
-        link: "./Details/author-01.html",
+    {
+        id: 14,
+        name: "Nguyễn Nhật Ánh",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/14.png",
+        link: "./Details/author.html?id=14",
         books: [
-            { id: "b-na-01", title: "Mắt Biếc", link: "./Details/book-mat-biec.html" },
-            { id: "b-na-02", title: "Tôi thấy hoa vàng trên cỏ xanh", link: "./Details/book-hoa-vang.html" }
-        ] 
-    },
-    { 
-        id: "au-02",
-        name: "J.K. Rowling", 
-        img: "./Images/Authors/a2.png", 
-        link: "./Details/author-02.html",
-        books: [
-            { id: "b-jk-01", title: "Harry Potter và Hòn đá Phù thủy", link: "#" },
-            { id: "b-jk-02", title: "Harry Potter và Phòng chứa Bí mật", link: "#" },
-            { id: "b-jk-03", title: "Harry Potter và Tên tù nhân ngục Azkaban", link: "#" }
-        ]
-    }, 
-    { 
-        id: "au-03",
-        name: "Haruki Murakami", 
-        img: "./Images/Authors/a3.jpg", 
-        link: "./Details/author-03.html",
-        books: [
-            { id: "b-hm-01", title: "Rừng Na Uy", link: "#" },
-            { id: "b-hm-02", title: "Kafka bên bờ biển", link: "#" }
+            { id: 17, title: "Có 2 con mèo ngồi bên cửa sổ", link: "./Details/book.html?id=17" }
         ]
     },
-    { 
-        id: "au-04",
-        name: "Stephen King", 
-        img: "./Images/Authors/a4.jpg", 
-        link: "./Details/author-04.html",
+    {
+        id: 10,
+        name: "Vũ Trọng Phụng",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/10.png",
+        link: "./Details/author.html?id=10",
         books: [
-            { id: "b-sk-01", title: "It (Gã Hề Ma Quái)", link: "#" },
-            { id: "b-sk-02", title: "The Shining", link: "#" }
+            { id: 12, title: "Số đỏ", link: "./Details/book.html?id=12" },
+            { id: 15, title: "Cơm thầy cơm cô", link: "./Details/book.html?id=15" }
+        ]
+    },
+    {
+        id: 22,
+        name: "Paulo Coelho",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/22.png",
+        link: "./Details/author.html?id=22",
+        books: [
+            { id: 27, title: "Nhà giả kim", link: "./Details/book.html?id=27" }
+        ]
+    },
+    {
+        id: 25,
+        name: "Tara Westover",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/25.png",
+        link: "./Details/author.html?id=25",
+        books: [
+            { id: 31, title: "Được học", link: "./Details/book.html?id=31" }
+        ]
+    },
+    {
+        id: 12,
+        name: "Chu Lai",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/12.png",
+        link: "./Details/author.html?id=12",
+        books: [
+            { id: 14, title: "Mưa đỏ", link: "./Details/book.html?id=14" }
+        ]
+    },
+    {
+        id: 34,
+        name: "Stephen Hawking",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/34.png",
+        link: "./Details/author.html?id=34",
+        books: [
+            { id: 41, title: "Vũ trụ trong vỏ hạt dẻ", link: "./Details/book.html?id=41" }
+        ]
+    },
+    {
+        id: 21,
+        name: "George Orwell",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/21.png",
+        link: "./Details/author.html?id=21",
+        books: [
+            { id: 25, title: "1984", link: "./Details/book.html?id=25" },
+            { id: 26, title: "Trại súc vật", link: "./Details/book.html?id=26" }
+        ]
+    },
+    {
+        id: 40,
+        name: "Ngô Bảo Châu",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/40.png",
+        link: "./Details/author.html?id=40",
+        books: [
+            { id: 47, title: "Ai và Ky ở xứ sở những con số tàng hình", link: "./Details/book.html?id=47" }
         ]
     }
 ];

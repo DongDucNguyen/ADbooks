@@ -1,154 +1,117 @@
 import { TopAuthorSlider } from './Author-Page/top-author.js';
 import { RecentActivitiesSection } from './Author-Page/recent-activities.js'; // <--- Import mới
 import { RisingAuthorsSection } from './Author-Page/rising-authors.js';
+// 1. TOP AUTHORS (Đã sửa ảnh thành .png)
 const topAuthorsData = [
     {
-        id: 1,
-        name: "Anthony Doerr",
-        birthDate: "27/10/1973",
-        description: 'Tác giả người Mỹ nổi tiếng với lối viết giàu cảm xúc và nhân văn. Ông đạt giải Pulitzer năm 2015 với tác phẩm "All the Light We Cannot See".',
-        link: './Details/author.html',
-        img: './Images/Authors/a1.jpg',
-                books: [{
-                img : './Images/Book-Covers/b1.png',
-                id : '1'
-            },
-            {
-                img : './Images/Book-Covers/b7.png',
-                id : '2'
-            },
-            {
-                img : './Images/Book-Covers/b8.png',
-                id : '3'
-            }
+        id: 22,
+        name: "Paulo Coelho",
+        birthDate: "24/08/1947",
+        description: "Nhà văn người Brazil, nổi tiếng với phong cách triết lý và truyền cảm hứng. 'Nhà giả kim' là tác phẩm đưa ông lên hàng nhà văn có sách bán chạy nhất thế giới.",
+        link: './Details/author.html?id=22',
+        img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/22.png',
+        books: [
+            { img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/27_22.png', id: 27 }
         ]
     },
     {
-        id: 2,
-        name: "J.K. Rowling",
-        birthDate: "31/07/1965",
-        description: 'Tác giả người Anh, nổi tiếng toàn cầu với bộ truyện Harry Potter. Bà là một trong những nhà văn giàu nhất và có ảnh hưởng nhất thế giới.',
-        link: './Details/author.html',
-        img: './Images/Authors/a2.png', // Đảm bảo bạn có ảnh này
-        books: [{
-                img : './Images/Book-Covers/b2.png',
-                id : '1'
-            },
-            {
-                img : './Images/Book-Covers/b3.png',
-                id : '2'
-            },
-            {
-                img : './Images/Book-Covers/b4.png',
-                id : '3'
-            }
+        id: 10,
+        name: "Vũ Trọng Phụng",
+        birthDate: "20/10/1912",
+        description: "Ông vua phóng sự đất Bắc, nổi tiếng với giọng văn trào phúng sắc sảo. Các tác phẩm của ông phơi bày chân thực xã hội Việt Nam thời Pháp thuộc.",
+        link: './Details/author.html?id=10',
+        img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/10.png',
+        books: [
+            { img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/12_10.png', id: 12 },
+            { img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/15_10.png', id: 15 }
         ]
     },
     {
-        id: 3,
-        name: "Haruki Murakami",
-        birthDate: "12/01/1949",
-        description: 'Nhà văn Nhật Bản hiện đại nổi tiếng với phong cách siêu thực. Các tác phẩm của ông thường đề cập đến sự cô đơn và khao khát của con người.',
-        link: './Details/author.html',
-        img: './Images/Authors/a3.jpg', // Đảm bảo bạn có ảnh này
-            books: [{
-                img : './Images/Book-Covers/b6.png',
-                id : '1'
-            },
-            {
-                img : './Images/Book-Covers/b7.png',
-                id : '2'
-            },
-            {
-                img : './Images/Book-Covers/b1.png',
-                id : '3'
-            }
+        id: 17,
+        name: "William Golding",
+        birthDate: "19/09/1911",
+        description: "Nhà văn, nhà thơ người Anh, đoạt giải Nobel Văn học năm 1983. Tác phẩm 'Chúa ruồi' của ông là một kiệt tác ẩn dụ về bản chất con người.",
+        link: './Details/author.html?id=17',
+        img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/17.png',
+        books: [
+            { img: 'https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/21_17.png', id: 21 }
         ]
     }
 ];
 
+// 2. RECENT ACTIVITIES (Đã sửa ảnh thành .png)
 const recentActivitiesData = [
     {
-        id: 101,
-        name: "Nguyễn Nhật Ánh",
-        img: "./Images/Authors/a1.jpg",
+        id: 25,
+        name: "Tara Westover",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/25.png",
         recentBooks: [
-            {id:1, date: "10/2023", title: "Mùa Hè Không Tên", link: "./Details/book1.html" },
-            {id:1, date: "05/2022", title: "Ra Bờ Suối Ngắm Hoa", link: "./Details/book2.html" },
-            {id:1, date: "12/2021", title: "Con Chim Xanh Biếc", link: "#" },
+            { id: 31, date: "10/2023", title: "Được học", link: "./Details/book.html?id=31" }
         ]
     },
     {
-        id: 102,
-        name: "J.K. Rowling",
-        img: "./Images/Authors/a2.png",
+        id: 12,
+        name: "Chu Lai",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/12.png",
         recentBooks: [
-            {id:1, date: "12/2023", title: "Harry Potter Illustrated", link: "#" },
-            {id:1, date: "10/2022", title: "The Christmas Pig", link: "#" },
-            {id:1, date: "08/2020", title: "The Ickabog", link: "#" }
+            { id: 14, date: "09/2023", title: "Mưa đỏ", link: "./Details/book.html?id=14" }
         ]
     },
     {
-        id: 103,
-        name: "Haruki Murakami",
-        img: "./Images/Authors/a3.jpg",
+        id: 28,
+        name: "Frank McCourt",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/28.png",
         recentBooks: [
-            {id:1, date: "04/2023", title: "The City and Its Uncertain Walls", link: "#" },
-            {id:1, date: "07/2021", title: "First Person Singular", link: "#" },
-            {id:1, date: "10/2017", title: "Killing Commendatore", link: "#" },
-            {id:1, date: "08/2014", title: "Men Without Women", link: "#" }
+            { id: 34, date: "08/2023", title: "Người thầy", link: "./Details/book.html?id=34" }
         ]
     },
     {
-        id: 104,
-        name: "Stephen King",
-        img: "./Images/Authors/a4.jpg",
+        id: 42,
+        name: "Takeshi Furukawa",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/42.png",
         recentBooks: [
-            {id:1, date: "09/2023", title: "Holly", link: "#" },
-            {id:1, date: "09/2022", title: "Fairy Tale", link: "#" },
-            {id:1, date: "08/2021", title: "Billy Summers", link: "#" },
-            {id:1, date: "04/2020", title: "If It Bleeds", link: "#" },
-            {id:1, date: "09/2019", title: "The Institute", link: "#" }
+            { id: 49, date: "07/2023", title: "Mình là cá, việc của mình là bơi", link: "./Details/book.html?id=49" }
         ]
     },
     {
-        id: 105,
-        name: "Dan Brown",
-        img: "./Images/Authors/a5.jpg",
+        id: 16,
+        name: "Nguyễn Dữ",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/16.png",
         recentBooks: [
-            {id:1, date: "09/2020", title: "Wild Symphony", link: "#" },
-            {id:1, date: "10/2017", title: "Origin", link: "#" }
+            { id: 19, date: "05/2023", title: "Nam Xương nữ tử truyện", link: "./Details/book.html?id=19" }
         ]
     }
 ];
+
+// 3. RISING AUTHORS (Đã sửa ảnh thành .png)
 const risingAuthorsData = [
     {
-        id: 201,
-        name: "Ocean Vuong",
-        img: "./Images/Authors/a1.jpg", // Thay bằng ảnh thật nếu có
-        link: "./Details/author-ocean-vuong.html",
-        bio: 'Nhà thơ, tiểu thuyết gia người Mỹ gốc Việt. Tác phẩm "On Earth We\'re Briefly Gorgeous" đã gây tiếng vang lớn trên văn đàn quốc tế.'
+        id: 40,
+        name: "Ngô Bảo Châu",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/40.png",
+        link: "./Details/author.html?id=40",
+        bio: 'Nhà toán học người Việt Nam, nổi tiếng với công trình Bổ đề cơ bản. Cuốn sách "Ai và Ky ở xứ sở những con số tàng hình" là tác phẩm văn học đầu tay đầy ấn tượng.'
     },
     {
-        id: 202,
-        name: "Rupi Kaur",
-        img: "./Images/Authors/a2.png",
-        link: "#",
-        bio: 'Nhà thơ, nghệ sĩ biểu diễn người Canada gốc Ấn. Nổi tiếng với tập thơ "Milk and Honey", cô là đại diện tiêu biểu cho dòng thơ Instapoetry.'
+        id: 7,
+        name: "Eckhart Tolle",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/7.png",
+        link: "./Details/author.html?id=7",
+        bio: 'Nhà tư tưởng tâm linh nổi tiếng thế giới. Tác phẩm của ông giúp hàng triệu người tìm thấy sự bình an nội tâm và thức tỉnh mục đích sống.'
     },
     {
-        id: 203,
-        name: "Sally Rooney",
-        img: "./Images/Authors/a3.jpg",
-        link: "#",
-        bio: 'Nữ nhà văn trẻ người Ireland, được mệnh danh là "tiếng nói của thế hệ millennials" với các tác phẩm như "Normal People".'
+        id: 31,
+        name: "John Medina",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/31.png",
+        link: "./Details/author.html?id=31",
+        bio: 'Tiến sĩ sinh học phân tử và nhà nghiên cứu não bộ. Ông nổi tiếng với việc áp dụng khoa học thần kinh vào việc nuôi dạy trẻ và phát triển trí tuệ.'
     },
     {
-        id: 204,
-        name: "Đinh Phương",
-        img: "./Images/Authors/a4.jpg",
-        link: "#",
-        bio: 'Một cây bút trẻ đầy triển vọng của văn học Việt Nam với lối viết ma mị, khai thác sâu vào tâm lý và lịch sử.'
+        id: 30,
+        name: "Kyuichi Kimura",
+        img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/author/30.png",
+        link: "./Details/author.html?id=30",
+        bio: 'Giáo viên, nhà tâm lý học tài ba. Ông có cái nhìn sâu sắc về giáo dục sớm và khơi dậy tiềm năng thiên tài trong mỗi đứa trẻ.'
     }
 ];
 

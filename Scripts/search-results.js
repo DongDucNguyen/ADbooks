@@ -1,163 +1,182 @@
-// Dữ liệu giả lập (Sau này sẽ thay bằng dữ liệu lấy từ API/Database)
-const MOCK_SEARCH_DATA = [
-    {
-        type: 'book',
-        id: 'b1',
-        title: "All The Light We Cannot See",
-        author: "Anthony Doerr",
-        publishDate: "06/05/2014",
-        img: "./Images/Book-Covers/b1.png"
-    },
-    {
-        type: 'author',
-        id: 'a1',
-        name: "Anthony Doerr",
-        birthDate: "27/10/1973",
-        img: "./Images/Authors/a1.jpg"
-    },
-    {
-        type: 'book',
-        id: 'b4',
-        title: "Where The Crawdads Sing",
-        author: "Delia Owens",
-        publishDate: "14/08/2018",
-        img: "./Images/Book-Covers/b4.png"
-    },
-    {
-        type: 'author',
-        id: 'a2',
-        name: "Delia Owens",
-        birthDate: "04/04/1949",
-        img: "./Images/Authors/a2.png" 
-    },
-    {
-        type: 'book',
-        id: 'b2',
-        title: "Rich People Problems",
-        author: "Kevin Kwan",
-        publishDate: "23/05/2017",
-        img: "./Images/Book-Covers/b2.png"
-    },
-    {
-        type: 'book',
-        id: 'b3',
-        title: "Becoming",
-        author: "Michelle Obama",
-        publishDate: "13/11/2018",
-        img: "./Images/Book-Covers/b3.png"
-    }
-];
+// Scripts/search-results.js
 
-export class SearchResultsPage {
-    #data;
-    #container;
-    #titleElement;
-    #input;
+let DB_DATA = { books: [], authors: [], links: [] }; // Biến toàn cục chứa dữ liệu
 
-    constructor(inputSelector, containerSelector, titleSelector) {
-        this.#container = document.querySelector(containerSelector);
-        this.#titleElement = document.querySelector(titleSelector);
-        this.#input = document.querySelector(inputSelector);
+document.addEventListener('DOMContentLoaded', async () => {
+    const resultsContainer = document.querySelector('.search-results-container');
+    const searchTitle = document.querySelector('.search-title-content'); // Sửa lại class cho đúng với HTML gốc
 
-        if (!this.#container || !this.#input) {
-            console.warn('SearchResultsPage: Không tìm thấy container hoặc input');
-            return;
+    // 1. Hiển thị trạng thái đang tải
+    if (resultsContainer) resultsContainer.innerHTML = '<p style="text-align: center; font-size: 20px;">Loading data...</p>';
+
+    try {
+        // 2. ĐỌC FILE JSON TỪ SERVER
+        const response = await fetch('./database-last.json'); 
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const rawData = await response.json();
 
-        this.#init();
-    }
+        // 3. Chuẩn hóa dữ liệu
+        processData(rawData);
 
-    #init() {
-        this.#input.addEventListener('input', () => this.#search());
-    }
+        // 4. Bắt đầu tìm kiếm
+        initSearchApp(resultsContainer, searchTitle);
 
-    async #search() {
-        const keyword = this.#input.value.trim();
-        if (!keyword) {
-            this.#container.innerHTML = '';
-            return;
-        }
-
-        try {
-            // Gọi API tác giả
-            const authorsResp = await fetch(`http://localhost:8080/api/v1/authors?keyword=${encodeURIComponent(keyword)}`);
-            const authorsJson = await authorsResp.json();
-            const authors = authorsJson.content || [];
-
-            // Gọi API sách
-            const booksResp = await fetch(`http://localhost:8080/api/v1/books?keyword=${encodeURIComponent(keyword)}`);
-            const booksJson = await booksResp.json();
-            const books = booksJson.content || [];
-
-            this.#data = [...books.map(b => ({...b, type: 'book'})), ...authors.map(a => ({...a, type: 'author'}))];
-            this.#render();
-
-        } catch (err) {
-            console.error("Lỗi khi tìm kiếm:", err);
-            this.#container.innerHTML = '<p>Có lỗi xảy ra. Vui lòng thử lại.</p>';
-        }
-    }
-
-    #render() {
-        this.#container.innerHTML = ''; // Xóa nội dung cũ
-
-        if (!this.#data.length) {
-            this.#container.innerHTML = '<p>Không tìm thấy kết quả.</p>';
-            return;
-        }
-
-        const html = this.#data.map(item => {
-            if (item.type === 'book') return this.#createBookCard(item);
-            if (item.type === 'author') return this.#createAuthorCard(item);
-            return '';
-        }).join('');
-
-        this.#container.innerHTML = html;
-    }
-
-    // Template HTML cho sách
-    #createBookCard(book) {
-        return `
-            <div class="result-card book-card-type jstoBookDetailPage" data-book-id="${book.id}">
-                <div class="card-background"></div>
-                <div class="card-content-layout">
-                    <img src="${book.img || './Images/Book-Covers/default.png'}" class="book-cover-img" alt="${book.title}">
-                    <div class="info-area">
-                        <h3 class="item-title">${book.title}</h3>
-                        <p class="item-subtitle">${book.authorName || book.author}</p>
-                        <p class="item-meta">Xuất bản: ${book.publishDate || ''}</p>
-                    </div>
+    } catch (error) {
+        console.error("Lỗi không đọc được file JSON:", error);
+        if (resultsContainer) {
+            resultsContainer.innerHTML = `
+                <div style="text-align: center; width: 100%;">
+                    <p style="color: red; font-weight: bold; font-size: 20px;">Không thể đọc dữ liệu!</p>
+                    <p>Lưu ý: Bạn phải chạy web bằng <u>Live Server</u> (localhost) thì mới đọc được file JSON.</p>
                 </div>
-            </div>
-        `;
+            `;
+        }
     }
-
-    // Template HTML cho tác giả
-    #createAuthorCard(author) {
-        return `
-            <div class="result-card author-card-type jstoAuthorPage" data-author-id="${author.id}">
-                <div class="card-background"></div>
-                <div class="card-content-layout author-layout">
-                    <img src="${author.img || './Images/elements/user-default.png'}" class="author-avatar-img" alt="${author.firstname || author.name}">
-                    <div class="info-area author-info">
-                        <h3 class="item-title">${author.firstname ? author.firstname + ' ' + author.lastname : author.name}</h3>
-                        <p class="item-meta">Sinh ngày: ${author.birthday || author.birthDate || ''}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-}
-
-// main.js
-import { SearchResultsPage } from "./search.js";
-
-document.addEventListener('DOMContentLoaded', () => {
-    new SearchResultsPage('#searchInput', '.search-results-container', '.search-title-content');
 });
 
+// --- HÀM XỬ LÝ DỮ LIỆU ---
+function processData(rawData) {
+    DB_DATA.books = rawData.books || [];
+    DB_DATA.authors = rawData.author || []; // JSON gốc là 'author' (số ít)
+    DB_DATA.links = rawData.authorsOfBooks || [];
+}
 
-// // Khởi chạy
-// document.addEventListener('DOMContentLoaded', () => {
-//     new SearchResultsPage(MOCK_SEARCH_DATA);
-// });
+// --- LOGIC TÌM KIẾM ---
+function initSearchApp(resultsContainer, searchTitle) {
+    const query = localStorage.getItem('searchQuery');
+
+    if (searchTitle && query) {
+        searchTitle.textContent = `Kết Quả: "${query}"`;
+    }
+
+    if (!query) {
+        if(resultsContainer) resultsContainer.innerHTML = '<p style="text-align: center;">Vui lòng nhập từ khóa để tìm kiếm.</p>';
+        return;
+    }
+
+    const results = performSearch(query);
+    renderSearchResults(results, resultsContainer);
+}
+
+function performSearch(query) {
+    const lowerQuery = query ? String(query).toLowerCase().trim() : "";
+    if (!lowerQuery) return [];
+
+    const results = [];
+
+    // 1. Tìm SÁCH
+    if (Array.isArray(DB_DATA.books)) {
+        DB_DATA.books.forEach(book => {
+            const bookName = book.name ? String(book.name).toLowerCase() : "";
+            
+            if (bookName.includes(lowerQuery)) {
+                // Tìm tác giả
+                const link = Array.isArray(DB_DATA.links) ? DB_DATA.links.find(l => l.BookId === book.id) : null;
+                let authorName = "Unknown Author";
+                
+                if (link && Array.isArray(DB_DATA.authors)) {
+                    const author = DB_DATA.authors.find(a => a.id === link.AuthorId);
+                    if (author) authorName = getFullName(author);
+                }
+
+                results.push({
+                    type: 'book',
+                    id: book.id,
+                    title: book.name || "No Title",
+                    author: authorName,
+                    publishDate: book.releaseDate || "Unknown",
+                    img: book.thumbnailUrl || "./Images/Book-Covers/default.png"
+                });
+            }
+        });
+    }
+
+    // 2. Tìm TÁC GIẢ
+    if (Array.isArray(DB_DATA.authors)) {
+        DB_DATA.authors.forEach(author => {
+            const fullName = getFullName(author);
+            const lowerName = fullName ? String(fullName).toLowerCase() : "";
+
+            if (lowerName.includes(lowerQuery)) {
+                results.push({
+                    type: 'author',
+                    id: author.id,
+                    name: fullName || "No Name",
+                    birthDate: author.birthday || "Unknown",
+                    img: author.imagineUrl || author.image || "./Images/Authors/default.png"
+                });
+            }
+        });
+    }
+
+    return results;
+}
+
+function getFullName(author) {
+    const first = author.firstName || "";
+    const last = author.lastName || "";
+    const vnSurnames = ["Nguyễn", "Trần", "Lê", "Phạm", "Hoàng", "Huỳnh", "Phan", "Vũ", "Võ", "Đặng", "Bùi", "Đỗ", "Hồ", "Ngô", "Dương", "Lý", "Chu", "Sơn", "Tô", "Trương", "Phùng", "Kim", "Nam"];
+    
+    if (vnSurnames.includes(last)) {
+        return `${last} ${first}`.trim();
+    }
+    return `${first} ${last}`.trim();
+}
+
+// --- HÀM RENDER (QUAN TRỌNG: Đã chỉnh đúng HTML Structure của bạn) ---
+function renderSearchResults(data, container) {
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (data.length === 0) {
+        container.innerHTML = '<p style="text-align: center; width: 100%; grid-column: span 3; font-size: 18px;">Không tìm thấy kết quả nào.</p>';
+        return;
+    }
+
+    data.forEach(item => {
+        const card = document.createElement('div');
+        
+        // SÁCH: Render đúng cấu trúc Book Card
+        if (item.type === 'book') {
+            card.className = 'result-card book-card-type';
+            // Khi click vào card sẽ chuyển trang
+            card.onclick = () => window.location.href = `./Details/book.html?id=${item.id}`;
+            
+            card.innerHTML = `
+                <div class="card-background"></div>
+                <div class="card-content-layout">
+                    <img src="${item.img}" class="book-cover-img" alt="${item.title}" onerror="this.src='./Images/Book-Covers/default.png'">
+                    
+                    <div class="info-area">
+                        <h3 class="item-title">${item.title}</h3>
+                        <p class="item-subtitle">${item.author}</p>
+                        <p class="item-meta">Xuất bản: ${item.publishDate}</p>
+                    </div>
+                </div>
+            `;
+        } 
+        // TÁC GIẢ: Render đúng cấu trúc Author Card
+        else if (item.type === 'author') {
+            card.className = 'result-card author-card-type';
+            card.onclick = () => window.location.href = `./Details/author.html?id=${item.id}`;
+
+            card.innerHTML = `
+                <div class="card-background"></div>
+                <div class="card-content-layout author-layout">
+                    <img src="${item.img}" class="author-avatar-img" alt="${item.name}" onerror="this.src='./Images/Authors/default.png'">
+                    
+                    <div class="info-area author-info">
+                        <h3 class="item-title">${item.name}</h3>
+                        <p class="item-meta">Sinh ngày: ${item.birthDate}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        container.appendChild(card);
+    });
+}

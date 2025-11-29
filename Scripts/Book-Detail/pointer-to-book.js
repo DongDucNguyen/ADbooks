@@ -1,18 +1,22 @@
+// Scripts/Book-Detail/pointer-to-book.js
+
 document.addEventListener('click', function(e) {
-    // Tìm phần tử được click (hoặc cha của nó) có class 'jstoBookDetailPage' hay không
+    // Tìm phần tử được click (hoặc cha của nó) có class 'jstoBookDetailPage'
     const targetButton = e.target.closest('.jstoBookDetailPage');
 
-    // Nếu tìm thấy (tức là người dùng đã click vào đúng nút/ảnh sách)
     if (targetButton) {
-        // Ngăn chặn hành vi mặc định (nếu là thẻ a)
         e.preventDefault(); 
         
-        // Lấy ID sách nếu cần (để dùng sau này)
+        // 1. Lấy ID sách từ data-book-id (Ví dụ: data-book-id="12")
         const bookId = targetButton.dataset.bookId;
-        console.log("Đang xem sách ID:", bookId);
 
-        // Chuyển hướng
-        
-        window.location.href = "/Details/book.html";
+        if (bookId) {
+            console.log("Đang chuyển hướng đến sách ID:", bookId);
+            // 2. Chuyển hướng kèm theo ID trên URL
+            // Ví dụ kết quả: /Details/book.html?id=12
+            window.location.href = `/Details/book.html?id=${bookId}`;
+        } else {
+            console.error("Lỗi: Không tìm thấy ID sách trên phần tử này.");
+        }
     }
 });

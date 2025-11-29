@@ -107,9 +107,9 @@ export class TopAuthorSlider {
                 <div class="desc-lines">${author.description}</div>
             </div>
 
-            <a class="author-photo jstoAuthorPage" href="${author.link}">
-                <img src="${author.img}" alt="${author.name}">
-            </a>
+            <div class="author-photo jstoAuthorPage">
+                <img src="${author.img}"  class="jstoAuthorPage">
+            </div>
 
             <div class="author-books">
                 ${author.books.map(bookImg => `<img src="${bookImg.img}" alt="Book Cover" data-book-id="${bookImg.id}" class="jstoBookDetailPage">`).join('')}

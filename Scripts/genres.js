@@ -25,60 +25,60 @@ const quotesData = [
 ];
 
 const featuredBooksData = [
-    // 0. VIỆT NAM
+    // 0. VIỆT NAM (Category ID: 1)
     [
-        { id: "vn-01", title: "Mắt Biếc", author: "Nguyễn Nhật Ánh", img: "./Images/Book-Covers/b9.png", link: "./Details/book-vn-01.html" },
-        { id: "vn-02", title: "Số Đỏ", author: "Vũ Trọng Phụng", img: "./Images/Book-Covers/b10.png" },
-        { id: "vn-03", title: "Dế Mèn Phiêu Lưu Ký", author: "Tô Hoài", img: "./Images/Book-Covers/b11.png" },
-        { id: "vn-04", title: "Đất Rừng Phương Nam", author: "Đoàn Giỏi", img: "./Images/Book-Covers/b12.png" },
-        { id: "vn-05", title: "Cánh Đồng Bất Tận", author: "Nguyễn Ngọc Tư", img: "./Images/Book-Covers/b13.png" },
-        { id: "vn-06", title: "Tuổi Thơ Dữ Dội", author: "Phùng Quán", img: "./Images/Book-Covers/b14.png" },
-        { id: "vn-07", title: "Vợ Nhặt", author: "Kim Lân", img: "./Images/Book-Covers/b15.png" },
-        { id: "vn-08", title: "Chí Phèo", author: "Nam Cao", img: "./Images/Book-Covers/b16.png" }
+        { id: 17, title: "Có 2 con mèo ngồi bên cửa sổ", author: "Nguyễn Nhật Ánh", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/17_14.png" },
+        { id: 12, title: "Số đỏ", author: "Vũ Trọng Phụng", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/12_10.png" },
+        { id: 13, title: "Búp sen xanh", author: "Sơn Tùng", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/13_11.png" },
+        { id: 16, title: "Tắt đèn", author: "Ngô Tất Tố", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/16_13.png" },
+        { id: 20, title: "Lão Hạc", author: "Nam Cao", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/20_9.png" },
+        { id: 14, title: "Mưa đỏ", author: "Chu Lai", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/14_12.png" },
+        { id: 11, title: "Đời thừa", author: "Nam Cao", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/11_9.png" },
+        { id: 15, title: "Cơm thầy cơm cô", author: "Vũ Trọng Phụng", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/15_10.png" }
     ],
-    // 1. NƯỚC NGOÀI
+    // 1. NƯỚC NGOÀI (Category ID: 2)
     [
-        { id: "fr-01", title: "Harry Potter", author: "J.K. Rowling", img: "./Images/Book-Covers/b1.png" },
-        { id: "fr-02", title: "The Great Gatsby", author: "F. Scott Fitzgerald", img: "./Images/Book-Covers/b2.png" },
-        { id: "fr-03", title: "To Kill a Mockingbird", author: "Harper Lee", img: "./Images/Book-Covers/b3.png" },
-        { id: "fr-04", title: "1984", author: "George Orwell", img: "./Images/Book-Covers/b4.png" },
-        { id: "fr-05", title: "Don Quixote", author: "Cervantes", img: "./Images/Book-Covers/b5.png" },
-        { id: "fr-06", title: "Sherlock Holmes", author: "Conan Doyle", img: "./Images/Book-Covers/b6.png" },
-        { id: "fr-07", title: "Les Misérables", author: "Victor Hugo", img: "./Images/Book-Covers/b7.png" },
-        { id: "fr-08", title: "Little Women", author: "Louisa May Alcott", img: "./Images/Book-Covers/b8.png" }
+        { id: 27, title: "Nhà giả kim", author: "Paulo Coelho", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/27_22.png" },
+        { id: 25, title: "1984", author: "George Orwell", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/25_21.png" },
+        { id: 22, title: "Người đua diều", author: "Khaled Hosseini", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/22_18.png" },
+        { id: 21, title: "Chúa ruồi", author: "William Golding", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/21_17.png" },
+        { id: 24, title: "Chú bé mang pyjama sọc", author: "John Boyne", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/24_20.png" },
+        { id: 26, title: "Trại súc vật", author: "George Orwell", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/26_21.png" },
+        { id: 28, title: "Điều kỳ diệu của tiệm tạp hóa Namiya", author: "Higashino Keigo", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/28_23.png" },
+        { id: 30, title: "Bố con cá gai", author: "Cho Chang-in", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/30_24.png" }
     ],
-    // 2. ĐỜI SỐNG & XÃ HỘI
+    // 2. ĐỜI SỐNG & XÃ HỘI (Category ID: 3)
     [
-        { id: "ls-01", title: "Đắc Nhân Tâm", author: "Dale Carnegie", img: "./Images/Book-Covers/b9.png" },
-        { id: "ls-02", title: "Quẳng Gánh Lo Đi", author: "Dale Carnegie", img: "./Images/Book-Covers/b10.png" },
-        { id: "ls-03", title: "Nhà Giả Kim", author: "Paulo Coelho", img: "./Images/Book-Covers/b11.png" },
-        { id: "ls-04", title: "Hành Trình Về Phương Đông", author: "Baird T. Spalding", img: "./Images/Book-Covers/b12.png" },
-        { id: "ls-05", title: "Sapiens", author: "Yuval Noah Harari", img: "./Images/Book-Covers/b13.png" },
-        { id: "ls-06", title: "Tâm Lý Học Đám Đông", author: "Gustave Le Bon", img: "./Images/Book-Covers/b14.png" },
-        { id: "ls-07", title: "Phi Lý Trí", author: "Dan Ariely", img: "./Images/Book-Covers/b15.png" },
-        { id: "ls-08", title: "Đi Tìm Lẽ Sống", author: "Viktor Frankl", img: "./Images/Book-Covers/b16.png" }
+        { id: 10, title: "Đắc nhân tâm", author: "Dale Carnegie", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/10_8.png" },
+        { id: 9, title: "Quẳng gánh lo đi mà vui sống", author: "Dale Carnegie", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/9_8.png" },
+        { id: 7, title: "Đời ngắn đừng ngủ dài", author: "Robin Sharma", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/7_6.png" },
+        { id: 8, title: "Thức tỉnh mục đích sống", author: "Eckhart Tolle", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/8_7.png" },
+        { id: 6, title: "Ba người thầy vĩ đại", author: "Robin Sharma", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/6_6.png" },
+        { id: 4, title: "Bàn về tự do", author: "John Stuart Mill", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/4_4.png" },
+        { id: 5, title: "Đường về nô lệ", author: "Friedrich Hayek", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/5_5.png" },
+        { id: 2, title: "Cộng Hòa", author: "Plato", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/2_2.png" }
     ],
-    // 3. GIÁO DỤC
+    // 3. GIÁO DỤC (Category ID: 4)
     [
-        { id: "edu-01", title: "Khuyến Học", author: "Fukuzawa Yukichi", img: "./Images/Book-Covers/b1.png" },
-        { id: "edu-02", title: "Em Phải Đến Harvard", author: "Lưu Vệ Hoa", img: "./Images/Book-Covers/b2.png" },
-        { id: "edu-03", title: "Totto-chan", author: "Kuroyanagi Tetsuko", img: "./Images/Book-Covers/b3.png" },
-        { id: "edu-04", title: "Người Thầy Đầu Tiên", author: "Chingiz Aitmatov", img: "./Images/Book-Covers/b4.png" },
-        { id: "edu-05", title: "Chiến Binh Cầu Vồng", author: "Andrea Hirata", img: "./Images/Book-Covers/b5.png" },
-        { id: "edu-06", title: "Tôi Tài Giỏi", author: "Adam Khoo", img: "./Images/Book-Covers/b6.png" },
-        { id: "edu-07", title: "Dạy Con Làm Giàu", author: "Robert Kiyosaki", img: "./Images/Book-Covers/b7.png" },
-        { id: "edu-08", title: "Trí Tuệ Do Thái", author: "Eran Katz", img: "./Images/Book-Covers/b8.png" }
+        { id: 33, title: "Khuyến học", author: "Yukichi Fukuzawa", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/33_27.png" },
+        { id: 31, title: "Được học", author: "Tara Westover", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/31_25.png" },
+        { id: 39, title: "Cha giàu cha nghèo - Tập 1", author: "Robert T. Kiyosaki", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/39_32.png" },
+        { id: 35, title: "Phương pháp giáo dục con của người Do Thái", author: "Trần Hân", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/35_29.png" },
+        { id: 34, title: "Người thầy", author: "Frank McCourt", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/34_28.png" },
+        { id: 36, title: "Emile hay là về giáo dục", author: "Jean-Jacques Rousseau", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/36_3.png" },
+        { id: 37, title: "Thiên tài và sự giáo dục từ sớm", author: "Kyuichi Kimura", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/37_30.png" },
+        { id: 40, title: "Những tù nhân của địa lý", author: "Tim Marshall", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/40_33.png" }
     ],
-    // 4. KHÁC
+    // 4. KHÁC (Category ID: 5 - Khoa học, Hồi ký, Kỹ năng...)
     [
-        { id: "ot-01", title: "Nấu Ăn Cùng Mẹ", author: "Unknown", img: "./Images/Book-Covers/b9.png" },
-        { id: "ot-02", title: "Mẹo Vặt Cuộc Sống", author: "Nhiều Tác Giả", img: "./Images/Book-Covers/b10.png" },
-        { id: "ot-03", title: "Yoga Cơ Bản", author: "Master Yoga", img: "./Images/Book-Covers/b11.png" },
-        { id: "ot-04", title: "Du Lịch Bụi", author: "Traveler", img: "./Images/Book-Covers/b12.png" },
-        { id: "ot-05", title: "Thiền Định", author: "Monk", img: "./Images/Book-Covers/b13.png" },
-        { id: "ot-06", title: "Làm Vườn", author: "Gardener", img: "./Images/Book-Covers/b14.png" },
-        { id: "ot-07", title: "Nuôi Dạy Cún", author: "Pet Lover", img: "./Images/Book-Covers/b15.png" },
-        { id: "ot-08", title: "Trà Đạo", author: "Tea Master", img: "./Images/Book-Covers/b16.png" }
+        { id: 42, title: "Lược sử loài người", author: "Yuval Noah Harari", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/42_35.png" },
+        { id: 50, title: "Nhật ký Đặng Thùy Trâm", author: "Đặng Thùy Trâm", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/50_43.png" },
+        { id: 44, title: "Từ tốt đến vĩ đại", author: "Jim Collins", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/44_37.png" },
+        { id: 41, title: "Vũ trụ trong vỏ hạt dẻ", author: "Stephen Hawking", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/41_34.png" },
+        { id: 46, title: "Ngày xưa có 1 con bò", author: "Camilo Cruz", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/46_39.png" },
+        { id: 47, title: "Ai và Ky ở xứ sở những con số tàng hình", author: "Ngô Bảo Châu", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/47_40.png" },
+        { id: 45, title: "Vị tu sĩ bán chiếc Ferrari", author: "Robin Sharma", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/45_38.png" },
+        { id: 49, title: "Mình là cá, việc của mình là bơi", author: "Takeshi Furukawa", img: "https://raw.githubusercontent.com/Kaohtp/images-authors-books/refs/heads/main/book/49_42.png" }
     ]
 ];
 
