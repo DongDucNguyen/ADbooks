@@ -38,7 +38,7 @@ async function generateAuthorContent() {
 
         // 3. Cấu hình Gemini AI
         // !!! THAY API KEY CỦA BẠN VÀO ĐÂY !!!
-        const API_KEY = "AIzaSyBU-VLC9v__TdUGq8SOloFA1316Kb4p4rg"; 
+        const API_KEY = "AIzaSyA28oTvYcVvBaSivElNtrNWoOdfWXt-WDE"; 
         
         const genAI = new GoogleGenerativeAI(API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash"});
