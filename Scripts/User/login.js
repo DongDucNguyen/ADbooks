@@ -30,42 +30,46 @@ export class LoginForm {
         }
 
         try {
-            // 1️⃣ GET user chỉ theo email
-            const response = await fetch(
-                `http://localhost:3000/user?email=${encodeURIComponent(email)}`
-            );
+            // 1️⃣ Gửi POST đến API signin
+            const response = await fetch("http://localhost:8080/api/auth/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+            });
 
+            // 2️⃣ Backend trả lỗi (401, 400, 500)
             if (!response.ok) {
-                alert("Không thể kết nối tới server!");
+                const err = await response.json().catch(() => ({}));
+
+                alert(err.message || "Đăng nhập thất bại!");
                 return;
             }
 
+            // 3️⃣ Nhận JWT từ backend
             const data = await response.json();
 
-            if (data.length === 0) {
-                alert("Tài khoản không tồn tại!");
+            // Expect: { token: "...", type: "Bearer", email: "...", roles: [...] }
+            if (!data.token) {
+                alert("Không nhận được token từ server!");
                 return;
             }
 
-            const user = data[0];
+            // 4️⃣ Lưu token và user info
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userInfo", JSON.stringify(data));
 
-            // 2️⃣ So sánh mật khẩu trong JS
-            if (user.encryptedPassword !== password) {
-                alert("Mật khẩu không đúng!");
-                return;
-            }
-
-            // 3️⃣ Lưu trạng thái đăng nhập localStorage
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userLogin", JSON.stringify(user));
-
-            // 4️⃣ Thông báo và chuyển hướng
+            // 5️⃣ Chuyển hướng
             alert("Đăng nhập thành công!");
+            sessionStorage.setItem("sessionActive", "true");
+
             setTimeout(() => {
                 window.location.href = "/Explore-Page.html";
             }, 100);
-
-            sessionStorage.setItem("sessionActive", "true");
 
         } catch (error) {
             console.error("Lỗi khi đăng nhập:", error);
